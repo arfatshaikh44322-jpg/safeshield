@@ -1,0 +1,244 @@
+/* =========================================================
+   SS SCROLL HERO — a pinned, scroll-driven cinematic section.
+   Scattered "threat" particles converge into a shield, hold,
+   then shatter into a full-screen burst that reveals a
+   statement. Text sits BEHIND the canvas so the shield
+   occludes it as it forms, the way the reference does.
+========================================================= */
+
+.ssx{
+    position:relative;
+    height:420vh;              /* scroll runway for the sequence */
+    background:#03070f;
+}
+
+.ssx-sticky{
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at 50% 45%,rgba(79,140,255,.10),transparent 42%),
+        radial-gradient(circle at 50% 60%,rgba(34,211,167,.06),transparent 55%),
+        #03070f;
+}
+
+/* subtle grid, same language as the rest of the site */
+.ssx-grid{
+    position:absolute;
+    inset:0;
+    opacity:.16;
+    background-image:
+        linear-gradient(rgba(79,140,255,.10) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(79,140,255,.10) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(ellipse at center,#000 8%,transparent 72%);
+    mask-image:radial-gradient(ellipse at center,#000 8%,transparent 72%);
+    pointer-events:none;
+}
+
+/* ---------- display text layer (sits behind the canvas) ---------- */
+
+.ssx-textlayer{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.02em;
+    text-align:center;
+    pointer-events:none;
+    user-select:none;
+}
+
+.ssx-line{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:400;
+    letter-spacing:.02em;
+    line-height:.95;
+    color:#f2f6ff;
+    font-size:clamp(38px,11vw,140px);
+    white-space:nowrap;
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1);
+}
+
+.ssx-line-2{
+    color:#dbe6fb;
+}
+
+.ssx-in .ssx-line{ opacity:1; transform:translateY(0); }
+.ssx-in .ssx-line-2{ transition-delay:.12s; }
+
+/* the swapping word */
+.ssx-word{
+    display:inline-block;
+    position:relative;
+    transition:opacity .45s ease,transform .45s cubic-bezier(.16,1,.3,1),filter .45s ease;
+}
+
+.ssx-word.ssx-word-out{
+    opacity:0;
+    transform:translateY(-14px) scale(.97);
+    filter:blur(6px);
+}
+
+/* ---------- canvas (above the text, transparent) ---------- */
+
+.ssx-canvas{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    width:100%;
+    height:100%;
+    display:block;
+    pointer-events:none;
+}
+
+/* ---------- small side captions ---------- */
+
+.ssx-side{
+    position:absolute;
+    z-index:3;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    line-height:1.7;
+    color:#8ea3c4;
+    opacity:0;
+    transition:opacity .7s ease;
+    pointer-events:none;
+}
+
+.ssx-in .ssx-side{ opacity:1; }
+
+.ssx-side-l{ left:5vw;  bottom:16vh; text-align:left; }
+.ssx-side-r{ right:5vw; top:22vh;    text-align:right; }
+
+@media(max-width:760px){
+    .ssx-side{ font-size:9px; letter-spacing:.1em; }
+    .ssx-side-l{ left:5vw; bottom:12vh; }
+    .ssx-side-r{ right:5vw; top:16vh; }
+}
+
+/* ---------- counter ---------- */
+
+.ssx-count{
+    position:absolute;
+    left:5vw;
+    bottom:7vh;
+    z-index:3;
+    font-family:Georgia,serif;
+    font-size:clamp(20px,3.4vw,34px);
+    color:#c9d8f5;
+    opacity:0;
+    transition:opacity .6s ease;
+    pointer-events:none;
+}
+
+.ssx-in .ssx-count{ opacity:.85; }
+
+/* ---------- final reveal ---------- */
+
+.ssx-reveal{
+    position:absolute;
+    inset:0;
+    z-index:4;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 8vw;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .6s ease;
+}
+
+.ssx-reveal.ssx-reveal-on{ opacity:1; }
+
+.ssx-reveal p{
+    max-width:920px;
+    margin:0;
+    text-align:center;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(15px,2.2vw,26px);
+    line-height:1.75;
+    letter-spacing:.01em;
+    color:#eaf2ff;
+    text-shadow:0 2px 24px rgba(0,0,0,.6);
+    transform:translateY(16px);
+    transition:transform .8s cubic-bezier(.16,1,.3,1);
+}
+
+.ssx-reveal.ssx-reveal-on p{ transform:translateY(0); }
+
+/* ---------- scroll hint + progress ---------- */
+
+.ssx-hint{
+    position:absolute;
+    left:50%;
+    bottom:5vh;
+    z-index:5;
+    transform:translateX(-50%);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:#7f93b4;
+    transition:opacity .5s ease;
+    pointer-events:none;
+}
+
+.ssx-hint::after{
+    content:"";
+    display:block;
+    width:1px;
+    height:28px;
+    margin:10px auto 0;
+    background:linear-gradient(#7f93b4,transparent);
+    animation:ssxHint 1.9s ease-in-out infinite;
+}
+
+@keyframes ssxHint{
+    0%,100%{ opacity:.25; transform:translateY(0); }
+    50%{ opacity:1; transform:translateY(6px); }
+}
+
+.ssx-hint.ssx-hint-off{ opacity:0; }
+
+.ssx-progress{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:6;
+    height:2px;
+    background:rgba(255,255,255,.06);
+}
+
+.ssx-progress i{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#4f8cff,#22d3a7);
+    box-shadow:0 0 12px rgba(79,140,255,.7);
+}
+
+/* ---------- reduced motion: show a calm static composition ---------- */
+
+@media(prefers-reduced-motion:reduce){
+    .ssx{ height:auto; }
+    .ssx-sticky{ position:relative; height:auto; min-height:70vh; padding:14vh 0; }
+    .ssx-line{ opacity:1; transform:none; }
+    .ssx-side,.ssx-count{ opacity:1; }
+    .ssx-hint{ display:none; }
+    .ssx-hint::after{ animation:none; }
+    .ssx-reveal{ position:relative; opacity:1; margin-top:6vh; }
+    .ssx-reveal p{ transform:none; }
+}

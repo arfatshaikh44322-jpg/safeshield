@@ -1,0 +1,3267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - Tech Support Scam</title>
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #0B1220;
+    color: #F8FAFC;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+:root {
+    --bg: #0B1220;
+    --bg-secondary: #0E1728;
+    --card: #111C2E;
+
+    --blue: #4F8CFF;
+    --blue-light: #6A9CFF;
+
+    --teal: #22D3A7;
+
+    --text: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --muted: #94A3B8;
+
+    --border: #26364D;
+
+    --red: #EF4444;
+    --red-light: #FF6B6B;
+    --red-dark: #B91C1C;
+
+    --orange: #F59E0B;
+
+    --footer: #080E19;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(7, 13, 25, 0.82);
+
+    border-bottom:
+        1px solid rgba(79, 140, 255, 0.18);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+
+    min-height: 72px;
+
+    padding: 12px 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--blue);
+
+    text-decoration: none;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+.logo span:not(.logo-shield) {
+    color: white;
+}
+
+.logo-shield {
+    font-size: 26px;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(79,140,255,0.7)
+        );
+
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease;
+}
+
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+.logo:hover .logo-shield {
+    transform:
+        rotate(-8deg)
+        scale(1.12);
+
+    filter:
+        drop-shadow(
+            0 0 12px rgba(79,140,255,0.9)
+        );
+}
+
+
+/* =====================================================
+   NAV LINKS
+===================================================== */
+
+.nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    color: var(--text-secondary);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: white;
+
+    background:
+        rgba(79,140,255,0.09);
+
+    box-shadow:
+        0 0 18px rgba(79,140,255,0.08);
+}
+
+
+/* ACTIVE PAGE */
+
+.nav-links a.active {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(79,140,255,0.16),
+            rgba(34,211,167,0.08)
+        );
+
+    border:
+        1px solid rgba(79,140,255,0.25);
+
+    box-shadow:
+        0 0 20px rgba(79,140,255,0.08);
+}
+
+.nav-links a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+
+    bottom: -5px;
+
+    height: 2px;
+
+    background:
+        var(--teal);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 0 10px var(--teal);
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.menu-toggle {
+    display: none;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--card);
+
+    color: white;
+
+    font-size: 22px;
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    transition:
+        0.3s ease;
+}
+
+.menu-toggle:hover {
+    border-color:
+        var(--blue);
+
+    background:
+        rgba(79,140,255,0.12);
+
+    box-shadow:
+        0 0 18px rgba(79,140,255,0.15);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    position: relative;
+
+    min-height: 72vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 100px 25px;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(239,68,68,0.16),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 20% 70%,
+            rgba(79,140,255,0.12),
+            transparent 35%
+        );
+}
+
+
+/* =====================================================
+   ANIMATED CIRCLES
+===================================================== */
+
+.circle {
+    position: absolute;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(79,140,255,0.14);
+
+    pointer-events: none;
+
+    animation:
+        floatCircle 6s ease-in-out infinite;
+}
+
+.circle.one {
+    width: 450px;
+    height: 450px;
+
+    top: -150px;
+    left: -150px;
+}
+
+.circle.two {
+    width: 350px;
+    height: 350px;
+
+    bottom: -150px;
+    right: -100px;
+
+    animation-delay: 1.5s;
+}
+
+.circle.three {
+    width: 190px;
+    height: 190px;
+
+    top: 18%;
+    right: 22%;
+
+    animation-delay: 3s;
+}
+
+@keyframes floatCircle {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity: 0.35;
+    }
+
+    50% {
+        transform:
+            translateY(-20px)
+            scale(1.07);
+
+        opacity: 0.8;
+    }
+}
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 900px;
+}
+
+
+/* =====================================================
+   WARNING BADGE
+===================================================== */
+
+.warning-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 18px;
+
+    margin-bottom: 24px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(239,68,68,0.08);
+
+    border:
+        1px solid rgba(239,68,68,0.5);
+
+    color:
+        var(--red-light);
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    animation:
+        badgeGlow 2s infinite;
+}
+
+.warning-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 10px var(--red),
+        0 0 20px var(--red);
+
+    animation:
+        blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
+}
+
+@keyframes badgeGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 8px rgba(239,68,68,0.05);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(239,68,68,0.25);
+    }
+}
+
+
+/* =====================================================
+   HERO TEXT
+===================================================== */
+
+.hero h1 {
+    font-size:
+        clamp(42px, 6vw, 70px);
+
+    line-height: 1.05;
+
+    margin-bottom: 22px;
+
+    animation:
+        enter 0.8s ease both;
+}
+
+.hero h1 span {
+    color:
+        var(--red-light);
+
+    text-shadow:
+        0 0 15px rgba(239,68,68,0.3),
+        0 0 35px rgba(239,68,68,0.15);
+}
+
+.hero p {
+    max-width: 760px;
+
+    margin: auto;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 18px;
+
+    animation:
+        enter 0.8s ease 0.15s both;
+}
+
+@keyframes enter {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =====================================================
+   COMMON BUTTON STYLE
+===================================================== */
+
+.hero-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 30px;
+
+    min-height: 50px;
+
+    padding: 14px 27px;
+
+    border:
+        1px solid rgba(79,140,255,0.25);
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #427CE5
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(79,140,255,0.2);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.hero-button:hover {
+    transform:
+        translateY(-4px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue-light),
+            var(--blue)
+        );
+
+    border-color:
+        rgba(106,156,255,0.55);
+
+    box-shadow:
+        0 14px 35px rgba(79,140,255,0.35);
+}
+
+.hero-button:active {
+    transform:
+        translateY(-1px)
+        scale(0.98);
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+section {
+    padding: 90px 25px;
+}
+
+.container {
+    max-width: 1100px;
+
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 45px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color:
+        var(--muted);
+}
+
+
+/* =====================================================
+   FAKE COMPUTER
+===================================================== */
+
+.computer-wrapper {
+    max-width: 850px;
+
+    margin: auto;
+
+    background:
+        #060B14;
+
+    border:
+        1px solid #334155;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.45);
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.computer-wrapper:hover {
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(239,68,68,0.5);
+
+    box-shadow:
+        0 30px 80px rgba(239,68,68,0.15);
+}
+
+
+/* =====================================================
+   BROWSER BAR
+===================================================== */
+
+.browser-bar {
+    height: 45px;
+
+    background:
+        #111827;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 15px;
+
+    gap: 8px;
+
+    border-bottom:
+        1px solid #26364D;
+}
+
+.browser-dot {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background:
+        #475569;
+
+    transition:
+        transform 0.3s ease;
+}
+
+.browser-dot:hover {
+    transform:
+        scale(1.3);
+}
+
+.browser-address {
+    margin-left: 15px;
+
+    flex: 1;
+
+    background:
+        #0B1220;
+
+    border:
+        1px solid #334155;
+
+    border-radius: 6px;
+
+    padding: 5px 12px;
+
+    color:
+        #64748B;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   COMPUTER SCREEN
+===================================================== */
+
+.computer-screen {
+    min-height: 390px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    background:
+        radial-gradient(
+            circle,
+            #1a1720,
+            #060B14
+        );
+}
+
+
+/* =====================================================
+   FAKE ALERT
+===================================================== */
+
+.fake-alert {
+    max-width: 560px;
+
+    width: 100%;
+
+    background:
+        #151923;
+
+    border:
+        2px solid var(--red);
+
+    border-radius: 12px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 0 25px rgba(239,68,68,0.25),
+        0 0 70px rgba(239,68,68,0.12);
+
+    animation:
+        alertPulse 2.5s infinite;
+}
+
+@keyframes alertPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 25px rgba(239,68,68,0.22),
+            0 0 60px rgba(239,68,68,0.08);
+    }
+
+    50% {
+        box-shadow:
+            0 0 40px rgba(239,68,68,0.4),
+            0 0 90px rgba(239,68,68,0.15);
+    }
+}
+
+.fake-alert .danger-icon {
+    font-size: 55px;
+
+    margin-bottom: 10px;
+
+    animation:
+        dangerPulse 1.5s infinite;
+}
+
+@keyframes dangerPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+.fake-alert h3 {
+    color:
+        var(--red-light);
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+}
+
+.fake-alert p {
+    color:
+        var(--text-secondary);
+
+    margin-bottom: 20px;
+}
+
+.fake-number {
+    color:
+        var(--red-light);
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+
+    text-shadow:
+        0 0 12px rgba(239,68,68,0.3);
+}
+
+.fake-alert button {
+    padding:
+        12px 22px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background:
+        var(--red);
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+
+    box-shadow:
+        0 5px 20px rgba(239,68,68,0.2);
+}
+
+.fake-alert button:hover {
+    background:
+        #DC2626;
+
+    transform:
+        translateY(-3px)
+        scale(1.03);
+
+    box-shadow:
+        0 8px 30px rgba(239,68,68,0.4);
+}
+
+.fake-alert button:active {
+    transform:
+        scale(0.97);
+}
+
+
+/* =====================================================
+   INTERACTIVE BOX
+===================================================== */
+
+.interactive-box {
+    max-width: 850px;
+
+    margin: 35px auto 0;
+
+    padding: 30px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.interactive-box:hover {
+    border-color:
+        rgba(79,140,255,0.5);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.2);
+}
+
+.interactive-box h3 {
+    color:
+        var(--blue-light);
+
+    margin-bottom: 10px;
+
+    font-size: 23px;
+}
+
+.interactive-box p {
+    color:
+        var(--muted);
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   CHOICE BUTTONS
+===================================================== */
+
+.choice-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.choice {
+    padding:
+        12px 20px;
+
+    border:
+        1px solid #31506F;
+
+    border-radius: 8px;
+
+    background:
+        #0B1220;
+
+    color:
+        var(--text-secondary);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.choice:hover {
+    border-color:
+        var(--blue);
+
+    color: white;
+
+    background:
+        rgba(79,140,255,0.08);
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 8px 20px rgba(79,140,255,0.15);
+}
+
+.choice:active {
+    transform:
+        translateY(-1px)
+        scale(0.98);
+}
+
+#choiceResult {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 10px;
+
+    text-align: left;
+}
+
+#choiceResult.show {
+    display: block;
+
+    animation:
+        resultEnter 0.4s ease;
+}
+
+@keyframes resultEnter {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+#choiceResult.danger {
+    background:
+        rgba(239,68,68,0.08);
+
+    border:
+        1px solid rgba(239,68,68,0.4);
+
+    color:
+        var(--red-light);
+}
+
+#choiceResult.safe {
+    background:
+        rgba(34,211,167,0.07);
+
+    border:
+        1px solid rgba(34,211,167,0.35);
+
+    color:
+        var(--teal);
+}
+
+
+/* =====================================================
+   WARNING SECTION
+===================================================== */
+
+.warning-section {
+    background:
+        var(--bg-secondary);
+}
+
+
+/* =====================================================
+   ATTACK FLOW
+===================================================== */
+
+.attack-flow {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.flow-card {
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.flow-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        var(--red);
+
+    transition:
+        left 0.5s ease;
+}
+
+.flow-card:hover::before {
+    left: 0;
+}
+
+.flow-card:hover {
+    transform:
+        translateY(-8px);
+
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0 15px 35px
+        rgba(239,68,68,0.12);
+}
+
+.flow-number {
+    width: 45px;
+    height: 45px;
+
+    margin:
+        0 auto 15px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(239,68,68,0.1);
+
+    border:
+        1px solid rgba(239,68,68,0.4);
+
+    color:
+        var(--red-light);
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.flow-card:hover .flow-number {
+    transform:
+        scale(1.15);
+
+    box-shadow:
+        0 0 20px rgba(239,68,68,0.25);
+}
+
+.flow-card h3 {
+    margin-bottom: 8px;
+}
+
+.flow-card p {
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   WARNING CARDS
+===================================================== */
+
+.warning-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.warning-card {
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 13px;
+
+    padding: 25px;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.warning-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    right: -40px;
+    top: -40px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(239,68,68,0.05);
+
+    transition:
+        width 0.4s ease,
+        height 0.4s ease;
+}
+
+.warning-card:hover::after {
+    width: 160px;
+    height: 160px;
+}
+
+.warning-card:hover {
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(239,68,68,0.6);
+
+    box-shadow:
+        0 15px 35px
+        rgba(239,68,68,0.1);
+}
+
+.warning-icon {
+    font-size: 35px;
+
+    margin-bottom: 12px;
+
+    transition:
+        transform 0.3s ease;
+}
+
+.warning-card:hover .warning-icon {
+    transform:
+        scale(1.18)
+        rotate(-5deg);
+}
+
+.warning-card h3 {
+    margin-bottom: 8px;
+
+    transition:
+        color 0.3s ease;
+}
+
+.warning-card:hover h3 {
+    color:
+        var(--red-light);
+}
+
+.warning-card p {
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   REQUEST LIST
+===================================================== */
+
+.request-list {
+    max-width: 850px;
+
+    margin: auto;
+}
+
+.request {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    margin-bottom: 13px;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.request:hover {
+    transform:
+        translateX(8px);
+
+    border-color:
+        var(--red);
+
+    background:
+        #151C2B;
+
+    box-shadow:
+        0 8px 25px rgba(239,68,68,0.08);
+}
+
+.request-icon {
+    min-width: 45px;
+
+    height: 45px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(239,68,68,0.1);
+
+    font-size: 22px;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.request:hover .request-icon {
+    transform:
+        scale(1.12);
+
+    box-shadow:
+        0 0 20px rgba(239,68,68,0.18);
+}
+
+.request h3 {
+    margin-bottom: 3px;
+}
+
+.request p {
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SAFE RESPONSE
+===================================================== */
+
+.safe-box {
+    max-width: 900px;
+
+    margin: auto;
+
+    background:
+        rgba(34,211,167,0.04);
+
+    border:
+        1px solid rgba(34,211,167,0.3);
+
+    border-left:
+        5px solid var(--teal);
+
+    border-radius: 15px;
+
+    padding: 35px;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.safe-box:hover {
+    box-shadow:
+        0 15px 40px
+        rgba(34,211,167,0.08);
+
+    transform:
+        translateY(-5px);
+}
+
+.safe-box h2 {
+    color:
+        var(--teal);
+
+    margin-bottom: 15px;
+}
+
+.safe-box p {
+    color:
+        var(--text-secondary);
+
+    margin-bottom: 15px;
+}
+
+.safe-box ul {
+    padding-left: 25px;
+
+    color:
+        var(--text-secondary);
+}
+
+.safe-box li {
+    margin-bottom: 9px;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.safe-box li:hover {
+    color:
+        var(--teal);
+
+    transform:
+        translateX(5px);
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+.quiz {
+    max-width: 800px;
+
+    margin: auto;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.quiz:hover {
+    border-color:
+        rgba(79,140,255,0.45);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,0.2);
+}
+
+.quiz h2 {
+    margin-bottom: 10px;
+}
+
+.quiz > p {
+    color:
+        var(--muted);
+
+    margin-bottom: 25px;
+}
+
+.quiz-question {
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+.quiz-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.quiz-button {
+    padding:
+        12px 25px;
+
+    border:
+        1px solid #31506F;
+
+    background:
+        #0B1220;
+
+    color:
+        var(--text-secondary);
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
+}
+
+.quiz-button:hover {
+    border-color:
+        var(--blue);
+
+    background:
+        #142238;
+
+    color: white;
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(79,140,255,0.12);
+}
+
+.quiz-button:active {
+    transform:
+        translateY(-1px)
+        scale(0.98);
+}
+
+#quizResult {
+    margin-top: 20px;
+
+    display: none;
+
+    padding: 17px;
+
+    border-radius: 9px;
+}
+
+#quizResult.show {
+    display: block;
+
+    animation:
+        resultEnter 0.4s ease;
+}
+
+
+/* =====================================================
+   NEW SCAM PAGE NAVIGATION
+   MATCHES MAIN BUTTON STYLE
+===================================================== */
+
+.scam-navigation {
+    padding:
+        65px 25px 80px;
+
+    background:
+        var(--bg);
+
+    position: relative;
+}
+
+
+/* Container */
+
+.scam-nav-box {
+    max-width: 1050px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =====================================================
+   SCAM NAV BUTTON
+===================================================== */
+
+.scam-nav-btn {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 50px;
+
+    padding:
+        13px 22px;
+
+    border:
+        1px solid rgba(79,140,255,0.25);
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #427CE5
+        );
+
+    color:
+        white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.1px;
+
+    box-shadow:
+        0 8px 25px rgba(79,140,255,0.18);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* Light animation across button */
+
+.scam-nav-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.15),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition:
+        left 0.6s ease;
+}
+
+.scam-nav-btn:hover::before {
+    left: 140%;
+}
+
+
+/* Hover */
+
+.scam-nav-btn:hover {
+    transform:
+        translateY(-4px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue-light),
+            var(--blue)
+        );
+
+    border-color:
+        rgba(106,156,255,0.55);
+
+    box-shadow:
+        0 14px 35px rgba(79,140,255,0.32);
+}
+
+
+/* Press */
+
+.scam-nav-btn:active {
+    transform:
+        translateY(-1px)
+        scale(0.97);
+
+    box-shadow:
+        0 6px 15px rgba(79,140,255,0.2);
+}
+
+
+/* =====================================================
+   INDIVIDUAL NAV BUTTON ACCENTS
+===================================================== */
+
+/* HOME */
+
+.scam-nav-btn.home {
+    background:
+        linear-gradient(
+            135deg,
+            var(--teal),
+            #18B98F
+        );
+
+    border-color:
+        rgba(34,211,167,0.3);
+
+    box-shadow:
+        0 8px 25px rgba(34,211,167,0.16);
+}
+
+.scam-nav-btn.home:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #35E3B7,
+            var(--teal)
+        );
+
+    border-color:
+        rgba(34,211,167,0.55);
+
+    box-shadow:
+        0 14px 35px rgba(34,211,167,0.28);
+}
+
+
+/* PREVIOUS */
+
+.scam-nav-btn.previous {
+    background:
+        linear-gradient(
+            135deg,
+            #64748B,
+            #475569
+        );
+
+    border-color:
+        rgba(148,163,184,0.25);
+
+    box-shadow:
+        0 8px 25px rgba(71,85,105,0.15);
+}
+
+.scam-nav-btn.previous:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #7B8CA3,
+            #64748B
+        );
+
+    border-color:
+        rgba(148,163,184,0.5);
+
+    box-shadow:
+        0 14px 35px rgba(71,85,105,0.28);
+}
+
+
+/* ALL SCAMS */
+
+.scam-nav-btn.all-scams {
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #427CE5
+        );
+
+    border-color:
+        rgba(79,140,255,0.35);
+
+    box-shadow:
+        0 8px 25px rgba(79,140,255,0.2);
+}
+
+.scam-nav-btn.all-scams:hover {
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue-light),
+            var(--blue)
+        );
+
+    box-shadow:
+        0 14px 35px rgba(79,140,255,0.35);
+}
+
+
+/* NEXT */
+
+.scam-nav-btn.next {
+    background:
+        linear-gradient(
+            135deg,
+            var(--red),
+            #DC2626
+        );
+
+    border-color:
+        rgba(239,68,68,0.3);
+
+    box-shadow:
+        0 8px 25px rgba(239,68,68,0.16);
+}
+
+.scam-nav-btn.next:hover {
+    background:
+        linear-gradient(
+            135deg,
+            var(--red-light),
+            var(--red)
+        );
+
+    border-color:
+        rgba(255,107,107,0.55);
+
+    box-shadow:
+        0 14px 35px rgba(239,68,68,0.28);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    background:
+        var(--footer);
+
+    border-top:
+        1px solid var(--border);
+
+    padding:
+        40px 25px;
+
+    text-align: center;
+}
+
+footer h3 {
+    color:
+        var(--teal);
+
+    margin-bottom: 10px;
+}
+
+footer p {
+    color:
+        #71859A;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .attack-flow {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .warning-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .nav-container {
+        min-height: 65px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+
+        top: 65px;
+
+        left: 15px;
+        right: 15px;
+
+        display: none;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+        padding: 12px;
+
+        background:
+            rgba(11,18,32,0.97);
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 13px;
+
+        box-shadow:
+            0 20px 45px rgba(0,0,0,0.4);
+
+        backdrop-filter:
+            blur(15px);
+    }
+
+    .nav-links.show {
+        display: flex;
+
+        animation:
+            menuEnter 0.25s ease;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        width: 100%;
+
+        padding: 13px 15px;
+    }
+
+
+    /* Bottom navigation */
+
+    .scam-navigation {
+        padding:
+            55px 18px 65px;
+    }
+
+    .scam-nav-box {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 11px;
+
+        width: 100%;
+    }
+
+    .scam-nav-btn {
+        width: 100%;
+
+        min-height: 50px;
+
+        padding:
+            12px 10px;
+
+        font-size: 13px;
+    }
+
+
+    section {
+        padding:
+            65px 18px;
+    }
+
+    .hero {
+        padding:
+            80px 18px;
+    }
+
+    .attack-flow,
+    .warning-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .computer-screen {
+        padding: 20px;
+    }
+
+    .fake-alert {
+        padding: 22px;
+    }
+
+    .request {
+        align-items:
+            flex-start;
+    }
+
+    .section-title h2 {
+        font-size: 30px;
+    }
+}
+
+
+@media (max-width: 430px) {
+
+    .scam-nav-box {
+        grid-template-columns:
+            1fr;
+    }
+
+    .scam-nav-btn {
+        min-height: 49px;
+    }
+
+    .hero-button {
+        width: 100%;
+
+        max-width: 300px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE MENU ANIMATION
+===================================================== */
+
+@keyframes menuEnter {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+
+        transition: none !important;
+
+        scroll-behavior: auto !important;
+    }
+}
+
+</style>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     TOP NAVIGATION
+===================================================== -->
+
+<nav>
+
+<div class="nav-container">
+
+<a href="home.html" class="logo">
+
+<span class="logo-shield">
+🛡️
+</span>
+
+Safe<span>Shield</span>
+
+</a>
+
+
+<button
+class="menu-toggle"
+onclick="toggleMenu()"
+aria-label="Open menu"
+>
+☰
+</button>
+
+
+<ul class="nav-links" id="navLinks">
+
+<li>
+<a href="home.html">
+🏠 Home
+</a>
+</li>
+
+<li>
+<a href="protect.html">
+🛡️ Protect
+</a>
+</li>
+
+<li>
+<a href="scam.html" class="active">
+🚨 Scams
+</a>
+</li>
+
+<li>
+<a href="tool.html">
+🔧 Tools
+</a>
+</li>
+
+<li>
+<a href="checklist.html">
+✓ Checklist
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+
+
+<div class="hero-content">
+
+<div class="warning-badge">
+
+<span class="warning-dot"></span>
+
+TECH SUPPORT SCAM • THREAT ALERT
+
+</div>
+
+
+<h1>
+
+Your Computer Has a
+<span>Virus!</span>
+
+</h1>
+
+
+<p>
+
+Or does it?
+
+<br><br>
+
+Fake technical-support scams use frightening
+pop-ups, phone calls and messages to convince
+you that your device is infected.
+
+Their real goal may be to make you install
+remote-access software, reveal sensitive
+information or pay for unnecessary services.
+
+</p>
+
+
+<a
+href="#fake-alert"
+class="hero-button"
+>
+
+💻 See the Fake Alert
+
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FAKE COMPUTER ALERT
+===================================================== -->
+
+<section id="fake-alert">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🚨 This Warning Looks Scary
+</h2>
+
+<p>
+But clicking the number or following
+the instructions could make things worse.
+</p>
+
+</div>
+
+
+<div class="computer-wrapper">
+
+<div class="browser-bar">
+
+<div class="browser-dot"></div>
+<div class="browser-dot"></div>
+<div class="browser-dot"></div>
+
+<div class="browser-address">
+
+⚠ suspicious-security-alert.example
+
+</div>
+
+</div>
+
+
+<div class="computer-screen">
+
+<div class="fake-alert">
+
+<div class="danger-icon">
+🚨
+</div>
+
+
+<h3>
+CRITICAL SECURITY WARNING
+</h3>
+
+
+<p>
+
+Your computer may be infected!
+
+<br><br>
+
+Do not close this window.
+
+<br>
+
+Call technical support immediately.
+
+</p>
+
+
+<div class="fake-number">
+
+📞 1-800-FAKE-HELP
+
+</div>
+
+
+<button onclick="fakeAlertAction()">
+
+Call Support
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="fakeAlertResult"
+class="interactive-box"
+style="display:none;"
+>
+
+<h3>
+🛡️ Good Choice!
+</h3>
+
+<p>
+
+You should NOT call the number displayed
+in a suspicious pop-up.
+
+Close the page or browser and use trusted
+security software or official support
+channels instead.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     INTERACTIVE CHECK
+===================================================== -->
+
+<section class="warning-section">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🧠 What Would You Do?
+</h2>
+
+<p>
+Test your reaction to a suspicious
+technical-support message.
+</p>
+
+</div>
+
+
+<div class="interactive-box">
+
+<h3>
+"Microsoft Support" calls you unexpectedly.
+</h3>
+
+
+<p>
+
+They claim your computer has a serious
+security problem and ask you to install
+remote-access software.
+
+<br><br>
+
+What's your safest response?
+
+</p>
+
+
+<div class="choice-buttons">
+
+<button
+class="choice"
+onclick="checkChoice(1)"
+>
+💻 Install the software
+</button>
+
+
+<button
+class="choice"
+onclick="checkChoice(2)"
+>
+📞 Give them remote access
+</button>
+
+
+<button
+class="choice"
+onclick="checkChoice(3)"
+>
+🛑 End the call and verify independently
+</button>
+
+</div>
+
+
+<div id="choiceResult"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW SCAM WORKS
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🎭 How the Scam Works
+</h2>
+
+<p>
+The scam usually follows a simple
+psychological pattern.
+</p>
+
+</div>
+
+
+<div class="attack-flow">
+
+
+<div class="flow-card">
+
+<div class="flow-number">
+1
+</div>
+
+<h3>
+Scare You
+</h3>
+
+<p>
+A pop-up, call or message claims
+something is seriously wrong.
+</p>
+
+</div>
+
+
+<div class="flow-card">
+
+<div class="flow-number">
+2
+</div>
+
+<h3>
+Create Urgency
+</h3>
+
+<p>
+You're told to act immediately
+before something terrible happens.
+</p>
+
+</div>
+
+
+<div class="flow-card">
+
+<div class="flow-number">
+3
+</div>
+
+<h3>
+Gain Access
+</h3>
+
+<p>
+The scammer asks you to install
+software or provide remote access.
+</p>
+
+</div>
+
+
+<div class="flow-card">
+
+<div class="flow-number">
+4
+</div>
+
+<h3>
+Demand Money
+</h3>
+
+<p>
+You may then be pressured to pay
+for fake repairs or services.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     WARNING SIGNS
+===================================================== -->
+
+<section class="warning-section">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🚨 Warning Signs
+</h2>
+
+<p>
+If you notice several of these signs,
+stop and verify.
+</p>
+
+</div>
+
+
+<div class="warning-grid">
+
+
+<div class="warning-card">
+
+<div class="warning-icon">
+📞
+</div>
+
+<h3>
+Unexpected Call
+</h3>
+
+<p>
+Someone suddenly calls claiming to
+be technical support.
+</p>
+
+</div>
+
+
+<div class="warning-card">
+
+<div class="warning-icon">
+🚨
+</div>
+
+<h3>
+Frightening Pop-Up
+</h3>
+
+<p>
+The screen uses alarming language
+and tells you to call a number.
+</p>
+
+</div>
+
+
+<div class="warning-card">
+
+<div class="warning-icon">
+⏰
+</div>
+
+<h3>
+Immediate Action
+</h3>
+
+<p>
+You're told you must act immediately
+to prevent account or device damage.
+</p>
+
+</div>
+
+
+<div class="warning-card">
+
+<div class="warning-icon">
+💻
+</div>
+
+<h3>
+Remote Access
+</h3>
+
+<p>
+Someone asks you to install software
+so they can control your computer.
+</p>
+
+</div>
+
+
+<div class="warning-card">
+
+<div class="warning-icon">
+💳
+</div>
+
+<h3>
+Payment Request
+</h3>
+
+<p>
+You are asked to pay unexpectedly
+to "fix" the problem.
+</p>
+
+</div>
+
+
+<div class="warning-card">
+
+<div class="warning-icon">
+🔐
+</div>
+
+<h3>
+Sensitive Information
+</h3>
+
+<p>
+They request passwords, card details
+or other sensitive information.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     WHAT THEY WANT
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🎯 What Are They Trying to Get?
+</h2>
+
+<p>
+The technical problem may be fake.
+The request is the real danger.
+</p>
+
+</div>
+
+
+<div class="request-list">
+
+
+<div class="request">
+
+<div class="request-icon">
+💻
+</div>
+
+<div>
+
+<h3>
+Remote Computer Access
+</h3>
+
+<p>
+They may ask you to install remote-access
+software so they can control your device.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="request">
+
+<div class="request-icon">
+🔑
+</div>
+
+<div>
+
+<h3>
+Passwords
+</h3>
+
+<p>
+They may ask for passwords while pretending
+to "verify" your account.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="request">
+
+<div class="request-icon">
+💳
+</div>
+
+<div>
+
+<h3>
+Card or Banking Details
+</h3>
+
+<p>
+A fake repair fee may be used to obtain
+your payment information.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="request">
+
+<div class="request-icon">
+🔢
+</div>
+
+<div>
+
+<h3>
+Verification Codes
+</h3>
+
+<p>
+Never share an OTP or security code with
+an unexpected caller.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     SAFE RESPONSE
+===================================================== -->
+
+<section class="warning-section">
+
+<div class="container">
+
+
+<div class="safe-box">
+
+<h2>
+🛡️ What Should You Do?
+</h2>
+
+
+<p>
+If you receive a suspicious technical-support
+call, message or pop-up:
+</p>
+
+
+<ul>
+
+<li>
+🛑 Don't call a number shown in a suspicious pop-up.
+</li>
+
+<li>
+🛑 Don't install unknown remote-access software.
+</li>
+
+<li>
+🛑 Don't give strangers control of your computer.
+</li>
+
+<li>
+🛑 Don't share passwords, OTPs or payment information.
+</li>
+
+<li>
+🔍 Close the suspicious page or application.
+</li>
+
+<li>
+🌐 Visit the company's official website yourself.
+</li>
+
+<li>
+🔐 Use trusted security software to check your device.
+</li>
+
+<li>
+📢 Report suspicious activity when appropriate.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MINI QUIZ
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<div class="quiz">
+
+<h2>
+🧠 Quick Scam Test
+</h2>
+
+<p>
+Can you identify the safest response?
+</p>
+
+
+<div class="quiz-question">
+
+A pop-up says:
+
+<br><br>
+
+<strong>
+"Your computer is infected!
+Call support immediately!"
+</strong>
+
+</div>
+
+
+<div class="quiz-buttons">
+
+
+<button
+class="quiz-button"
+onclick="quizAnswer(false)"
+>
+📞 Call the number
+</button>
+
+
+<button
+class="quiz-button"
+onclick="quizAnswer(false)"
+>
+💳 Pay for the repair
+</button>
+
+
+<button
+class="quiz-button"
+onclick="quizAnswer(true)"
+>
+🛡️ Close it and verify independently
+</button>
+
+
+</div>
+
+
+<div id="quizResult"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL MESSAGE
+===================================================== -->
+
+<section class="warning-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🔐 Remember
+</h2>
+
+<p>
+
+Real security protection should not depend
+on panic, pressure or a stranger controlling
+your device.
+
+<br><br>
+
+<strong>
+Stop. Close. Verify.
+</strong>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     SCAM PAGE NAVIGATION
+===================================================== -->
+
+<section class="scam-navigation">
+
+<div class="scam-nav-box">
+
+
+<a
+href="home.html"
+class="scam-nav-btn home"
+>
+🏠 Home
+</a>
+
+
+<a
+href="investment.html"
+class="scam-nav-btn previous"
+>
+← 📈Investment Scam
+</a>
+
+
+<a
+href="scam.html"
+class="scam-nav-btn all-scams"
+>
+🛡️ All Scams
+</a>
+
+
+<a
+href="media.html"
+class="scam-nav-btn next"
+>
+📱Social media imporsonation Scam →
+</a>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+<h3>
+🛡️ SafeShield
+</h3>
+
+<p>
+Stay alert. Protect your information.
+Think before you click.
+</p>
+
+<p style="margin-top:10px;">
+© 2026 SafeShield |
+Educational Privacy & Scam Awareness Website
+</p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   MOBILE NAVIGATION
+===================================================== */
+
+function toggleMenu() {
+
+    const nav =
+        document.getElementById("navLinks");
+
+    nav.classList.toggle("show");
+
+}
+
+
+/* Close mobile menu after selecting a page */
+
+document
+    .querySelectorAll("#navLinks a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("show");
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   FAKE ALERT INTERACTION
+===================================================== */
+
+function fakeAlertAction() {
+
+    const result =
+        document.getElementById("fakeAlertResult");
+
+    result.style.display =
+        "block";
+
+    result.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "center"
+
+    });
+
+}
+
+
+/* =====================================================
+   INTERACTIVE CHOICE
+===================================================== */
+
+function checkChoice(choice) {
+
+    const result =
+        document.getElementById("choiceResult");
+
+    result.classList.remove(
+        "danger",
+        "safe"
+    );
+
+    result.classList.add("show");
+
+
+    if (choice === 3) {
+
+        result.classList.add("safe");
+
+        result.innerHTML =
+
+            "🛡️ <strong>Correct!</strong><br><br>" +
+
+            "End the unexpected call and verify the " +
+
+            "claim independently. If you really have " +
+
+            "a technical problem, contact the company " +
+
+            "through an official website or trusted " +
+
+            "support channel.";
+
+    }
+
+    else {
+
+        result.classList.add("danger");
+
+        result.innerHTML =
+
+            "🔴 <strong>Danger!</strong><br><br>" +
+
+            "Installing unknown software or giving " +
+
+            "remote access to an unexpected caller " +
+
+            "can expose your computer and personal " +
+
+            "information. Stop and verify the claim " +
+
+            "independently.";
+
+    }
+
+}
+
+
+/* =====================================================
+   MINI QUIZ
+===================================================== */
+
+function quizAnswer(correct) {
+
+    const result =
+        document.getElementById("quizResult");
+
+    result.classList.add("show");
+
+
+    if (correct) {
+
+        result.style.background =
+            "rgba(34,211,167,0.08)";
+
+        result.style.border =
+            "1px solid rgba(34,211,167,0.35)";
+
+        result.style.color =
+            "#22D3A7";
+
+        result.innerHTML =
+
+            "🟢 <strong>Correct!</strong> " +
+
+            "Don't let a frightening pop-up control " +
+
+            "your decision. Close it and verify the " +
+
+            "problem through a trusted source.";
+
+    }
+
+    else {
+
+        result.style.background =
+            "rgba(239,68,68,0.08)";
+
+        result.style.border =
+            "1px solid rgba(239,68,68,0.35)";
+
+        result.style.color =
+            "#FF6B6B";
+
+        result.innerHTML =
+
+            "🔴 <strong>Be careful!</strong> " +
+
+            "A suspicious pop-up should not be trusted " +
+
+            "just because it looks official. Don't call " +
+
+            "the displayed number or provide information.";
+
+    }
+
+}
+
+
+</script>
+
+
+<script src="safeshield-fix.js"></script>
+</body>
+
+</html>

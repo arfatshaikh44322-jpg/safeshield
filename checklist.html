@@ -1,0 +1,4435 @@
+```html
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ 
+<title>SafeShield - Security Checkup</title> 
+ 
+<style> 
+ 
+/* ========================================================= 
+   GLOBAL 
+========================================================= */ 
+ 
+*{ 
+    margin:0; 
+    padding:0; 
+    box-sizing:border-box; 
+    font-family:Inter,Arial,Helvetica,sans-serif; 
+} 
+ 
+html{ 
+    scroll-behavior:smooth; 
+} 
+ 
+body{ 
+    background:#050b14; 
+    color:#edf6ff; 
+    line-height:1.6; 
+    overflow-x:hidden; 
+} 
+ 
+button, 
+a{ 
+    -webkit-tap-highlight-color:transparent; 
+} 
+ 
+button{ 
+    font-family:inherit; 
+} 
+ 
+:root{ 
+    --blue:#4da3ff; 
+    --blue2:#73c2ff; 
+    --cyan:#4de8ff; 
+    --green:#36e6a5; 
+    --yellow:#ffd166; 
+    --red:#ff5c70; 
+ 
+    --bg:#050b14; 
+    --surface:#0a1422; 
+    --surface2:#0d1b2c; 
+    --surface3:#10243a; 
+ 
+    --border:#1a3550; 
+    --text:#edf6ff; 
+    --muted:#8fa6bd; 
+ 
+    --shadow:0 25px 70px rgba(0,0,0,.35); 
+} 
+ 
+ 
+/* ========================================================= 
+   BACKGROUND 
+========================================================= */ 
+ 
+body::before{ 
+    content:""; 
+    position:fixed; 
+    inset:0; 
+    z-index:-3; 
+ 
+    background: 
+        radial-gradient( 
+            circle at 15% 15%, 
+            rgba(77,163,255,.10), 
+            transparent 30% 
+        ), 
+        radial-gradient( 
+            circle at 85% 25%, 
+            rgba(77,232,255,.06), 
+            transparent 30% 
+        ), 
+        radial-gradient( 
+            circle at 50% 90%, 
+            rgba(54,230,165,.04), 
+            transparent 35% 
+        ); 
+} 
+ 
+.grid-background{ 
+    position:fixed; 
+    inset:0; 
+    z-index:-2; 
+    pointer-events:none; 
+    opacity:.25; 
+ 
+    background-image: 
+        linear-gradient(rgba(77,163,255,.035) 1px,transparent 1px), 
+        linear-gradient(90deg,rgba(77,163,255,.035) 1px,transparent 1px); 
+ 
+    background-size:50px 50px; 
+ 
+    mask-image:linear-gradient( 
+        to bottom, 
+        black, 
+        transparent 90% 
+    ); 
+} 
+ 
+ 
+/* ========================================================= 
+   FLOATING ORBS 
+========================================================= */ 
+ 
+.orb{ 
+    position:fixed; 
+    border-radius:50%; 
+    pointer-events:none; 
+    filter:blur(2px); 
+    z-index:-1; 
+} 
+ 
+.orb.one{ 
+    width:280px; 
+    height:280px; 
+    background:rgba(77,163,255,.035); 
+    top:10%; 
+    left:-150px; 
+    animation:orbFloat 12s ease-in-out infinite; 
+} 
+ 
+.orb.two{ 
+    width:350px; 
+    height:350px; 
+    background:rgba(54,230,165,.025); 
+    right:-180px; 
+    bottom:5%; 
+    animation:orbFloat 15s ease-in-out infinite reverse; 
+} 
+ 
+@keyframes orbFloat{ 
+    0%,100%{ 
+        transform:translate(0,0); 
+    } 
+ 
+    50%{ 
+        transform:translate(30px,-35px); 
+    } 
+} 
+ 
+ 
+/* ========================================================= 
+   SIGN IN BUTTON + LOGIN PANEL
+   ADDED
+========================================================= */ 
+ 
+.signin-area{ 
+    position:fixed; 
+    top:18px; 
+    left:20px; 
+    z-index:3000; 
+} 
+ 
+.signin-button{ 
+    display:flex; 
+    align-items:center; 
+    gap:8px; 
+ 
+    padding:10px 16px; 
+ 
+    border:1px solid rgba(77,163,255,.35); 
+    border-radius:10px; 
+ 
+    background:rgba(7,17,31,.88); 
+    color:#dce8f5; 
+ 
+    font-size:13px; 
+    font-weight:800; 
+ 
+    cursor:pointer; 
+ 
+    backdrop-filter:blur(15px); 
+    -webkit-backdrop-filter:blur(15px); 
+ 
+    box-shadow:0 8px 25px rgba(0,0,0,.25); 
+ 
+    transition:.3s; 
+} 
+ 
+.signin-button:hover{ 
+    color:white; 
+    border-color:var(--blue); 
+    background:#0c2034; 
+    transform:translateY(-2px); 
+    box-shadow:0 10px 30px rgba(77,163,255,.15); 
+} 
+ 
+.signin-panel{ 
+    position:absolute; 
+    top:52px; 
+    left:0; 
+ 
+    width:310px; 
+ 
+    padding:22px; 
+ 
+    border:1px solid #23415e; 
+    border-radius:15px; 
+ 
+    background:rgba(7,17,31,.97); 
+ 
+    box-shadow:0 25px 70px rgba(0,0,0,.55); 
+ 
+    backdrop-filter:blur(20px); 
+    -webkit-backdrop-filter:blur(20px); 
+ 
+    opacity:0; 
+    visibility:hidden; 
+    transform:translateY(-10px) scale(.97); 
+ 
+    transition:.25s ease; 
+} 
+ 
+.signin-panel.show{ 
+    opacity:1; 
+    visibility:visible; 
+    transform:translateY(0) scale(1); 
+} 
+ 
+.signin-panel h3{ 
+    color:white; 
+    font-size:20px; 
+    margin-bottom:4px; 
+} 
+ 
+.signin-panel-subtitle{ 
+    color:#8299af; 
+    font-size:12px; 
+    margin-bottom:17px; 
+} 
+ 
+.signin-input{ 
+    width:100%; 
+ 
+    padding:12px 13px; 
+ 
+    margin-bottom:10px; 
+ 
+    border:1px solid #294760; 
+    border-radius:9px; 
+ 
+    outline:none; 
+ 
+    background:#07111f; 
+    color:#edf6ff; 
+ 
+    font-size:13px; 
+ 
+    transition:.25s; 
+} 
+ 
+.signin-input:focus{ 
+    border-color:var(--blue); 
+    box-shadow:0 0 15px rgba(77,163,255,.08); 
+} 
+ 
+.signin-input::placeholder{ 
+    color:#607990; 
+} 
+ 
+.signin-submit{ 
+    width:100%; 
+    padding:12px; 
+ 
+    border:0; 
+    border-radius:9px; 
+ 
+    background:linear-gradient(135deg,#347fc7,#4da3ff); 
+    color:white; 
+ 
+    font-size:13px; 
+    font-weight:800; 
+ 
+    cursor:pointer; 
+ 
+    transition:.3s; 
+} 
+ 
+.signin-submit:hover{ 
+    transform:translateY(-2px); 
+    box-shadow:0 10px 25px rgba(77,163,255,.25); 
+} 
+ 
+.signin-divider{ 
+    display:flex; 
+    align-items:center; 
+    gap:9px; 
+ 
+    margin:15px 0; 
+ 
+    color:#627a92; 
+    font-size:11px; 
+} 
+ 
+.signin-divider::before, 
+.signin-divider::after{ 
+    content:""; 
+    height:1px; 
+    flex:1; 
+    background:#1c344b; 
+} 
+ 
+.google-button{ 
+    width:100%; 
+    padding:11px; 
+ 
+    border:1px solid #31506f; 
+    border-radius:9px; 
+ 
+    background:#0a1726; 
+    color:#e6f0fa; 
+ 
+    font-size:13px; 
+    font-weight:700; 
+ 
+    cursor:pointer; 
+ 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    gap:9px; 
+ 
+    transition:.3s; 
+} 
+ 
+.google-button:hover{ 
+    border-color:#6d88a1; 
+    background:#0e2135; 
+    transform:translateY(-2px); 
+} 
+ 
+.google-icon{ 
+    width:19px; 
+    height:19px; 
+    border-radius:50%; 
+ 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+ 
+    background:white; 
+    color:#4285f4; 
+ 
+    font-size:12px; 
+    font-weight:900; 
+} 
+ 
+.signin-message{ 
+    min-height:18px; 
+    margin-top:10px; 
+ 
+    color:var(--red); 
+    font-size:11px; 
+    text-align:center; 
+} 
+ 
+.signout-button{ 
+    width:100%; 
+    margin-top:10px; 
+ 
+    padding:9px; 
+ 
+    border:1px solid rgba(255,92,112,.3); 
+    border-radius:8px; 
+ 
+    background:rgba(255,92,112,.05); 
+    color:#ff8a99; 
+ 
+    cursor:pointer; 
+ 
+    font-size:11px; 
+    font-weight:700; 
+ 
+    transition:.25s; 
+} 
+ 
+.signout-button:hover{ 
+    background:rgba(255,92,112,.1); 
+    border-color:var(--red); 
+} 
+ 
+ 
+/* ========================================================= 
+   NAVBAR 
+========================================================= */ 
+ 
+nav{ 
+    position:sticky; 
+    top:0; 
+    z-index:1000; 
+ 
+    background:rgba(5,11,20,.84); 
+    border-bottom:1px solid rgba(77,163,255,.14); 
+ 
+    backdrop-filter:blur(18px); 
+    -webkit-backdrop-filter:blur(18px); 
+} 
+ 
+.nav-container{ 
+    max-width:1250px; 
+    margin:auto; 
+    padding:15px 25px; 
+ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+} 
+ 
+.logo{ 
+    font-size:24px; 
+    font-weight:800; 
+    letter-spacing:-.5px; 
+    color:var(--blue); 
+ 
+    display:flex; 
+    align-items:center; 
+    gap:7px; 
+ 
+    transition:.3s; 
+} 
+ 
+.logo span{ 
+    color:white; 
+} 
+ 
+.logo:hover{ 
+    transform:translateY(-1px) scale(1.02); 
+} 
+ 
+.nav-links{ 
+    display:flex; 
+    gap:25px; 
+    list-style:none; 
+} 
+ 
+.nav-links a{ 
+    position:relative; 
+    color:#aebed0; 
+    text-decoration:none; 
+    font-size:14px; 
+    transition:.3s; 
+} 
+ 
+.nav-links a::after{ 
+    content:""; 
+    position:absolute; 
+    left:0; 
+    bottom:-7px; 
+    width:0; 
+    height:2px; 
+    border-radius:5px; 
+    background:var(--blue); 
+    box-shadow:0 0 10px rgba(77,163,255,.6); 
+    transition:.3s; 
+} 
+ 
+.nav-links a:hover{ 
+    color:var(--blue); 
+} 
+ 
+.nav-links a:hover::after{ 
+    width:100%; 
+} 
+ 
+ 
+/* ========================================================= 
+   HERO 
+========================================================= */ 
+ 
+.hero{ 
+    position:relative; 
+    min-height:55vh; 
+ 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+ 
+    text-align:center; 
+ 
+    overflow:hidden; 
+ 
+    padding:80px 20px 70px; 
+} 
+ 
+.hero-container{ 
+    max-width:950px; 
+    position:relative; 
+    z-index:2; 
+ 
+    animation:heroIn 1s cubic-bezier(.16,1,.3,1); 
+} 
+ 
+@keyframes heroIn{ 
+    from{ 
+        opacity:0; 
+        transform:translateY(35px) scale(.97); 
+    } 
+ 
+    to{ 
+        opacity:1; 
+        transform:translateY(0) scale(1); 
+    } 
+} 
+ 
+.hero-badge{ 
+    display:inline-flex; 
+    align-items:center; 
+    gap:8px; 
+ 
+    padding:8px 15px; 
+ 
+    border:1px solid rgba(77,163,255,.3); 
+    border-radius:50px; 
+ 
+    background:rgba(77,163,255,.07); 
+ 
+    color:var(--blue); 
+ 
+    font-size:12px; 
+    font-weight:700; 
+    letter-spacing:.8px; 
+ 
+    margin-bottom:25px; 
+ 
+    box-shadow: 
+        0 0 30px rgba(77,163,255,.06); 
+ 
+    animation:badgePulse 3s infinite; 
+} 
+ 
+.hero-badge::before{ 
+    content:""; 
+    width:7px; 
+    height:7px; 
+    border-radius:50%; 
+    background:var(--green); 
+    box-shadow:0 0 12px var(--green); 
+} 
+ 
+@keyframes badgePulse{ 
+    0%,100%{ 
+        box-shadow:0 0 0 rgba(77,163,255,0); 
+    } 
+ 
+    50%{ 
+        box-shadow:0 0 30px rgba(77,163,255,.14); 
+    } 
+} 
+ 
+.hero h1{ 
+    font-size:clamp(42px,7vw,76px); 
+    line-height:1.02; 
+    letter-spacing:-3px; 
+    margin-bottom:22px; 
+} 
+ 
+.hero h1 span{ 
+    color:var(--blue); 
+    text-shadow: 
+        0 0 30px rgba(77,163,255,.35); 
+} 
+ 
+.hero p{ 
+    max-width:720px; 
+    margin:auto; 
+ 
+    color:#9eb1c5; 
+    font-size:18px; 
+} 
+ 
+.hero-substats{ 
+    margin:35px auto 0; 
+ 
+    display:flex; 
+    justify-content:center; 
+    gap:12px; 
+    flex-wrap:wrap; 
+} 
+ 
+.hero-stat{ 
+    padding:9px 15px; 
+ 
+    border:1px solid var(--border); 
+    background:rgba(10,20,34,.7); 
+ 
+    border-radius:10px; 
+ 
+    color:#9eb1c5; 
+    font-size:12px; 
+} 
+ 
+.hero-stat strong{ 
+    color:#fff; 
+} 
+ 
+ 
+/* ========================================================= 
+   MAIN 
+========================================================= */ 
+ 
+section{ 
+    padding:70px 20px; 
+} 
+ 
+.container{ 
+    width:100%; 
+    max-width:900px; 
+    margin:auto; 
+} 
+ 
+ 
+/* ========================================================= 
+   DASHBOARD STATS 
+========================================================= */ 
+ 
+.dashboard{ 
+    display:grid; 
+    grid-template-columns:repeat(3,1fr); 
+    gap:12px; 
+    margin-bottom:18px; 
+} 
+ 
+.stat-card{ 
+    background: 
+        linear-gradient( 
+            145deg, 
+            rgba(13,27,44,.95), 
+            rgba(8,17,29,.95) 
+        ); 
+ 
+    border:1px solid var(--border); 
+    border-radius:14px; 
+ 
+    padding:17px; 
+ 
+    position:relative; 
+    overflow:hidden; 
+ 
+    transition:.35s; 
+} 
+ 
+.stat-card::before{ 
+    content:""; 
+    position:absolute; 
+    inset:0; 
+ 
+    background: 
+        linear-gradient( 
+            120deg, 
+            transparent, 
+            rgba(77,163,255,.07), 
+            transparent 
+        ); 
+ 
+    transform:translateX(-100%); 
+    transition:.6s; 
+} 
+ 
+.stat-card:hover{ 
+    transform:translateY(-4px); 
+    border-color:rgba(77,163,255,.4); 
+    box-shadow:0 15px 35px rgba(0,0,0,.2); 
+} 
+ 
+.stat-card:hover::before{ 
+    transform:translateX(100%); 
+} 
+ 
+.stat-label{ 
+    font-size:11px; 
+    text-transform:uppercase; 
+    letter-spacing:1px; 
+    color:#728ba4; 
+} 
+ 
+.stat-value{ 
+    margin-top:4px; 
+    font-size:21px; 
+    font-weight:800; 
+} 
+ 
+.stat-value.blue{ 
+    color:var(--blue); 
+} 
+ 
+.stat-value.green{ 
+    color:var(--green); 
+} 
+ 
+.stat-value.yellow{ 
+    color:var(--yellow); 
+} 
+ 
+ 
+/* ========================================================= 
+   PROGRESS 
+========================================================= */ 
+ 
+.progress-container{ 
+    background: 
+        linear-gradient( 
+            145deg, 
+            rgba(13,27,44,.97), 
+            rgba(8,17,29,.97) 
+        ); 
+ 
+    border:1px solid var(--border); 
+ 
+    padding:21px; 
+ 
+    border-radius:16px; 
+ 
+    margin-bottom:16px; 
+ 
+    box-shadow:var(--shadow); 
+ 
+    animation:slideUp .7s ease; 
+} 
+ 
+@keyframes slideUp{ 
+    from{ 
+        opacity:0; 
+        transform:translateY(20px); 
+    } 
+ 
+    to{ 
+        opacity:1; 
+        transform:translateY(0); 
+    } 
+} 
+ 
+.progress-top{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+ 
+    margin-bottom:11px; 
+ 
+    color:#8ea5bc; 
+    font-size:13px; 
+} 
+ 
+#scoreText{ 
+    color:var(--blue); 
+    font-weight:800; 
+} 
+ 
+.progress{ 
+    height:9px; 
+    background:#14263a; 
+    border-radius:30px; 
+    overflow:hidden; 
+} 
+ 
+.progress-bar{ 
+    width:0%; 
+    height:100%; 
+ 
+    background: 
+        linear-gradient( 
+            90deg, 
+            #347fc7, 
+            var(--blue), 
+            var(--cyan) 
+        ); 
+ 
+    border-radius:30px; 
+ 
+    transition: 
+        width .7s cubic-bezier(.4,0,.2,1); 
+ 
+    box-shadow: 
+        0 0 20px rgba(77,163,255,.4); 
+} 
+ 
+ 
+/* ========================================================= 
+   STREAK BAR 
+========================================================= */ 
+ 
+.streak-panel{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+ 
+    margin-bottom:18px; 
+ 
+    padding:13px 16px; 
+ 
+    border-radius:12px; 
+ 
+    border:1px solid rgba(54,230,165,.15); 
+    background:rgba(54,230,165,.035); 
+ 
+    transition:.3s; 
+} 
+ 
+.streak-left{ 
+    display:flex; 
+    align-items:center; 
+    gap:10px; 
+} 
+ 
+.streak-icon{ 
+    font-size:19px; 
+} 
+ 
+.streak-text{ 
+    font-size:12px; 
+    color:#8fa6bd; 
+} 
+ 
+.streak-text strong{ 
+    color:var(--green); 
+} 
+ 
+.streak-dots{ 
+    display:flex; 
+    gap:5px; 
+} 
+ 
+.streak-dot{ 
+    width:7px; 
+    height:7px; 
+    border-radius:50%; 
+    background:#1b344d; 
+    transition:.4s; 
+} 
+ 
+.streak-dot.active{ 
+    background:var(--green); 
+    box-shadow:0 0 10px rgba(54,230,165,.7); 
+} 
+ 
+ 
+/* ========================================================= 
+   SECURITY TIP 
+========================================================= */ 
+ 
+.security-tip{ 
+    position:relative; 
+ 
+    padding:17px 19px 17px 21px; 
+ 
+    margin-bottom:18px; 
+ 
+    border-radius:13px; 
+ 
+    border:1px solid rgba(77,163,255,.18); 
+    border-left:3px solid var(--blue); 
+ 
+    background: 
+        linear-gradient( 
+            135deg, 
+            rgba(77,163,255,.075), 
+            rgba(10,20,34,.75) 
+        ); 
+ 
+    animation:tipIn .45s ease; 
+} 
+ 
+@keyframes tipIn{ 
+    from{ 
+        opacity:0; 
+        transform:translateX(-12px); 
+    } 
+ 
+    to{ 
+        opacity:1; 
+        transform:translateX(0); 
+    } 
+} 
+ 
+.security-tip strong{ 
+    color:var(--blue); 
+    font-size:13px; 
+} 
+ 
+.security-tip p{ 
+    margin-top:4px; 
+    color:#91a7bc; 
+    font-size:13px; 
+} 
+ 
+ 
+/* ========================================================= 
+   QUESTION CARD 
+========================================================= */ 
+ 
+.question-card{ 
+    position:relative; 
+ 
+    background: 
+        linear-gradient( 
+            145deg, 
+            rgba(13,27,44,.98), 
+            rgba(7,15,26,.98) 
+        ); 
+ 
+    border:1px solid var(--border); 
+ 
+    border-radius:19px; 
+ 
+    padding:35px; 
+ 
+    box-shadow:var(--shadow); 
+ 
+    overflow:hidden; 
+ 
+    transition:.35s; 
+} 
+ 
+.question-card::before{ 
+    content:""; 
+    position:absolute; 
+    top:0; 
+    left:0; 
+    right:0; 
+ 
+    height:1px; 
+ 
+    background: 
+        linear-gradient( 
+            90deg, 
+            transparent, 
+            rgba(77,163,255,.5), 
+            transparent 
+        ); 
+} 
+ 
+.question-card:hover{ 
+    border-color:rgba(77,163,255,.3); 
+} 
+ 
+.question-card.change{ 
+    animation:questionChange .45s cubic-bezier(.16,1,.3,1); 
+} 
+ 
+@keyframes questionChange{ 
+    0%{ 
+        opacity:0; 
+        transform:translateX(25px); 
+    } 
+ 
+    100%{ 
+        opacity:1; 
+        transform:translateX(0); 
+    } 
+} 
+ 
+.question-number{ 
+    display:inline-flex; 
+    align-items:center; 
+    gap:7px; 
+ 
+    color:var(--blue); 
+ 
+    font-weight:800; 
+ 
+    font-size:11px; 
+ 
+    letter-spacing:1.3px; 
+ 
+    margin-bottom:13px; 
+} 
+ 
+.question-number::before{ 
+    content:""; 
+    width:6px; 
+    height:6px; 
+    border-radius:50%; 
+    background:var(--blue); 
+    box-shadow:0 0 10px var(--blue); 
+} 
+ 
+.question-card h2{ 
+    font-size:26px; 
+    line-height:1.35; 
+    margin-bottom:27px; 
+    letter-spacing:-.4px; 
+} 
+ 
+ 
+/* ========================================================= 
+   ANSWERS 
+========================================================= */ 
+ 
+.answers{ 
+    display:grid; 
+    gap:11px; 
+} 
+ 
+.answer{ 
+    width:100%; 
+ 
+    display:flex; 
+    align-items:center; 
+    gap:13px; 
+ 
+    padding:15px; 
+ 
+    text-align:left; 
+ 
+    color:#dce8f5; 
+ 
+    background:#07111f; 
+ 
+    border:1px solid #26445f; 
+ 
+    border-radius:11px; 
+ 
+    cursor:pointer; 
+ 
+    font-size:14px; 
+ 
+    position:relative; 
+    overflow:hidden; 
+ 
+    transition: 
+        transform .25s, 
+        border-color .25s, 
+        background .25s, 
+        box-shadow .25s; 
+} 
+ 
+.answer::before{ 
+    content:""; 
+ 
+    width:29px; 
+    height:29px; 
+ 
+    flex:0 0 29px; 
+ 
+    border-radius:8px; 
+ 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+ 
+    border:1px solid #31506f; 
+ 
+    color:#7892aa; 
+ 
+    transition:.25s; 
+} 
+ 
+.answer:nth-child(1)::before{ 
+    content:"A"; 
+} 
+ 
+.answer:nth-child(2)::before{ 
+    content:"B"; 
+} 
+ 
+.answer:nth-child(3)::before{ 
+    content:"C"; 
+} 
+ 
+.answer:nth-child(4)::before{ 
+    content:"D"; 
+} 
+ 
+.answer:hover{ 
+    transform:translateX(6px); 
+ 
+    border-color:var(--blue); 
+ 
+    background:#0c2034; 
+ 
+    box-shadow: 
+        0 10px 25px rgba(0,0,0,.2), 
+        0 0 20px rgba(77,163,255,.04); 
+} 
+ 
+.answer:hover::before{ 
+    background:rgba(77,163,255,.1); 
+    border-color:var(--blue); 
+    color:var(--blue); 
+} 
+ 
+.answer.correct{ 
+    border-color:var(--green); 
+    background:rgba(54,230,165,.08); 
+    color:#65edba; 
+ 
+    animation:correctPop .45s ease; 
+} 
+ 
+.answer.correct::before{ 
+    content:"✓" !important; 
+    color:var(--green); 
+    border-color:var(--green); 
+    background:rgba(54,230,165,.1); 
+} 
+ 
+.answer.wrong{ 
+    border-color:var(--red); 
+    background:rgba(255,92,112,.08); 
+    color:#ff8393; 
+ 
+    animation:wrongShake .45s ease; 
+} 
+ 
+.answer.wrong::before{ 
+    content:"×" !important; 
+    color:var(--red); 
+    border-color:var(--red); 
+} 
+ 
+.answer:disabled{ 
+    cursor:default; 
+} 
+ 
+.answer:disabled:not(.correct):not(.wrong){ 
+    opacity:.58; 
+} 
+ 
+@keyframes correctPop{ 
+    0%{ 
+        transform:scale(.97); 
+    } 
+ 
+    60%{ 
+        transform:scale(1.02); 
+    } 
+ 
+    100%{ 
+        transform:scale(1); 
+    } 
+} 
+ 
+@keyframes wrongShake{ 
+    0%,100%{ 
+        transform:translateX(0); 
+    } 
+ 
+    25%{ 
+        transform:translateX(-7px); 
+    } 
+ 
+    75%{ 
+        transform:translateX(7px); 
+    } 
+} 
+ 
+ 
+/* ========================================================= 
+   FEEDBACK 
+========================================================= */ 
+ 
+.feedback{ 
+    margin-top:18px; 
+ 
+    padding:17px; 
+ 
+    border-radius:11px; 
+ 
+    border:1px solid #1e3a54; 
+ 
+    background:#07111f; 
+ 
+    display:none; 
+ 
+    animation:feedbackIn .45s ease; 
+} 
+ 
+.feedback.show{ 
+    display:block; 
+} 
+ 
+.feedback-title{ 
+    display:flex; 
+    align-items:center; 
+    gap:8px; 
+ 
+    font-weight:800; 
+    font-size:14px; 
+ 
+    margin-bottom:5px; 
+} 
+ 
+.feedback-title.correct-title{ 
+    color:var(--green); 
+} 
+ 
+.feedback-title.wrong-title{ 
+    color:var(--red); 
+} 
+ 
+.feedback p{ 
+    color:#9fb1c3; 
+    font-size:13px; 
+} 
+ 
+.why-matters{ 
+    margin-top:11px; 
+ 
+    padding:12px; 
+ 
+    border-radius:9px; 
+ 
+    background:rgba(77,163,255,.055); 
+ 
+    border-left:2px solid var(--blue); 
+ 
+    color:#91a8bf; 
+ 
+    font-size:12px; 
+} 
+ 
+.why-matters strong{ 
+    color:var(--blue); 
+} 
+ 
+@keyframes feedbackIn{ 
+    from{ 
+        opacity:0; 
+        transform:translateY(8px); 
+    } 
+ 
+    to{ 
+        opacity:1; 
+        transform:translateY(0); 
+    } 
+} 
+ 
+ 
+/* ========================================================= 
+   BUTTONS 
+========================================================= */ 
+ 
+.next-container{ 
+    margin-top:18px; 
+ 
+    display:flex; 
+    justify-content:flex-end; 
+} 
+ 
+.btn{ 
+    border:none; 
+ 
+    padding:12px 20px; 
+ 
+    border-radius:9px; 
+ 
+    font-size:13px; 
+    font-weight:800; 
+ 
+    cursor:pointer; 
+ 
+    transition:.3s; 
+ 
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center; 
+    gap:7px; 
+ 
+    text-decoration:none; 
+} 
+ 
+.btn-primary{ 
+    color:white; 
+ 
+    background: 
+        linear-gradient( 
+            135deg, 
+            #347fc7, 
+            #4da3ff 
+        ); 
+ 
+    box-shadow: 
+        0 7px 25px rgba(77,163,255,.16); 
+} 
+ 
+.btn-primary:hover{ 
+    transform:translateY(-3px); 
+ 
+    box-shadow: 
+        0 12px 30px rgba(77,163,255,.3); 
+} 
+ 
+.btn-secondary{ 
+    background:transparent; 
+ 
+    color:#dce8f5; 
+ 
+    border:1px solid #31506f; 
+} 
+ 
+.btn-secondary:hover{ 
+    transform:translateY(-2px); 
+    border-color:var(--blue); 
+    color:var(--blue); 
+} 
+ 
+ 
+/* ========================================================= 
+   RESULT 
+========================================================= */ 
+ 
+.result-card{ 
+    display:none; 
+ 
+    background: 
+        linear-gradient( 
+            145deg, 
+            rgba(13,27,44,.98), 
+            rgba(7,15,26,.98) 
+        ); 
+ 
+    border:1px solid var(--border); 
+ 
+    border-radius:20px; 
+ 
+    padding:45px 35px; 
+ 
+    text-align:center; 
+ 
+    box-shadow:var(--shadow); 
+ 
+    animation:resultIn .8s cubic-bezier(.16,1,.3,1); 
+} 
+ 
+.result-card.show{ 
+    display:block; 
+} 
+ 
+@keyframes resultIn{ 
+    from{ 
+        opacity:0; 
+        transform:translateY(25px) scale(.96); 
+    } 
+ 
+    to{ 
+        opacity:1; 
+        transform:translateY(0) scale(1); 
+    } 
+} 
+ 
+ 
+/* ========================================================= 
+   SCORE CIRCLE 
+========================================================= */ 
+ 
+.score-circle{ 
+    width:190px; 
+    height:190px; 
+ 
+    margin:0 auto 25px; 
+ 
+    border-radius:50%; 
+ 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+ 
+    position:relative; 
+ 
+    background: 
+        conic-gradient( 
+            var(--blue) 0deg, 
+            #172b41 0deg 
+        ); 
+ 
+    transition:.8s; 
+ 
+    box-shadow: 
+        0 0 45px rgba(77,163,255,.12); 
+} 
+ 
+.score-circle::before{ 
+    content:""; 
+ 
+    position:absolute; 
+    inset:9px; 
+ 
+    border-radius:50%; 
+ 
+    background:#07111f; 
+ 
+    border:1px solid #1d344d; 
+} 
+ 
+.score-inner{ 
+    position:relative; 
+    z-index:2; 
+} 
+ 
+#finalScore{ 
+    font-size:48px; 
+    font-weight:900; 
+    color:var(--blue); 
+    letter-spacing:-2px; 
+} 
+ 
+.score-label{ 
+    color:#728ba4; 
+    font-size:11px; 
+    text-transform:uppercase; 
+    letter-spacing:1px; 
+} 
+ 
+#resultTitle{ 
+    font-size:30px; 
+    margin-bottom:9px; 
+} 
+ 
+#resultDescription{ 
+    color:#9eb1c5; 
+    max-width:650px; 
+    margin:auto; 
+} 
+ 
+ 
+/* ========================================================= 
+   SECURITY LEVEL 
+========================================================= */ 
+ 
+.security-level{ 
+    max-width:520px; 
+ 
+    margin:24px auto; 
+ 
+    padding:16px; 
+ 
+    background:#07111f; 
+ 
+    border:1px solid var(--border); 
+ 
+    border-radius:11px; 
+} 
+ 
+.security-level-title{ 
+    color:#728ba4; 
+    font-size:10px; 
+    text-transform:uppercase; 
+    letter-spacing:1.3px; 
+} 
+ 
+#securityLevel{ 
+    margin-top:4px; 
+ 
+    font-size:19px; 
+    font-weight:900; 
+ 
+    color:var(--blue); 
+} 
+ 
+ 
+/* ========================================================= 
+   RESULT METRICS 
+========================================================= */ 
+ 
+.result-metrics{ 
+    max-width:600px; 
+ 
+    margin:20px auto; 
+ 
+    display:grid; 
+    grid-template-columns:repeat(3,1fr); 
+ 
+    gap:10px; 
+} 
+ 
+.result-metric{ 
+    padding:14px; 
+ 
+    background:#07111f; 
+ 
+    border:1px solid var(--border); 
+ 
+    border-radius:10px; 
+} 
+ 
+.result-metric span{ 
+    display:block; 
+    color:#728ba4; 
+    font-size:10px; 
+    text-transform:uppercase; 
+} 
+ 
+.result-metric strong{ 
+    display:block; 
+    margin-top:3px; 
+    font-size:18px; 
+} 
+ 
+ 
+/* ========================================================= 
+   RECOMMENDATIONS 
+========================================================= */ 
+ 
+.recommendations{ 
+    margin-top:25px; 
+ 
+    text-align:left; 
+ 
+    background:#07111f; 
+ 
+    padding:23px; 
+ 
+    border-radius:11px; 
+ 
+    border:1px solid var(--border); 
+} 
+ 
+.recommendations h3{ 
+    color:var(--blue); 
+    margin-bottom:13px; 
+    font-size:16px; 
+} 
+ 
+.recommendations ul{ 
+    list-style:none; 
+} 
+ 
+.recommendations li{ 
+    position:relative; 
+ 
+    margin:11px 0; 
+ 
+    padding-left:26px; 
+ 
+    color:#9eb1c5; 
+ 
+    font-size:13px; 
+} 
+ 
+.recommendations li::before{ 
+    content:"✓"; 
+ 
+    position:absolute; 
+    left:0; 
+ 
+    color:var(--green); 
+    font-weight:900; 
+} 
+ 
+ 
+/* ========================================================= 
+   RESULT BUTTONS 
+========================================================= */ 
+ 
+.result-buttons{ 
+    margin-top:24px; 
+ 
+    display:flex; 
+    justify-content:center; 
+ 
+    gap:10px; 
+ 
+    flex-wrap:wrap; 
+} 
+ 
+ 
+/* ========================================================= 
+   REVIEW MISTAKES 
+========================================================= */ 
+ 
+.review-section{ 
+    display:none; 
+ 
+    margin-top:20px; 
+ 
+    background:#07111f; 
+ 
+    border:1px solid var(--border); 
+ 
+    border-radius:13px; 
+ 
+    padding:20px; 
+ 
+    text-align:left; 
+} 
+ 
+.review-section.show{ 
+    display:block; 
+} 
+ 
+.review-section h3{ 
+    color:var(--yellow); 
+    margin-bottom:12px; 
+} 
+ 
+.mistake{ 
+    padding:13px; 
+ 
+    border-bottom:1px solid #172c42; 
+ 
+    color:#a5b7c9; 
+ 
+    font-size:13px; 
+} 
+ 
+.mistake:last-child{ 
+    border-bottom:none; 
+} 
+ 
+.mistake strong{ 
+    color:#fff; 
+} 
+ 
+.mistake-answer{ 
+    color:var(--red); 
+} 
+ 
+.correct-answer{ 
+    color:var(--green); 
+} 
+ 
+ 
+/* ========================================================= 
+   FOOTER 
+========================================================= */ 
+ 
+footer{ 
+    margin-top:70px; 
+ 
+    background:#030812; 
+ 
+    border-top:1px solid #132a41; 
+ 
+    padding:42px 20px; 
+ 
+    text-align:center; 
+} 
+ 
+footer h3{ 
+    color:var(--blue); 
+    margin-bottom:8px; 
+} 
+ 
+footer p{ 
+    color:#61778d; 
+    font-size:12px; 
+} 
+ 
+ 
+/* ========================================================= 
+   TOAST 
+========================================================= */ 
+ 
+.toast{ 
+    position:fixed; 
+ 
+    left:50%; 
+    bottom:25px; 
+ 
+    transform: 
+        translate(-50%,30px); 
+ 
+    padding:11px 17px; 
+ 
+    border-radius:9px; 
+ 
+    background:#10243a; 
+ 
+    border:1px solid #31506f; 
+ 
+    color:#dce8f5; 
+ 
+    font-size:12px; 
+ 
+    opacity:0; 
+ 
+    pointer-events:none; 
+ 
+    transition:.35s; 
+ 
+    z-index:5000; 
+ 
+    box-shadow:0 15px 35px rgba(0,0,0,.35); 
+} 
+ 
+.toast.show{ 
+    opacity:1; 
+    transform:translate(-50%,0); 
+} 
+ 
+ 
+/* ========================================================= 
+   RESPONSIVE 
+========================================================= */ 
+ 
+@media(max-width:800px){ 
+ 
+    .nav-links{ 
+        gap:14px; 
+    } 
+ 
+    .hero h1{ 
+        letter-spacing:-2px; 
+    } 
+} 
+ 
+@media(max-width:600px){ 
+ 
+    .signin-area{ 
+        top:12px; 
+        left:12px; 
+    } 
+ 
+    .signin-button{ 
+        padding:9px 12px; 
+        font-size:12px; 
+    } 
+ 
+    .signin-panel{ 
+        width:calc(100vw - 24px); 
+        max-width:310px; 
+    } 
+ 
+    .nav-container{ 
+        padding:13px 17px; 
+    } 
+ 
+    .logo{ 
+        font-size:20px; 
+    } 
+ 
+    .nav-links{ 
+        display:none; 
+    } 
+ 
+    section{ 
+        padding:50px 15px; 
+    } 
+ 
+    .hero{ 
+        min-height:60vh; 
+        padding:60px 18px; 
+    } 
+ 
+    .hero p{ 
+        font-size:15px; 
+    } 
+ 
+    .dashboard{ 
+        grid-template-columns:1fr; 
+    } 
+ 
+    .stat-card{ 
+        padding:13px; 
+    } 
+ 
+    .progress-container{ 
+        padding:16px; 
+    } 
+ 
+    .question-card{ 
+        padding:24px 18px; 
+        border-radius:15px; 
+    } 
+ 
+    .question-card h2{ 
+        font-size:21px; 
+    } 
+ 
+    .answer{ 
+        padding:13px; 
+        font-size:13px; 
+    } 
+ 
+    .result-card{ 
+        padding:35px 18px; 
+    } 
+ 
+    .score-circle{ 
+        width:155px; 
+        height:155px; 
+    } 
+ 
+    #finalScore{ 
+        font-size:40px; 
+    } 
+ 
+    #resultTitle{ 
+        font-size:24px; 
+    } 
+ 
+    .result-metrics{ 
+        grid-template-columns:1fr; 
+    } 
+ 
+    .streak-panel{ 
+        align-items:flex-start; 
+        gap:10px; 
+        flex-direction:column; 
+    } 
+} 
+ 
+</style> 
+<link rel="stylesheet" href="safeshield-fix.css">
+</head> 
+ 
+ 
+<body> 
+ 
+<div class="grid-background"></div> 
+<div class="orb one"></div> 
+<div class="orb two"></div> 
+ 
+ 
+<!-- ======================================================= 
+     SIGN IN
+     ADDED
+======================================================= --> 
+ 
+<div class="signin-area"> 
+ 
+    <button 
+        class="signin-button" 
+        id="signinButton" 
+        onclick="toggleSignin()"> 
+ 
+        👤 <span id="signinButtonText">Sign In</span> 
+ 
+    </button> 
+ 
+    <div 
+        class="signin-panel" 
+        id="signinPanel"> 
+ 
+        <div id="signinFormArea"> 
+ 
+            <h3>Welcome to SafeShield</h3> 
+ 
+            <p class="signin-panel-subtitle"> 
+                Sign in to save your SafeShield account information. 
+            </p> 
+ 
+            <input 
+                type="email" 
+                id="signinEmail" 
+                class="signin-input" 
+                placeholder="Email address" 
+                autocomplete="email"> 
+ 
+            <input 
+                type="password" 
+                id="signinPassword" 
+                class="signin-input" 
+                placeholder="Password" 
+                autocomplete="current-password"> 
+ 
+            <button 
+                class="signin-submit" 
+                onclick="signIn()"> 
+ 
+                🔐 Sign In 
+ 
+            </button> 
+ 
+            <div class="signin-divider"> 
+                OR 
+            </div> 
+ 
+            <button 
+                class="google-button" 
+                onclick="googleSignIn()"> 
+ 
+                <span class="google-icon">G</span> 
+                Continue with Google 
+ 
+            </button> 
+ 
+            <div 
+                class="signin-message" 
+                id="signinMessage"> 
+            </div> 
+ 
+        </div> 
+ 
+        <div 
+            id="signedInArea" 
+            style="display:none;"> 
+ 
+            <h3>You're signed in ✓</h3> 
+ 
+            <p class="signin-panel-subtitle"> 
+                Your SafeShield sign-in information is saved on this browser. 
+            </p> 
+ 
+            <div 
+                id="signedInEmail" 
+                style=" 
+                    padding:12px; 
+                    background:#07111f; 
+                    border:1px solid #1a3550; 
+                    border-radius:9px; 
+                    color:#36e6a5; 
+                    font-size:13px; 
+                    word-break:break-word; 
+                "> 
+            </div> 
+ 
+            <button 
+                class="signout-button" 
+                onclick="signOut()"> 
+ 
+                Sign Out 
+ 
+            </button> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+</div> 
+ 
+ 
+<!-- ======================================================= 
+     NAVIGATION 
+======================================================= --> 
+ 
+<nav> 
+ 
+<div class="nav-container"> 
+ 
+<div class="logo"> 
+🛡️ Safe<span>Shield</span> 
+</div> 
+ 
+<ul class="nav-links"> 
+ 
+<li> 
+<a href="home.html">🏠 Home</a> 
+</li> 
+ 
+<li> 
+<a href="protect.html">🛡️ Protect</a> 
+</li> 
+ 
+<li> 
+<a href="scam.html">🚨 Scams</a> 
+</li> 
+ 
+<li> 
+<a href="tool.html">🔧 Tools</a> 
+</li> 
+ 
+<li> 
+<a href="checklist.html">📋 Checklist</a> 
+</li> 
+ <a href="register.html">🖊️ Register Complaint</a> 
+</li> 
+<li>
+    <a
+        href="contact.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        📄 Contact 
+    </a>
+</li>
+
+</ul> 
+ 
+</div> 
+ 
+</nav> 
+ 
+ 
+<!-- ======================================================= 
+     HERO 
+======================================================= --> 
+ 
+<section class="hero"> 
+ 
+<div class="hero-container"> 
+ 
+<div class="hero-badge"> 
+PERSONAL DIGITAL SECURITY CHECKUP 
+</div> 
+ 
+<h1> 
+How <span>Secure</span> Are You? 
+</h1> 
+ 
+<p> 
+Test your cybersecurity instincts against realistic situations, 
+spot common scam patterns and discover exactly where your digital 
+security habits can improve. 
+</p> 
+ 
+<div class="hero-substats"> 
+ 
+<div class="hero-stat"> 
+<strong>15</strong> randomized questions 
+</div> 
+ 
+<div class="hero-stat"> 
+<strong>10</strong> points each 
+</div> 
+ 
+<div class="hero-stat"> 
+<strong>Instant</strong> security feedback 
+</div> 
+ 
+</div> 
+ 
+</div> 
+ 
+</section> 
+ 
+ 
+<!-- ======================================================= 
+     CHECKUP 
+======================================================= --> 
+ 
+<section> 
+ 
+<div class="container"> 
+ 
+ 
+<!-- DASHBOARD --> 
+ 
+<div class="dashboard"> 
+ 
+<div class="stat-card"> 
+ 
+<div class="stat-label"> 
+Current Score 
+</div> 
+ 
+<div 
+class="stat-value blue" 
+id="dashboardScore"> 
+0 / 150 
+</div> 
+ 
+</div> 
+ 
+ 
+<div class="stat-card"> 
+ 
+<div class="stat-label"> 
+Questions Answered 
+</div> 
+ 
+<div 
+class="stat-value green" 
+id="dashboardAnswered"> 
+0 / 15 
+</div> 
+ 
+</div> 
+ 
+ 
+<div class="stat-card"> 
+ 
+<div class="stat-label"> 
+Best Streak 
+</div> 
+ 
+<div 
+class="stat-value yellow" 
+id="dashboardStreak"> 
+0 🔥 
+</div> 
+ 
+</div> 
+ 
+</div> 
+ 
+ 
+<!-- PROGRESS --> 
+ 
+<div class="progress-container"> 
+ 
+<div class="progress-top"> 
+ 
+<span id="progressText"> 
+Question 1 of 15 
+</span> 
+ 
+<span id="scoreText"> 
+Score: 0 
+</span> 
+ 
+</div> 
+ 
+<div class="progress"> 
+ 
+<div 
+class="progress-bar" 
+id="progressBar"> 
+</div> 
+ 
+</div> 
+ 
+</div> 
+ 
+ 
+<!-- STREAK --> 
+ 
+<div class="streak-panel"> 
+ 
+<div class="streak-left"> 
+ 
+<div class="streak-icon"> 
+🔥 
+</div> 
+ 
+<div class="streak-text"> 
+ 
+Current streak: 
+<strong id="streakText"> 
+0 
+</strong> 
+ 
+</div> 
+ 
+</div> 
+ 
+<div class="streak-dots"> 
+ 
+<div class="streak-dot" id="dot1"></div> 
+<div class="streak-dot" id="dot2"></div> 
+<div class="streak-dot" id="dot3"></div> 
+<div class="streak-dot" id="dot4"></div> 
+<div class="streak-dot" id="dot5"></div> 
+ 
+</div> 
+ 
+</div> 
+ 
+ 
+<!-- SECURITY TIP --> 
+ 
+<div 
+class="security-tip" 
+id="securityTip"> 
+ 
+<strong> 
+💡 Security Tip 
+</strong> 
+ 
+<p id="tipText"> 
+Strong security starts with small habits. 
+</p> 
+ 
+</div> 
+ 
+ 
+<!-- QUESTION --> 
+ 
+<div 
+class="question-card" 
+id="questionCard"> 
+ 
+<div 
+class="question-number" 
+id="questionNumber"> 
+ 
+QUESTION 1 
+ 
+</div> 
+ 
+ 
+<h2 id="question"> 
+Loading question... 
+</h2> 
+ 
+ 
+<div 
+class="answers" 
+id="answers"> 
+</div> 
+ 
+ 
+<div 
+class="feedback" 
+id="feedback"> 
+</div> 
+ 
+ 
+<div class="next-container"> 
+ 
+<button 
+class="btn btn-primary" 
+id="nextButton" 
+onclick="nextQuestion()" 
+style="display:none;"> 
+ 
+Next Question → 
+ 
+</button> 
+ 
+</div> 
+ 
+</div> 
+ 
+ 
+<!-- ===================================================== 
+     RESULT 
+===================================================== --> 
+ 
+<div 
+class="result-card" 
+id="resultCard"> 
+ 
+ 
+<div 
+class="score-circle" 
+id="scoreCircle"> 
+ 
+<div class="score-inner"> 
+ 
+<div id="finalScore"> 
+0% 
+</div> 
+ 
+<div class="score-label"> 
+Security Score 
+</div> 
+ 
+</div> 
+ 
+</div> 
+ 
+ 
+<h2 id="resultTitle"> 
+Your Security Score 
+</h2> 
+ 
+ 
+<p id="resultDescription"> 
+</p> 
+ 
+ 
+<div class="security-level"> 
+ 
+<div class="security-level-title"> 
+Your Security Level 
+</div> 
+ 
+<div id="securityLevel"> 
+— 
+</div> 
+ 
+</div> 
+ 
+ 
+<div class="result-metrics"> 
+ 
+<div class="result-metric"> 
+ 
+<span>Correct</span> 
+ 
+<strong 
+id="correctMetric"> 
+0 
+</strong> 
+ 
+</div> 
+ 
+<div class="result-metric"> 
+ 
+<span>Wrong</span> 
+ 
+<strong 
+id="wrongMetric"> 
+0 
+</strong> 
+ 
+</div> 
+ 
+<div class="result-metric"> 
+ 
+<span>Best Streak</span> 
+ 
+<strong 
+id="bestStreakMetric"> 
+0 🔥 
+</strong> 
+ 
+</div> 
+ 
+</div> 
+ 
+ 
+<div class="recommendations"> 
+ 
+<h3> 
+🛡️ Your Security Upgrade Plan 
+</h3> 
+ 
+<ul id="recommendationsList"> 
+</ul> 
+ 
+</div> 
+ 
+ 
+<div 
+class="review-section" 
+id="reviewSection"> 
+ 
+<h3> 
+⚠️ Review Your Mistakes 
+</h3> 
+ 
+<div id="mistakesList"> 
+</div> 
+ 
+</div> 
+ 
+ 
+<div class="result-buttons"> 
+ 
+<button 
+class="btn btn-primary" 
+onclick="restartQuiz()"> 
+ 
+🔀 New Random Checkup 
+ 
+</button> 
+ 
+ 
+<button 
+class="btn btn-secondary" 
+onclick="toggleReview()"> 
+ 
+📋 Review Mistakes 
+ 
+</button> 
+ 
+ 
+<a 
+href="tool.html" 
+class="btn btn-secondary"> 
+ 
+🔐 Security Tools 
+ 
+</a> 
+ 
+</div> 
+ 
+</div> 
+ 
+</div> 
+ 
+</section> 
+ 
+ 
+<!-- ======================================================= 
+     FOOTER 
+======================================================= --> 
+ 
+<footer> 
+ 
+<h3> 
+🛡️ SafeShield 
+</h3> 
+ 
+<p> 
+Stay alert. Protect your information. Think before you click. 
+</p> 
+ 
+<p style="margin-top:10px;"> 
+© 2026 SafeShield | Educational Privacy & Scam Awareness Website 
+</p> 
+ 
+</footer> 
+ 
+ 
+<div 
+class="toast" 
+id="toast"> 
+</div> 
+ 
+ 
+<script> 
+ 
+/* ========================================================= 
+   SIGN IN SYSTEM
+   ADDED
+========================================================= */ 
+ 
+function toggleSignin(){ 
+ 
+    const panel = 
+        document.getElementById("signinPanel"); 
+ 
+    panel.classList.toggle("show"); 
+ 
+} 
+ 
+ 
+function signIn(){ 
+ 
+    const email = 
+        document.getElementById("signinEmail").value.trim(); 
+ 
+    const password = 
+        document.getElementById("signinPassword").value; 
+ 
+    const message = 
+        document.getElementById("signinMessage"); 
+ 
+ 
+    message.textContent=""; 
+ 
+ 
+    if(!email){ 
+ 
+        message.textContent = 
+            "Please enter your email address."; 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    if(!email.includes("@")){ 
+ 
+        message.textContent = 
+            "Please enter a valid email address."; 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    if(!password){ 
+ 
+        message.textContent = 
+            "Please enter your password."; 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    /* 
+       The password is NOT stored. 
+       Only the sign-in identity is stored. 
+    */ 
+ 
+    const user = { 
+ 
+        email:email, 
+ 
+        provider:"email", 
+ 
+        signedIn:true 
+ 
+    }; 
+ 
+ 
+    localStorage.setItem( 
+        "safeShieldUser", 
+        JSON.stringify(user) 
+    ); 
+ 
+ 
+    showSignedInUser(user); 
+ 
+ 
+    localStorage.setItem("safeshieldSignedIn","1");
+    localStorage.setItem("safeshieldUser", (email.split("@")[0] || "SafeShield User"));
+
+    showToast(window.ssLang === "hi" ? "✓ सफलतापूर्वक साइन इन हुआ!" : "✓ Signed in successfully!"); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   GOOGLE SIGN IN
+========================================================= */ 
+ 
+function googleSignIn(){ 
+ 
+    /* 
+       This is the front-end/demo Google option. 
+       Real Google authentication requires Google 
+       Identity Services, Firebase, or a backend. 
+    */ 
+ 
+    const googleEmail = 
+        prompt( 
+            "Enter the Google email you want to use for this SafeShield demo:" 
+        ); 
+ 
+ 
+    if(!googleEmail){ 
+        return; 
+    } 
+ 
+ 
+    if(!googleEmail.includes("@")){ 
+ 
+        showToast(window.ssLang === "hi" ? "कृपया एक मान्य Google ईमेल डालें।" : "Please enter a valid Google email."); 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    const user = { 
+ 
+        email:googleEmail.trim(), 
+ 
+        provider:"google", 
+ 
+        signedIn:true 
+ 
+    }; 
+ 
+ 
+    localStorage.setItem( 
+        "safeShieldUser", 
+        JSON.stringify(user) 
+    ); 
+ 
+ 
+    showSignedInUser(user); 
+ 
+ 
+    localStorage.setItem("safeshieldSignedIn","1");
+    localStorage.setItem("safeshieldUser", (googleEmail.trim().split("@")[0] || "SafeShield User"));
+
+    showToast(window.ssLang === "hi" ? "✓ Google साइन-इन सहेजा गया!" : "✓ Google sign-in saved!"); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   SHOW SIGNED-IN USER
+========================================================= */ 
+ 
+function showSignedInUser(user){ 
+ 
+    document.getElementById("signinFormArea") 
+        .style.display="none"; 
+ 
+ 
+    document.getElementById("signedInArea") 
+        .style.display="block"; 
+ 
+ 
+    document.getElementById("signedInEmail") 
+        .textContent = 
+            user.email; 
+ 
+ 
+    document.getElementById("signinButtonText") 
+        .textContent = 
+            user.email; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   SIGN OUT
+========================================================= */ 
+ 
+function signOut(){ 
+ 
+    localStorage.removeItem("safeShieldUser"); 
+ 
+    localStorage.removeItem("safeshieldSignedIn"); 
+ 
+    localStorage.removeItem("safeshieldUser"); 
+ 
+ 
+    document.getElementById("signinFormArea") 
+        .style.display="block"; 
+ 
+ 
+    document.getElementById("signedInArea") 
+        .style.display="none"; 
+ 
+ 
+    document.getElementById("signinEmail") 
+        .value=""; 
+ 
+ 
+    document.getElementById("signinPassword") 
+        .value=""; 
+ 
+ 
+    document.getElementById("signinMessage") 
+        .textContent=""; 
+ 
+ 
+    document.getElementById("signinButtonText") 
+        .textContent="Sign In"; 
+ 
+ 
+    showToast(window.ssLang === "hi" ? "सफलतापूर्वक साइन आउट हुआ।" : "Signed out successfully."); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   LOAD STORED SIGN IN
+========================================================= */ 
+ 
+function loadStoredUser(){ 
+ 
+    if(!localStorage.getItem("safeShieldUser") && localStorage.getItem("safeshieldSignedIn")==="1"){ 
+        const canonicalName = localStorage.getItem("safeshieldUser") || "SafeShield User"; 
+        showSignedInUser({email:canonicalName, provider:"safeshield", signedIn:true}); 
+        return; 
+    } 
+ 
+    const savedUser = 
+        localStorage.getItem("safeShieldUser"); 
+ 
+ 
+    if(!savedUser){ 
+        return; 
+    } 
+ 
+ 
+    try{ 
+ 
+        const user = 
+            JSON.parse(savedUser); 
+ 
+ 
+        if(user && user.signedIn && user.email){ 
+ 
+            showSignedInUser(user); 
+ 
+        } 
+ 
+    } 
+    catch(error){ 
+ 
+        localStorage.removeItem("safeShieldUser"); 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   CLOSE SIGN IN WHEN CLICKING OUTSIDE
+========================================================= */ 
+ 
+document.addEventListener("click",function(event){ 
+ 
+    const signinArea = 
+        document.querySelector(".signin-area"); 
+ 
+ 
+    const panel = 
+        document.getElementById("signinPanel"); 
+ 
+ 
+    if( 
+        !signinArea.contains(event.target) && 
+        panel.classList.contains("show") 
+    ){ 
+ 
+        panel.classList.remove("show"); 
+ 
+    } 
+ 
+}); 
+ 
+ 
+/* ========================================================= 
+   QUESTION DATABASE 
+========================================================= */ 
+ 
+const questionBank = [ 
+ 
+{ 
+question:"You receive a message claiming your bank account will be blocked in 30 minutes. What is your safest move?", 
+ 
+answers:[ 
+"Click the link immediately", 
+"Reply with my OTP", 
+"Open my banking app directly", 
+"Call the number in the message" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Excellent choice. Never rely on links or phone numbers supplied in an unexpected message.", 
+ 
+tip:"Scammers use urgency to prevent you from thinking carefully.", 
+ 
+why:"Opening your official banking app independently avoids a potentially fake login page." 
+}, 
+ 
+ 
+{ 
+question:"Which password is the safest choice for an important account?", 
+ 
+answers:[ 
+"MyName@2005", 
+"Password123!", 
+"The same password I use everywhere", 
+"A long, unique password generated for this account" 
+], 
+ 
+correct:3, 
+ 
+feedback:"Correct. Long and unique passwords dramatically reduce the impact of credential reuse.", 
+ 
+tip:"Never reuse your most important password across multiple services.", 
+ 
+why:"If one website is breached, reused passwords can allow attackers to access your other accounts." 
+}, 
+ 
+ 
+{ 
+question:"Someone calls claiming to be from your bank and asks for your OTP. What should you do?", 
+ 
+answers:[ 
+"Give them the OTP", 
+"Give them the first half", 
+"Hang up and contact the bank independently", 
+"Ask them to prove they work at the bank" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Legitimate support should never require you to reveal an authentication code.", 
+ 
+tip:"Your OTP authenticates you. It should never be handed to another person.", 
+ 
+why:"An attacker who has your password may only need your OTP to complete a fraudulent login or transaction." 
+}, 
+ 
+ 
+{ 
+question:"A friend suddenly messages you asking for money because of an emergency. What should you do first?", 
+ 
+answers:[ 
+"Send the money immediately", 
+"Ask for their bank details", 
+"Verify the request through another communication method", 
+"Forward the message to your contacts" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Social accounts can be compromised and used to impersonate people you trust.", 
+ 
+tip:"Unexpected money requests deserve independent verification.", 
+ 
+why:"Calling your friend directly can expose an impersonation scam before you lose money." 
+}, 
+ 
+ 
+{ 
+question:"You receive an email saying you won ₹1,00,000 but must pay ₹2,000 to claim it. What should you do?", 
+ 
+answers:[ 
+"Pay the processing fee", 
+"Send your bank details", 
+"Ignore and report the message", 
+"Ask for a discount on the fee" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Unexpected prizes requiring upfront payment are a classic scam warning sign.", 
+ 
+tip:"If you never entered a contest, an unexpected prize should immediately raise suspicion.", 
+ 
+why:"Fraudsters often use small upfront fees to make victims believe a much larger reward is coming." 
+}, 
+ 
+ 
+{ 
+question:"Why is two-factor authentication useful?", 
+ 
+answers:[ 
+"It makes your internet faster", 
+"It adds another layer of protection", 
+"It removes the need for passwords", 
+"It prevents every possible scam" 
+], 
+ 
+correct:1, 
+ 
+feedback:"Correct. 2FA creates an additional verification step beyond your password.", 
+ 
+tip:"Think of 2FA as an extra lock on your digital door.", 
+ 
+why:"A stolen password alone may not be enough for an attacker to access a protected account." 
+}, 
+ 
+ 
+{ 
+question:"Your phone displays a software update inside its official settings. What should you normally do?", 
+ 
+answers:[ 
+"Ignore every update", 
+"Install the update from the official system", 
+"Download an update from a random website", 
+"Disable security updates" 
+], 
+ 
+correct:1, 
+ 
+feedback:"Correct. Official updates often contain important security patches.", 
+ 
+tip:"Updates are not only about new features.", 
+ 
+why:"Security patches can fix vulnerabilities that attackers already know how to exploit." 
+}, 
+ 
+ 
+{ 
+question:"An unknown website asks for your password after you clicked a message link. What should you do?", 
+ 
+answers:[ 
+"Enter the password", 
+"Use an old password", 
+"Close the page and visit the official website yourself", 
+"Send your password to support" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. The safest approach is to navigate independently to the official service.", 
+ 
+tip:"Unexpected login pages deserve extra suspicion.", 
+ 
+why:"Phishing websites are designed to look legitimate while silently collecting your credentials." 
+}, 
+ 
+ 
+{ 
+question:"Which information should you be most careful about sharing publicly?", 
+ 
+answers:[ 
+"Favorite movie", 
+"Favorite color", 
+"Home address and sensitive ID information", 
+"Favorite sport" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Sensitive information can be abused for identity theft and targeted scams.", 
+ 
+tip:"Think about whether a stranger could use your post to impersonate you.", 
+ 
+why:"Attackers can combine small pieces of personal information to create convincing scams." 
+}, 
+ 
+ 
+{ 
+question:"Someone tells you not to tell anyone about a financial request they made. What should you think?", 
+ 
+answers:[ 
+"They must be trustworthy", 
+"It's probably fine", 
+"This is a possible scam warning sign", 
+"Keep the secret and send the money" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Pressure, secrecy and money are powerful scam warning signs.", 
+ 
+tip:"A trustworthy request should not require you to hide it from everyone.", 
+ 
+why:"Scammers often isolate victims so nobody else can interrupt the fraud." 
+}, 
+ 
+ 
+{ 
+question:"You receive a QR code from an unknown person asking you to scan it to receive a refund. What should you do?", 
+ 
+answers:[ 
+"Scan it immediately", 
+"Scan it and enter my PIN", 
+"Verify the refund through the official company first", 
+"Forward it to friends" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. A QR code can redirect you to a malicious website or payment request.", 
+ 
+tip:"Treat QR codes like links — they can lead anywhere.", 
+ 
+why:"A QR code does not automatically mean the destination is safe." 
+}, 
+ 
+ 
+{ 
+question:"You are using public Wi-Fi at an airport. Which behavior is safest?", 
+ 
+answers:[ 
+"Log into every important account", 
+"Share files with nearby devices", 
+"Use trusted websites and avoid sensitive activity when possible", 
+"Disable all device security" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Public networks deserve additional caution.", 
+ 
+tip:"Avoid sensitive transactions on networks you don't control whenever practical.", 
+ 
+why:"Untrusted networks can increase exposure to interception and malicious activity." 
+}, 
+ 
+ 
+{ 
+question:"A website asks you to install a browser extension to continue reading an article. What should you do?", 
+ 
+answers:[ 
+"Install it immediately", 
+"Check the extension's source and permissions first", 
+"Give it every permission requested", 
+"Disable browser security" 
+], 
+ 
+correct:1, 
+ 
+feedback:"Correct. Browser extensions can have significant access to your browsing environment.", 
+ 
+tip:"Check who published an extension and what permissions it requests.", 
+ 
+why:"Malicious or overly permissive extensions can expose browsing data and credentials." 
+}, 
+ 
+ 
+{ 
+question:"Which email address should make you most suspicious when it claims to be from a major company?", 
+ 
+answers:[ 
+"support@company.com", 
+"security@company.com", 
+"company-helpdesk-7842@example-random.com", 
+"billing@company.com" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Unexpected domains and strange sender addresses are useful phishing clues.", 
+ 
+tip:"Look beyond the display name and inspect the actual sender address.", 
+ 
+why:"Attackers can make a fake sender name look official while the real address reveals the scam." 
+}, 
+ 
+ 
+{ 
+question:"You find a USB drive labeled 'Salary Data' in a parking lot. What should you do?", 
+ 
+answers:[ 
+"Plug it into your laptop", 
+"Open it on your work computer", 
+"Leave it alone and report it if appropriate", 
+"Give it to a friend to test" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Unknown USB devices should not be connected to your computer.", 
+ 
+tip:"Curiosity can be a security risk.", 
+ 
+why:"Unknown removable devices can contain malicious software designed to compromise computers." 
+}, 
+ 
+ 
+{ 
+question:"Which habit gives you the strongest protection against password reuse attacks?", 
+ 
+answers:[ 
+"Using one very complicated password everywhere", 
+"Using a unique password for every important account", 
+"Changing the same password every week", 
+"Writing the same password in every app" 
+], 
+ 
+correct:1, 
+ 
+feedback:"Correct. Unique credentials prevent one breach from automatically compromising multiple accounts.", 
+ 
+tip:"A password manager can make unique passwords much easier to manage.", 
+ 
+why:"Attackers frequently test leaked passwords against other popular services." 
+}, 
+ 
+ 
+{ 
+question:"You receive a message from a delivery company asking you to pay ₹25 through a link to reschedule a package. What should you do?", 
+ 
+answers:[ 
+"Pay immediately", 
+"Click the link and enter card details", 
+"Check the delivery through the company's official app or website", 
+"Send your OTP to the sender" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Small payment requests are frequently used in phishing campaigns.", 
+ 
+tip:"A tiny payment request can still lead to a large credential theft.", 
+ 
+why:"Fraudsters may use small amounts to make suspicious requests feel harmless." 
+}, 
+ 
+ 
+{ 
+question:"What is the safest way to access an important online account after receiving a suspicious email?", 
+ 
+answers:[ 
+"Click the email link", 
+"Search for the official service or type its known address yourself", 
+"Reply to the email", 
+"Use the phone number in the email" 
+], 
+ 
+correct:1, 
+ 
+feedback:"Correct. Independent navigation reduces the chance of landing on a phishing page.", 
+ 
+tip:"Don't let an unexpected message control how you reach the service.", 
+ 
+why:"Attackers can control links and contact details inside fraudulent messages." 
+}, 
+ 
+ 
+{ 
+question:"You discover that one of your passwords was exposed in a data breach. What should you do first?", 
+ 
+answers:[ 
+"Ignore it", 
+"Use the same password somewhere else", 
+"Change the exposed password and any reused passwords", 
+"Post the password online" 
+], 
+ 
+correct:2, 
+ 
+feedback:"Correct. Change the compromised password and any other accounts where it was reused.", 
+ 
+tip:"Password reuse turns one breach into multiple potential compromises.", 
+ 
+why:"Attackers often automate attempts to use leaked credentials on other websites." 
+} 
+ 
+]; 
+const questionBankHi = [
+
+{
+question:"आपको एक मैसेज मिलता है कि 30 मिनट में आपका बैंक खाता ब्लॉक हो जाएगा। आपका सबसे सुरक्षित कदम क्या है?",
+
+answers:[
+"तुरंत लिंक पर क्लिक करना",
+"अपने ओटीपी के साथ जवाब देना",
+"सीधे अपना बैंकिंग ऐप खोलना",
+"मैसेज में दिए नंबर पर कॉल करना"
+],
+
+correct:2,
+
+feedback:"बहुत बढ़िया चुनाव। किसी अनपेक्षित मैसेज में दिए गए लिंक या फ़ोन नंबर पर कभी भरोसा न करें।",
+
+tip:"ठग आपको ध्यान से सोचने से रोकने के लिए जल्दबाज़ी का इस्तेमाल करते हैं।",
+
+why:"खुद अपना आधिकारिक बैंकिंग ऐप खोलने से एक संभावित नकली लॉगिन पेज से बचा जा सकता है।"
+},
+
+
+{
+question:"किसी ज़रूरी खाते के लिए सबसे सुरक्षित पासवर्ड कौन सा है?",
+
+answers:[
+"MyName@2005",
+"Password123!",
+"वही पासवर्ड जो मैं हर जगह इस्तेमाल करता/करती हूँ",
+"इस खाते के लिए बनाया गया एक लंबा, अलग पासवर्ड"
+],
+
+correct:3,
+
+feedback:"सही। लंबे और अलग पासवर्ड क्रेडेंशियल दोबारा इस्तेमाल होने के असर को बहुत कम कर देते हैं।",
+
+tip:"अपना सबसे ज़रूरी पासवर्ड कभी भी कई सेवाओं में दोबारा इस्तेमाल न करें।",
+
+why:"अगर एक वेबसाइट हैक होती है, तो दोहराए गए पासवर्ड हमलावर को आपके अन्य खातों तक पहुँच दे सकते हैं।"
+},
+
+
+{
+question:"कोई व्यक्ति आपके बैंक से होने का दावा करते हुए कॉल करता है और आपका ओटीपी माँगता है। आपको क्या करना चाहिए?",
+
+answers:[
+"उन्हें ओटीपी दे देना",
+"उन्हें आधा ओटीपी देना",
+"फ़ोन काटकर खुद बैंक से संपर्क करना",
+"उनसे यह साबित करने को कहना कि वे बैंक में काम करते हैं"
+],
+
+correct:2,
+
+feedback:"सही। असली सहायता के लिए कभी भी आपसे सत्यापन कोड बताने को नहीं कहा जाएगा।",
+
+tip:"आपका ओटीपी आपकी पहचान सत्यापित करता है। इसे कभी किसी और को न दें।",
+
+why:"जिस हमलावर के पास आपका पासवर्ड है, उसे धोखाधड़ी वाला लॉगिन या लेन-देन पूरा करने के लिए बस आपका ओटीपी चाहिए हो सकता है।"
+},
+
+
+{
+question:"एक दोस्त अचानक आपातकाल का हवाला देकर पैसे माँगने का मैसेज भेजता है। आपको सबसे पहले क्या करना चाहिए?",
+
+answers:[
+"तुरंत पैसे भेज देना",
+"उनका बैंक विवरण माँगना",
+"किसी और माध्यम से अनुरोध की पुष्टि करना",
+"मैसेज अपने संपर्कों को फ़ॉरवर्ड करना"
+],
+
+correct:2,
+
+feedback:"सही। सोशल अकाउंट हैक होकर भरोसेमंद लोगों की नकल करने के लिए इस्तेमाल हो सकते हैं।",
+
+tip:"अनपेक्षित पैसों के अनुरोध की स्वतंत्र रूप से पुष्टि ज़रूरी है।",
+
+why:"दोस्त को सीधे कॉल करने से पैसे गँवाने से पहले ही इम्पर्सनेशन घोटाला उजागर हो सकता है।"
+},
+
+
+{
+question:"आपको एक ईमेल मिलता है कि आपने ₹1,00,000 जीते हैं, लेकिन इसे पाने के लिए ₹2,000 देने होंगे। आपको क्या करना चाहिए?",
+
+answers:[
+"प्रोसेसिंग फ़ीस भर देना",
+"अपना बैंक विवरण भेज देना",
+"मैसेज को नज़रअंदाज़ कर उसकी शिकायत करना",
+"फ़ीस पर छूट माँगना"
+],
+
+correct:2,
+
+feedback:"सही। अनपेक्षित इनाम जिसके लिए पहले भुगतान माँगा जाए, यह एक क्लासिक घोटाले का संकेत है।",
+
+tip:"अगर आपने कभी कोई प्रतियोगिता में भाग ही नहीं लिया, तो अचानक मिला इनाम तुरंत संदेह पैदा करना चाहिए।",
+
+why:"ठग अक्सर छोटी अग्रिम फ़ीस का इस्तेमाल कर पीड़ितों को यक़ीन दिलाते हैं कि एक बड़ा इनाम आने वाला है।"
+},
+
+
+{
+question:"टू-फैक्टर ऑथेंटिकेशन क्यों उपयोगी है?",
+
+answers:[
+"इससे आपका इंटरनेट तेज़ हो जाता है",
+"यह सुरक्षा की एक और परत जोड़ता है",
+"इससे पासवर्ड की ज़रूरत खत्म हो जाती है",
+"यह हर संभावित घोटाले को रोकता है"
+],
+
+correct:1,
+
+feedback:"सही। 2FA आपके पासवर्ड के अलावा एक अतिरिक्त सत्यापन चरण बनाता है।",
+
+tip:"2FA को अपने डिजिटल दरवाज़े पर एक अतिरिक्त ताले की तरह सोचें।",
+
+why:"सिर्फ़ चोरी हुआ पासवर्ड किसी हमलावर के लिए सुरक्षित खाते तक पहुँचने के लिए काफ़ी नहीं हो सकता।"
+},
+
+
+{
+question:"आपके फ़ोन की आधिकारिक सेटिंग्स में एक सॉफ़्टवेयर अपडेट दिखता है। आमतौर पर आपको क्या करना चाहिए?",
+
+answers:[
+"हर अपडेट को नज़रअंदाज़ करना",
+"आधिकारिक सिस्टम से अपडेट इंस्टॉल करना",
+"किसी रैंडम वेबसाइट से अपडेट डाउनलोड करना",
+"सुरक्षा अपडेट बंद कर देना"
+],
+
+correct:1,
+
+feedback:"सही। आधिकारिक अपडेट में अक्सर ज़रूरी सुरक्षा पैच होते हैं।",
+
+tip:"अपडेट सिर्फ़ नए फ़ीचर्स के बारे में नहीं होते।",
+
+why:"सुरक्षा पैच उन कमज़ोरियों को ठीक कर सकते हैं जिनका फ़ायदा उठाना हमलावरों को पहले से पता होता है।"
+},
+
+
+{
+question:"एक मैसेज के लिंक पर क्लिक करने के बाद एक अनजान वेबसाइट आपका पासवर्ड माँगती है। आपको क्या करना चाहिए?",
+
+answers:[
+"पासवर्ड डाल देना",
+"पुराना पासवर्ड इस्तेमाल करना",
+"पेज बंद कर खुद आधिकारिक वेबसाइट पर जाना",
+"सपोर्ट को अपना पासवर्ड भेज देना"
+],
+
+correct:2,
+
+feedback:"सही। सबसे सुरक्षित तरीका है खुद स्वतंत्र रूप से आधिकारिक सेवा पर जाना।",
+
+tip:"अनपेक्षित लॉगिन पेज पर अतिरिक्त संदेह ज़रूरी है।",
+
+why:"फ़िशिंग वेबसाइटें असली दिखने के लिए बनाई जाती हैं, जबकि चुपचाप आपकी जानकारी चुराती हैं।"
+},
+
+
+{
+question:"किस जानकारी को सार्वजनिक रूप से साझा करने में आपको सबसे ज़्यादा सावधान रहना चाहिए?",
+
+answers:[
+"पसंदीदा फ़िल्म",
+"पसंदीदा रंग",
+"घर का पता और संवेदनशील पहचान जानकारी",
+"पसंदीदा खेल"
+],
+
+correct:2,
+
+feedback:"सही। संवेदनशील जानकारी का इस्तेमाल पहचान की चोरी और टार्गेटेड घोटालों के लिए किया जा सकता है।",
+
+tip:"सोचें कि क्या कोई अजनबी आपकी पोस्ट का इस्तेमाल आपकी नकल करने के लिए कर सकता है।",
+
+why:"हमलावर निजी जानकारी के छोटे-छोटे टुकड़ों को जोड़कर भरोसेमंद घोटाले बना सकते हैं।"
+},
+
+
+{
+question:"कोई आपसे कहता है कि उसने जो वित्तीय अनुरोध किया है, उसके बारे में किसी को न बताएँ। आपको क्या सोचना चाहिए?",
+
+answers:[
+"वे ज़रूर भरोसेमंद होंगे",
+"शायद ठीक ही होगा",
+"यह घोटाले का संभावित संकेत है",
+"राज़ रखें और पैसे भेज दें"
+],
+
+correct:2,
+
+feedback:"सही। दबाव, गोपनीयता और पैसा — ये घोटाले के मज़बूत चेतावनी संकेत हैं।",
+
+tip:"एक भरोसेमंद अनुरोध को सबसे छिपाने की ज़रूरत नहीं होनी चाहिए।",
+
+why:"ठग अक्सर पीड़ितों को अलग-थलग कर देते हैं ताकि कोई और धोखाधड़ी को रोक न सके।"
+},
+
+
+{
+question:"एक अनजान व्यक्ति आपको रिफंड पाने के लिए एक क्यूआर कोड स्कैन करने को कहता है। आपको क्या करना चाहिए?",
+
+answers:[
+"तुरंत स्कैन कर लेना",
+"स्कैन कर अपना पिन डाल देना",
+"पहले आधिकारिक कंपनी से रिफंड की पुष्टि करना",
+"इसे दोस्तों को फ़ॉरवर्ड करना"
+],
+
+correct:2,
+
+feedback:"सही। एक क्यूआर कोड आपको किसी नुकसानदायक वेबसाइट या भुगतान अनुरोध पर भेज सकता है।",
+
+tip:"क्यूआर कोड को लिंक की तरह समझें — ये कहीं भी ले जा सकते हैं।",
+
+why:"क्यूआर कोड होने का मतलब यह नहीं कि गंतव्य सुरक्षित है।"
+},
+
+
+{
+question:"आप एयरपोर्ट पर सार्वजनिक वाई-फ़ाई इस्तेमाल कर रहे हैं। कौन सा व्यवहार सबसे सुरक्षित है?",
+
+answers:[
+"हर ज़रूरी खाते में लॉगिन करना",
+"पास के डिवाइस के साथ फ़ाइलें साझा करना",
+"भरोसेमंद वेबसाइट इस्तेमाल करना और जहाँ तक हो संवेदनशील काम टालना",
+"डिवाइस की सारी सुरक्षा बंद कर देना"
+],
+
+correct:2,
+
+feedback:"सही। सार्वजनिक नेटवर्क पर अतिरिक्त सावधानी ज़रूरी है।",
+
+tip:"जहाँ तक संभव हो, ऐसे नेटवर्क पर संवेदनशील लेन-देन से बचें जिन पर आपका नियंत्रण नहीं है।",
+
+why:"अविश्वसनीय नेटवर्क पर जानकारी बीच में पकड़े जाने और नुकसानदायक गतिविधि का खतरा बढ़ जाता है।"
+},
+
+
+{
+question:"एक वेबसाइट आपसे लेख पढ़ने के लिए एक ब्राउज़र एक्सटेंशन इंस्टॉल करने को कहती है। आपको क्या करना चाहिए?",
+
+answers:[
+"तुरंत इंस्टॉल कर लेना",
+"पहले एक्सटेंशन का स्रोत और अनुमतियाँ जाँचना",
+"माँगी गई हर अनुमति दे देना",
+"ब्राउज़र सुरक्षा बंद कर देना"
+],
+
+correct:1,
+
+feedback:"सही। ब्राउज़र एक्सटेंशन को आपके ब्राउज़िंग वातावरण तक काफ़ी पहुँच मिल सकती है।",
+
+tip:"जाँचें कि एक्सटेंशन किसने बनाया है और यह कौन-सी अनुमतियाँ माँगता है।",
+
+why:"नुकसानदायक या ज़्यादा अनुमति वाले एक्सटेंशन आपकी ब्राउज़िंग जानकारी और क्रेडेंशियल उजागर कर सकते हैं।"
+},
+
+
+{
+question:"एक बड़ी कंपनी होने का दावा करने वाला कौन सा ईमेल पता आपको सबसे ज़्यादा संदिग्ध लगना चाहिए?",
+
+answers:[
+"support@company.com",
+"security@company.com",
+"company-helpdesk-7842@example-random.com",
+"billing@company.com"
+],
+
+correct:2,
+
+feedback:"सही। अनपेक्षित डोमेन और अजीब भेजने वाले पते फ़िशिंग के उपयोगी सुराग हैं।",
+
+tip:"सिर्फ़ डिस्प्ले नेम नहीं, बल्कि असली भेजने वाले पते को भी जाँचें।",
+
+why:"हमलावर भेजने वाले का नाम आधिकारिक दिखा सकते हैं, जबकि असली पता घोटाले को उजागर कर देता है।"
+},
+
+
+{
+question:"आपको पार्किंग लॉट में 'Salary Data' लिखी एक USB ड्राइव मिलती है। आपको क्या करना चाहिए?",
+
+answers:[
+"इसे अपने लैपटॉप में लगाना",
+"इसे अपने ऑफ़िस कंप्यूटर पर खोलना",
+"इसे छोड़ देना और ज़रूरत पड़ने पर इसकी सूचना देना",
+"इसे जाँचने के लिए किसी दोस्त को देना"
+],
+
+correct:2,
+
+feedback:"सही। अनजान USB डिवाइस को अपने कंप्यूटर से कभी नहीं जोड़ना चाहिए।",
+
+tip:"जिज्ञासा एक सुरक्षा जोखिम बन सकती है।",
+
+why:"अनजान रिमूवेबल डिवाइस में ऐसा नुकसानदायक सॉफ़्टवेयर हो सकता है जो कंप्यूटर को खतरे में डाल सकता है।"
+},
+
+
+{
+question:"पासवर्ड दोबारा इस्तेमाल होने वाले हमलों से सबसे मज़बूत सुरक्षा कौन सी आदत देती है?",
+
+answers:[
+"हर जगह एक ही बहुत जटिल पासवर्ड इस्तेमाल करना",
+"हर ज़रूरी खाते के लिए अलग पासवर्ड इस्तेमाल करना",
+"हर हफ़्ते वही पासवर्ड बदलना",
+"हर ऐप में एक ही पासवर्ड लिख देना"
+],
+
+correct:1,
+
+feedback:"सही। अलग-अलग क्रेडेंशियल एक ब्रीच को अपने आप कई खातों तक फैलने से रोकते हैं।",
+
+tip:"एक पासवर्ड मैनेजर अलग-अलग पासवर्ड मैनेज करना काफ़ी आसान बना सकता है।",
+
+why:"हमलावर अक्सर लीक हुए पासवर्ड को दूसरी लोकप्रिय सेवाओं पर आज़माते हैं।"
+},
+
+
+{
+question:"एक डिलीवरी कंपनी का मैसेज आपसे पार्सल दोबारा शेड्यूल करने के लिए एक लिंक से ₹25 भरने को कहता है। आपको क्या करना चाहिए?",
+
+answers:[
+"तुरंत भुगतान कर देना",
+"लिंक पर क्लिक कर कार्ड जानकारी डाल देना",
+"कंपनी के आधिकारिक ऐप या वेबसाइट से डिलीवरी जाँचना",
+"भेजने वाले को अपना ओटीपी भेज देना"
+],
+
+correct:2,
+
+feedback:"सही। फ़िशिंग अभियानों में अक्सर छोटे भुगतान अनुरोध इस्तेमाल होते हैं।",
+
+tip:"एक छोटा भुगतान अनुरोध भी बड़ी क्रेडेंशियल चोरी की ओर ले जा सकता है।",
+
+why:"ठग छोटी राशि का इस्तेमाल कर संदिग्ध अनुरोध को हानिरहित दिखा सकते हैं।"
+},
+
+
+{
+question:"एक संदिग्ध ईमेल मिलने के बाद किसी ज़रूरी ऑनलाइन खाते तक पहुँचने का सबसे सुरक्षित तरीका क्या है?",
+
+answers:[
+"ईमेल के लिंक पर क्लिक करना",
+"खुद आधिकारिक सेवा को सर्च करना या उसका जाना-पहचाना पता खुद टाइप करना",
+"ईमेल का जवाब देना",
+"ईमेल में दिए फ़ोन नंबर का इस्तेमाल करना"
+],
+
+correct:1,
+
+feedback:"सही। स्वतंत्र रूप से जाने से फ़िशिंग पेज पर पहुँचने की संभावना कम हो जाती है।",
+
+tip:"किसी अनपेक्षित मैसेज को यह तय न करने दें कि आप सेवा तक कैसे पहुँचते हैं।",
+
+why:"हमलावर धोखाधड़ी वाले मैसेज के अंदर लिंक और संपर्क जानकारी को नियंत्रित कर सकते हैं।"
+},
+
+
+{
+question:"आपको पता चलता है कि आपका एक पासवर्ड डेटा ब्रीच में उजागर हुआ है। आपको सबसे पहले क्या करना चाहिए?",
+
+answers:[
+"इसे नज़रअंदाज़ करना",
+"वही पासवर्ड कहीं और भी इस्तेमाल करना",
+"उजागर हुआ पासवर्ड और उसके जैसे दोहराए गए पासवर्ड बदलना",
+"पासवर्ड को ऑनलाइन पोस्ट कर देना"
+],
+
+correct:2,
+
+feedback:"सही। उजागर हुए पासवर्ड और उसे इस्तेमाल करने वाले अन्य खातों को बदलें।",
+
+tip:"पासवर्ड दोबारा इस्तेमाल करने से एक ब्रीच कई संभावित खतरों में बदल जाती है।",
+
+why:"हमलावर अक्सर लीक हुए क्रेडेंशियल को दूसरी वेबसाइटों पर स्वचालित रूप से आज़माते हैं।"
+}
+
+];
+
+ 
+ 
+/* ========================================================= 
+   STATE 
+========================================================= */ 
+ 
+let questions = []; 
+ 
+let currentQuestion = 0; 
+ 
+let score = 0; 
+ 
+let streak = 0; 
+ 
+let bestStreak = 0; 
+ 
+let answered = false; 
+ 
+let mistakes = []; 
+ 
+const TOTAL_QUESTIONS = 15; 
+ 
+ 
+/* ========================================================= 
+   RANDOMIZE 
+========================================================= */ 
+ 
+function shuffle(array){ 
+ 
+    const copy = [...array]; 
+ 
+    for(let i=copy.length-1;i>0;i--){ 
+ 
+        const j = 
+            Math.floor(Math.random()*(i+1)); 
+ 
+        [copy[i],copy[j]] = 
+        [copy[j],copy[i]]; 
+ 
+    } 
+ 
+    return copy; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   START / RESET 
+========================================================= */ 
+ 
+function createQuiz(){ 
+ 
+    questions = 
+        shuffle(window.ssLang === "hi" ? questionBankHi : questionBank) 
+        .slice(0,TOTAL_QUESTIONS) 
+        .map(q => { 
+ 
+            const answerObjects = 
+                q.answers.map((answer,index)=>({ 
+ 
+                    text:answer, 
+                    originalIndex:index 
+ 
+                })); 
+ 
+            const shuffledAnswers = 
+                shuffle(answerObjects); 
+ 
+            return{ 
+ 
+                ...q, 
+ 
+                answers: 
+                    shuffledAnswers.map(a=>a.text), 
+ 
+                correct: 
+                    shuffledAnswers.findIndex( 
+                        a=>a.originalIndex===q.correct 
+                    ) 
+ 
+            }; 
+ 
+        }); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   LOAD QUESTION 
+========================================================= */ 
+ 
+function loadQuestion(){ 
+ 
+    answered=false; 
+ 
+    const current = 
+        questions[currentQuestion]; 
+ 
+    const card = 
+        document.getElementById("questionCard"); 
+ 
+    card.classList.remove("change"); 
+ 
+    void card.offsetWidth; 
+ 
+    card.classList.add("change"); 
+ 
+ 
+    document.getElementById("questionNumber").textContent = 
+        (window.ssLang === "hi" ? "प्रश्न " : "QUESTION ") + (currentQuestion+1); 
+ 
+ 
+    document.getElementById("question").textContent = 
+        current.question; 
+ 
+ 
+    document.getElementById("progressText").textContent = 
+        (window.ssLang === "hi" ? "प्रश्न " : "Question ") + 
+        (currentQuestion+1) + 
+        (window.ssLang === "hi" ? " / " : " of ") + 
+        questions.length; 
+ 
+ 
+    document.getElementById("scoreText").textContent = 
+        (window.ssLang === "hi" ? "स्कोर: " : "Score: ") + score; 
+ 
+ 
+    const percentage = 
+        (currentQuestion/questions.length)*100; 
+ 
+ 
+    document.getElementById("progressBar").style.width = 
+        percentage + "%"; 
+ 
+ 
+    document.getElementById("tipText").textContent = 
+        current.tip; 
+ 
+ 
+    const answers = 
+        document.getElementById("answers"); 
+ 
+    answers.innerHTML=""; 
+ 
+ 
+    current.answers.forEach( 
+        (answer,index)=>{ 
+ 
+            const button = 
+                document.createElement("button"); 
+ 
+            button.className="answer"; 
+ 
+            button.textContent=answer; 
+ 
+            button.onclick=()=>{ 
+ 
+                selectAnswer(index,button); 
+ 
+            }; 
+ 
+            answers.appendChild(button); 
+ 
+        } 
+    ); 
+ 
+ 
+    document 
+        .getElementById("feedback") 
+        .classList.remove("show"); 
+ 
+    document.getElementById("feedback").innerHTML=""; 
+ 
+    document.getElementById("nextButton").style.display="none"; 
+ 
+    updateDashboard(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   ANSWER 
+========================================================= */ 
+ 
+function selectAnswer(index,button){ 
+ 
+    if(answered) return; 
+ 
+    answered=true; 
+ 
+    const current = 
+        questions[currentQuestion]; 
+ 
+    const allAnswers = 
+        document.querySelectorAll(".answer"); 
+ 
+ 
+    allAnswers.forEach(answer=>{ 
+ 
+        answer.disabled=true; 
+ 
+    }); 
+ 
+ 
+    const correct = 
+        index===current.correct; 
+ 
+ 
+    if(correct){ 
+ 
+        score+=10; 
+ 
+        streak++; 
+ 
+        bestStreak = 
+            Math.max(bestStreak,streak); 
+ 
+        button.classList.add("correct"); 
+ 
+    } 
+ 
+    else{ 
+ 
+        streak=0; 
+ 
+        button.classList.add("wrong"); 
+ 
+        allAnswers[ 
+            current.correct 
+        ].classList.add("correct"); 
+ 
+ 
+        mistakes.push({ 
+ 
+            question:current.question, 
+ 
+            selected:current.answers[index], 
+ 
+            correct:current.answers[current.correct] 
+ 
+        }); 
+ 
+    } 
+ 
+ 
+    updateStreak(); 
+ 
+ 
+    const feedback = 
+        document.getElementById("feedback"); 
+ 
+ 
+    if(correct){ 
+ 
+        feedback.innerHTML = window.ssLang === "hi" ? ` 
+
+            <div class="feedback-title correct-title"> 
+                ✓ सही — बेहतरीन सुरक्षा समझ! 
+            </div> 
+
+            <p> 
+                ${current.feedback} 
+            </p> 
+
+            <div class="why-matters"> 
+                <strong>💡 यह क्यों ज़रूरी है:</strong> 
+                ${current.why} 
+            </div> 
+
+        ` : ` 
+
+            <div class="feedback-title correct-title"> 
+                ✓ Correct — excellent security instinct! 
+            </div> 
+ 
+            <p> 
+                ${current.feedback} 
+            </p> 
+ 
+            <div class="why-matters"> 
+                <strong>💡 Why this matters:</strong> 
+                ${current.why} 
+            </div> 
+ 
+        `; 
+ 
+    } 
+ 
+    else{ 
+ 
+        feedback.innerHTML = window.ssLang === "hi" ? ` 
+
+            <div class="feedback-title wrong-title"> 
+                ⚠️ ऐसा नहीं — यह याद रखें 
+            </div> 
+
+            <p> 
+                ${current.feedback} 
+            </p> 
+
+            <div class="why-matters"> 
+                <strong>🛡️ यह क्यों ज़रूरी है:</strong> 
+                ${current.why} 
+            </div> 
+
+        ` : ` 
+
+            <div class="feedback-title wrong-title"> 
+                ⚠️ Not quite — here's what to remember 
+            </div> 
+ 
+            <p> 
+                ${current.feedback} 
+            </p> 
+ 
+            <div class="why-matters"> 
+                <strong>🛡️ Why this matters:</strong> 
+                ${current.why} 
+            </div> 
+ 
+        `; 
+ 
+    } 
+ 
+ 
+    feedback.classList.add("show"); 
+ 
+ 
+    document.getElementById("scoreText").textContent = 
+        (window.ssLang === "hi" ? "स्कोर: " : "Score: ") + score; 
+ 
+ 
+    const next = 
+        document.getElementById("nextButton"); 
+ 
+    next.style.display="inline-flex"; 
+ 
+ 
+    if(currentQuestion===questions.length-1){ 
+ 
+        next.innerHTML = 
+            window.ssLang === "hi" ? "मेरा सुरक्षा स्कोर देखें →" : "See My Security Score →"; 
+ 
+    } 
+    else{ 
+ 
+        next.innerHTML = 
+            window.ssLang === "hi" ? "अगला प्रश्न →" : "Next Question →"; 
+ 
+    } 
+ 
+ 
+    updateDashboard(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   NEXT 
+========================================================= */ 
+ 
+function nextQuestion(){ 
+ 
+    if(!answered) return; 
+ 
+    currentQuestion++; 
+ 
+    if(currentQuestion<questions.length){ 
+ 
+        loadQuestion(); 
+ 
+        window.scrollTo({ 
+ 
+            top: 
+                document.getElementById("questionCard") 
+                    .getBoundingClientRect().top 
+                + 
+                window.scrollY 
+                - 
+                110, 
+ 
+            behavior:"smooth" 
+ 
+        }); 
+ 
+    } 
+    else{ 
+ 
+        showResults(); 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   DASHBOARD 
+========================================================= */ 
+ 
+function updateDashboard(){ 
+ 
+    document.getElementById("dashboardScore").textContent = 
+        score + " / " + (questions.length*10); 
+ 
+ 
+    document.getElementById("dashboardAnswered").textContent = 
+        currentQuestion + 
+        " / " + 
+        questions.length; 
+ 
+ 
+    document.getElementById("dashboardStreak").textContent = 
+        bestStreak + " 🔥"; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   STREAK 
+========================================================= */ 
+ 
+function updateStreak(){ 
+ 
+    document.getElementById("streakText").textContent = 
+        streak; 
+ 
+ 
+    for(let i=1;i<=5;i++){ 
+ 
+        const dot = 
+            document.getElementById("dot"+i); 
+ 
+        dot.classList.toggle( 
+            "active", 
+            i<=streak 
+        ); 
+ 
+    } 
+ 
+ 
+    if(streak>=3){ 
+ 
+        showToast( 
+            window.ssLang === "hi" ? 
+            ("🔥 आपकी " + streak + " जवाबों की स्ट्रीक चल रही है!") : 
+            ("🔥 You're on a " + streak + "-answer streak!") 
+        ); 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   RESULTS 
+========================================================= */ 
+ 
+function showResults(){ 
+ 
+    const total = 
+        questions.length*10; 
+ 
+    const percentage = 
+        Math.round((score/total)*100); 
+ 
+ 
+    document.getElementById("questionCard") 
+        .style.display="none"; 
+ 
+ 
+    document.getElementById("securityTip") 
+        .style.display="none"; 
+ 
+ 
+    document.getElementById("resultCard") 
+        .classList.add("show"); 
+ 
+ 
+    document.getElementById("progressText").textContent = 
+        "Assessment Complete"; 
+ 
+ 
+    document.getElementById("scoreText").textContent = 
+        "Final Score: " + score; 
+ 
+ 
+    document.getElementById("progressBar").style.width="100%"; 
+ 
+ 
+    animateScore( 
+        percentage 
+    ); 
+ 
+ 
+    document.getElementById("correctMetric").textContent = 
+        score/10; 
+ 
+ 
+    document.getElementById("wrongMetric").textContent = 
+        questions.length-(score/10); 
+ 
+ 
+    document.getElementById("bestStreakMetric").textContent = 
+        bestStreak + " 🔥"; 
+ 
+ 
+    const title = 
+        document.getElementById("resultTitle"); 
+ 
+    const description = 
+        document.getElementById("resultDescription"); 
+ 
+    const level = 
+        document.getElementById("securityLevel"); 
+ 
+    const list = 
+        document.getElementById("recommendationsList"); 
+ 
+ 
+    list.innerHTML=""; 
+ 
+ 
+    if(percentage>=90){ 
+ 
+        title.textContent = 
+            window.ssLang === "hi" ? "🛡️ बेहतरीन सुरक्षा आदतें!" : "🛡️ Excellent Security Habits!"; 
+ 
+        title.style.color="var(--green)"; 
+ 
+        level.textContent = 
+            window.ssLang === "hi" ? "डिजिटल सेफ्टी प्रो" : "DIGITAL SAFETY PRO"; 
+ 
+        level.style.color="var(--green)"; 
+ 
+        description.textContent = 
+            window.ssLang === "hi" ? "शानदार। आपने लगातार जोखिम भरे व्यवहार को पहचाना और सुरक्षित विकल्प चुने।" : "Outstanding. You consistently recognized risky behavior and chose safer alternatives."; 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "हर ज़रूरी खाते के लिए अलग पासवर्ड इस्तेमाल करते रहें।" : "Keep using unique passwords for every important account." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "टू-फैक्टर ऑथेंटिकेशन का इस्तेमाल जारी रखें।" : "Continue using two-factor authentication." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "डिवाइस और ऐप्स को अपडेटेड रखें।" : "Keep devices and applications updated." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "असामान्य अनुरोधों की स्वतंत्र रूप से जाँच करना जारी रखें।" : "Continue independently verifying unusual requests." 
+        ); 
+ 
+    } 
+ 
+    else if(percentage>=70){ 
+ 
+        title.textContent = 
+            window.ssLang === "hi" ? "🔵 मज़बूत सुरक्षा जागरूकता" : "🔵 Strong Security Awareness"; 
+ 
+        title.style.color="var(--blue)"; 
+ 
+        level.textContent = 
+            window.ssLang === "hi" ? "अच्छी तरह सुरक्षित" : "WELL PROTECTED"; 
+ 
+        level.style.color="var(--blue)"; 
+ 
+        description.textContent = 
+            window.ssLang === "hi" ? "आप कई समझदार सुरक्षा फ़ैसले ले रहे हैं। कुछ और मज़बूत आदतें आपको घोटालों से और सुरक्षित बना सकती हैं।" : "You're making many smart security decisions. A few stronger habits can make you even harder to scam."; 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "जिन सवालों में गलती हुई, उन्हें दोबारा देखें।" : "Review the questions you missed." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "अपने सबसे ज़रूरी खातों पर 2FA इस्तेमाल करें।" : "Use 2FA on your most important accounts." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "अनपेक्षित लिंक और तुरंत वाले अनुरोधों से सावधान रहें।" : "Be cautious with unexpected links and urgent requests." 
+        ); 
+ 
+    } 
+ 
+    else if(percentage>=50){ 
+ 
+        title.textContent = 
+            window.ssLang === "hi" ? "🟡 आपकी सुरक्षा में सुधार हो सकता है" : "🟡 Your Security Can Improve"; 
+ 
+        title.style.color="var(--yellow)"; 
+ 
+        level.textContent = 
+            window.ssLang === "hi" ? "ध्यान देने की ज़रूरत" : "NEEDS ATTENTION"; 
+ 
+        level.style.color="var(--yellow)"; 
+ 
+        description.textContent = 
+            window.ssLang === "hi" ? "आपकी कुछ अच्छी आदतें हैं, लेकिन कई आम घोटाले के तरीके अब भी आपको चौंका सकते हैं।" : "You have some good habits, but several common scam techniques may still catch you off guard."; 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "हर ज़रूरी खाते के लिए अलग पासवर्ड इस्तेमाल करें।" : "Use a unique password for every important account." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "टू-फैक्टर ऑथेंटिकेशन चालू करें।" : "Enable two-factor authentication." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "पासवर्ड या ओटीपी कभी साझा न करें।" : "Never share passwords or OTPs." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "जब कोई मैसेज जल्दबाज़ी पैदा करे, तो धीमे चलें।" : "Slow down when a message creates urgency." 
+        ); 
+ 
+    } 
+ 
+    else{ 
+ 
+        title.textContent = 
+            window.ssLang === "hi" ? "🚨 सुरक्षा अपग्रेड का समय" : "🚨 Time for a Security Upgrade"; 
+ 
+        title.style.color="var(--red)"; 
+ 
+        level.textContent = 
+            window.ssLang === "hi" ? "ज़्यादा जोखिम वाली आदतें" : "HIGH RISK HABITS"; 
+ 
+        level.style.color="var(--red)"; 
+ 
+        description.textContent = 
+            window.ssLang === "hi" ? "चिंता न करें। साइबर सुरक्षा एक कौशल है। बुनियादी बातों से शुरू करें और धीरे-धीरे मज़बूत आदतें बनाएँ।" : "Don't worry. Cybersecurity is a skill. Start with the basics and build stronger habits one step at a time."; 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "अलग पासवर्ड इस्तेमाल करना शुरू करें।" : "Start using unique passwords." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "टू-फैक्टर ऑथेंटिकेशन चालू करें।" : "Enable two-factor authentication." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "ओटीपी या पासवर्ड कभी साझा न करें।" : "Never share OTPs or passwords." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "अनपेक्षित लिंक और क्यूआर कोड से बचें।" : "Avoid unexpected links and QR codes." 
+        ); 
+ 
+        addRecommendation( 
+            window.ssLang === "hi" ? "अपने डिवाइस और ऐप्स को अपडेटेड रखें।" : "Keep your devices and applications updated." 
+        ); 
+ 
+    } 
+ 
+ 
+    buildMistakes(); 
+ 
+ 
+    localStorage.setItem( 
+        "securityChecklistPercentage", 
+        percentage 
+    ); 
+ 
+ 
+    window.scrollTo({ 
+ 
+        top: 
+            document.getElementById("resultCard") 
+                .getBoundingClientRect().top 
+            + 
+            window.scrollY 
+            - 
+            100, 
+ 
+        behavior:"smooth" 
+ 
+    }); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   SCORE ANIMATION 
+========================================================= */ 
+ 
+function animateScore(target){ 
+ 
+    let current=0; 
+ 
+    const scoreElement = 
+        document.getElementById("finalScore"); 
+ 
+    const circle = 
+        document.getElementById("scoreCircle"); 
+ 
+    const duration=1100; 
+ 
+    const start=performance.now(); 
+ 
+ 
+    function frame(time){ 
+ 
+        const progress = 
+            Math.min( 
+                (time-start)/duration, 
+                1 
+            ); 
+ 
+ 
+        const eased = 
+            1-Math.pow(1-progress,3); 
+ 
+ 
+        current = 
+            Math.round(target*eased); 
+ 
+ 
+        scoreElement.textContent = 
+            current+"%"; 
+ 
+ 
+        circle.style.background = 
+            `conic-gradient( 
+                var(--blue) 
+                ${current*3.6}deg, 
+                #172b41 
+                ${current*3.6}deg 
+            )`; 
+ 
+ 
+        if(progress<1){ 
+ 
+            requestAnimationFrame(frame); 
+ 
+        } 
+ 
+    } 
+ 
+ 
+    requestAnimationFrame(frame); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   RECOMMENDATIONS 
+========================================================= */ 
+ 
+function addRecommendation(text){ 
+ 
+    const item = 
+        document.createElement("li"); 
+ 
+    item.textContent=text; 
+ 
+    document 
+        .getElementById("recommendationsList") 
+        .appendChild(item); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   MISTAKES 
+========================================================= */ 
+ 
+function buildMistakes(){ 
+ 
+    const list = 
+        document.getElementById("mistakesList"); 
+ 
+ 
+    list.innerHTML=""; 
+ 
+ 
+    if(mistakes.length===0){ 
+ 
+        list.innerHTML= window.ssLang === "hi" ? ` 
+
+            <div class="mistake"> 
+
+                🎉 पूरे अंक! 
+
+                आपने एक भी सवाल नहीं छोड़ा। 
+
+            </div> 
+
+        ` : ` 
+ 
+            <div class="mistake"> 
+ 
+                🎉 Perfect score! 
+ 
+                You didn't miss any questions. 
+ 
+            </div> 
+ 
+        `; 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    mistakes.forEach( 
+        (mistake,index)=>{ 
+ 
+            const item = 
+                document.createElement("div"); 
+ 
+            item.className="mistake"; 
+ 
+            item.innerHTML= window.ssLang === "hi" ? ` 
+
+                <strong> 
+                    ${index+1}. ${mistake.question} 
+                </strong> 
+
+                <br> 
+
+                आपका जवाब: 
+                <span class="mistake-answer"> 
+                    ${mistake.selected} 
+                </span> 
+
+                <br> 
+
+                बेहतर जवाब: 
+                <span class="correct-answer"> 
+                    ${mistake.correct} 
+                </span> 
+
+            ` : ` 
+ 
+                <strong> 
+                    ${index+1}. ${mistake.question} 
+                </strong> 
+ 
+                <br> 
+ 
+                Your answer: 
+                <span class="mistake-answer"> 
+                    ${mistake.selected} 
+                </span> 
+ 
+                <br> 
+ 
+                Better answer: 
+                <span class="correct-answer"> 
+                    ${mistake.correct} 
+                </span> 
+ 
+            `; 
+ 
+            list.appendChild(item); 
+ 
+        } 
+    ); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   TOGGLE REVIEW 
+========================================================= */ 
+ 
+function toggleReview(){ 
+ 
+    const section = 
+        document.getElementById("reviewSection"); 
+ 
+    section.classList.toggle("show"); 
+ 
+    if(section.classList.contains("show")){ 
+ 
+        section.scrollIntoView({ 
+ 
+            behavior:"smooth", 
+            block:"center" 
+ 
+        }); 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   RESTART 
+========================================================= */ 
+ 
+function restartQuiz(){ 
+ 
+    currentQuestion=0; 
+ 
+    score=0; 
+ 
+    streak=0; 
+ 
+    bestStreak=0; 
+ 
+    answered=false; 
+ 
+    mistakes=[]; 
+ 
+ 
+    createQuiz(); 
+ 
+ 
+    document.getElementById("resultCard") 
+        .classList.remove("show"); 
+ 
+ 
+    document.getElementById("questionCard") 
+        .style.display="block"; 
+ 
+ 
+    document.getElementById("securityTip") 
+        .style.display="block"; 
+ 
+ 
+    document.getElementById("reviewSection") 
+        .classList.remove("show"); 
+ 
+ 
+    document.getElementById("progressBar") 
+        .style.width="0%"; 
+ 
+ 
+    updateStreak(); 
+ 
+    loadQuestion(); 
+ 
+ 
+    window.scrollTo({ 
+ 
+        top:0, 
+        behavior:"smooth" 
+ 
+    }); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   TOAST 
+========================================================= */ 
+ 
+let toastTimer; 
+ 
+function showToast(message){ 
+ 
+    const toast = 
+        document.getElementById("toast"); 
+ 
+ 
+    toast.textContent=message; 
+ 
+    toast.classList.add("show"); 
+ 
+ 
+    clearTimeout(toastTimer); 
+ 
+ 
+    toastTimer = 
+        setTimeout(()=>{ 
+ 
+            toast.classList.remove("show"); 
+ 
+        },2200); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   INITIALIZE 
+========================================================= */ 
+ 
+loadStoredUser(); 
+ 
+createQuiz(); 
+ 
+loadQuestion(); 
+ 
+</script> 
+ 
+<script src="safeshield-fix.js"></script>
+</body> 
+</html>
+```

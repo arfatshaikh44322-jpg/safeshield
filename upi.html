@@ -1,0 +1,3669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - UPI Payment Scam</title>
+
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0B1220;
+    color:#F8FAFC;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+:root{
+
+    --bg:#0B1220;
+    --bg-secondary:#0E1728;
+    --card:#111C2E;
+
+    --blue:#4F8CFF;
+    --blue-light:#6A9CFF;
+
+    --teal:#22D3A7;
+
+    --text:#F8FAFC;
+    --text-secondary:#CBD5E1;
+    --muted:#94A3B8;
+
+    --border:#26364D;
+
+    --red:#EF4444;
+    --red-light:#FF6B6B;
+
+    --orange:#F59E0B;
+
+    --footer:#080E19;
+}
+
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:9px;
+}
+
+::-webkit-scrollbar-track{
+    background:#080E19;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#26364D;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue);
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    overflow:hidden;
+}
+
+.particle{
+
+    position:absolute;
+
+    width:3px;
+    height:3px;
+
+    background:rgba(79,140,255,.5);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 10px rgba(79,140,255,.5);
+
+    animation:
+        particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+
+    0%{
+        transform:translateY(100vh) translateX(0);
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    90%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-100px) translateX(80px);
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+nav{
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+
+    background:
+        rgba(11,18,32,.82);
+
+    border-bottom:
+        1px solid rgba(79,140,255,.12);
+
+    backdrop-filter:blur(18px);
+
+    transition:.3s;
+}
+
+nav.scrolled{
+
+    background:
+        rgba(5,10,18,.96);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.3);
+}
+
+.nav-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:16px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:var(--blue);
+
+    transition:.3s;
+
+    cursor:pointer;
+}
+
+.logo:hover{
+
+    transform:scale(1.05);
+
+    text-shadow:
+        0 0 20px rgba(79,140,255,.8);
+}
+
+.logo span{
+    color:white;
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:25px;
+
+    list-style:none;
+}
+
+.nav-links a{
+
+    position:relative;
+
+    color:var(--text-secondary);
+
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--teal);
+}
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-6px;
+
+    width:0;
+    height:2px;
+
+    background:var(--teal);
+
+    transition:.3s;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    min-height:650px;
+
+    padding:110px 25px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(79,140,255,.16),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(239,68,68,.08),
+            transparent 30%
+        );
+}
+
+
+/* Animated glowing orbs */
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    background:
+        rgba(79,140,255,.08);
+
+    border-radius:50%;
+
+    filter:blur(70px);
+
+    top:-100px;
+    left:-100px;
+
+    animation:
+        orbMove 8s ease-in-out infinite;
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    background:
+        rgba(34,211,167,.06);
+
+    border-radius:50%;
+
+    filter:blur(70px);
+
+    right:-80px;
+    bottom:-100px;
+
+    animation:
+        orbMove2 9s ease-in-out infinite;
+}
+
+@keyframes orbMove{
+
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(100px,80px);
+    }
+}
+
+@keyframes orbMove2{
+
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(-80px,-60px);
+    }
+}
+
+
+/* Radar */
+
+.radar{
+
+    position:absolute;
+
+    width:430px;
+    height:430px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border:
+        1px solid
+        rgba(79,140,255,.15);
+
+    border-radius:50%;
+
+    animation:
+        radarPulse 4s ease-in-out infinite;
+}
+
+.radar::before,
+.radar::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(79,140,255,.1);
+}
+
+.radar::before{
+
+    width:300px;
+    height:300px;
+}
+
+.radar::after{
+
+    width:160px;
+    height:160px;
+}
+
+@keyframes radarPulse{
+
+    0%,100%{
+
+        opacity:.2;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.85);
+    }
+
+    50%{
+
+        opacity:.8;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+}
+
+.radar::after{
+
+    box-shadow:
+        0 0 25px rgba(79,140,255,.2);
+}
+
+
+/* Hero content */
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:850px;
+}
+
+.alert-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:8px 17px;
+
+    margin-bottom:22px;
+
+    border-radius:30px;
+
+    background:
+        rgba(239,68,68,.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,.5);
+
+    color:var(--red-light);
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+    animation:
+        alertGlow 2s infinite;
+}
+
+.alert-dot{
+
+    width:8px;
+    height:8px;
+
+    background:var(--red);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 12px var(--red);
+
+    animation:
+        alertBlink 1s infinite;
+}
+
+@keyframes alertGlow{
+
+    0%,100%{
+        box-shadow:
+            0 0 10px
+            rgba(239,68,68,.08);
+    }
+
+    50%{
+        box-shadow:
+            0 0 28px
+            rgba(239,68,68,.35);
+    }
+}
+
+@keyframes alertBlink{
+
+    0%,100%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.4;
+        transform:scale(.7);
+    }
+}
+
+
+.hero h1{
+
+    font-size:
+        clamp(42px,6vw,68px);
+
+    line-height:1.1;
+
+    margin-bottom:20px;
+
+    animation:
+        heroEnter .8s ease both;
+}
+
+.hero h1 span{
+
+    color:var(--blue-light);
+
+    text-shadow:
+        0 0 25px
+        rgba(79,140,255,.5);
+
+    animation:
+        textGlow 3s ease-in-out infinite;
+}
+
+@keyframes textGlow{
+
+    0%,100%{
+        text-shadow:
+            0 0 15px rgba(79,140,255,.25);
+    }
+
+    50%{
+        text-shadow:
+            0 0 35px rgba(79,140,255,.7);
+    }
+}
+
+.hero p{
+
+    max-width:760px;
+
+    margin:auto;
+
+    color:var(--text-secondary);
+
+    font-size:18px;
+
+    animation:
+        heroEnter .8s ease .15s both;
+}
+
+@keyframes heroEnter{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.hero-button{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:13px 25px;
+
+    border-radius:8px;
+
+    background:var(--blue);
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+    box-shadow:
+        0 8px 25px
+        rgba(79,140,255,.2);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.hero-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.25),
+            transparent
+        );
+
+    transition:.5s;
+}
+
+.hero-button:hover::before{
+    left:100%;
+}
+
+.hero-button:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    background:var(--blue-light);
+
+    box-shadow:
+        0 15px 40px
+        rgba(79,140,255,.4);
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section{
+
+    padding:90px 25px;
+
+    position:relative;
+
+    z-index:1;
+}
+
+.container{
+
+    max-width:1100px;
+
+    margin:auto;
+}
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.section-title.visible{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+.section-title h2{
+
+    font-size:38px;
+
+    margin-bottom:10px;
+}
+
+.section-title p{
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:
+        translateY(40px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+.message-wrapper{
+
+    max-width:650px;
+
+    margin:auto;
+}
+
+.phone{
+
+    background:#050A12;
+
+    border:
+        2px solid #334155;
+
+    border-radius:30px;
+
+    padding:15px;
+
+    max-width:390px;
+
+    margin:auto;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+
+    transition:.4s;
+
+    animation:
+        phoneFloat 5s ease-in-out infinite;
+}
+
+@keyframes phoneFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+.phone:hover{
+
+    animation-play-state:paused;
+
+    transform:
+        translateY(-10px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 30px 80px
+        rgba(79,140,255,.2);
+}
+
+.phone-top{
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    padding:5px;
+
+    margin-bottom:15px;
+}
+
+.upi-message{
+
+    background:#111827;
+
+    border:
+        1px solid #374151;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    animation:
+        messageAppear .8s ease;
+}
+
+@keyframes messageAppear{
+
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.sender{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:15px;
+}
+
+.sender-icon{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    background:var(--blue);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+    box-shadow:
+        0 0 20px rgba(79,140,255,.35);
+
+    animation:
+        iconPulse 2s infinite;
+}
+
+@keyframes iconPulse{
+
+    0%,100%{
+        box-shadow:
+            0 0 10px rgba(79,140,255,.2);
+    }
+
+    50%{
+        box-shadow:
+            0 0 25px rgba(79,140,255,.6);
+    }
+}
+
+.sender-name{
+    font-weight:bold;
+}
+
+.sender-number{
+
+    font-size:12px;
+
+    color:var(--muted);
+}
+
+.upi-message p{
+
+    color:var(--text-secondary);
+
+    margin-bottom:15px;
+}
+
+.danger{
+
+    color:var(--red-light);
+
+    font-weight:bold;
+}
+
+.fake-upi-button{
+
+    display:block;
+
+    width:100%;
+
+    padding:12px;
+
+    text-align:center;
+
+    background:
+        rgba(239,68,68,.1);
+
+    border:
+        1px solid
+        rgba(239,68,68,.4);
+
+    border-radius:8px;
+
+    color:var(--red-light);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    animation:
+        dangerButton 2s infinite;
+}
+
+@keyframes dangerButton{
+
+    0%,100%{
+        box-shadow:
+            0 0 0 rgba(239,68,68,0);
+    }
+
+    50%{
+        box-shadow:
+            0 0 20px rgba(239,68,68,.25);
+    }
+}
+
+.fake-upi-button:hover{
+
+    background:
+        rgba(239,68,68,.2);
+
+    transform:
+        scale(1.02);
+}
+
+.message-warning{
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border-radius:10px;
+
+    background:
+        rgba(239,68,68,.07);
+
+    border:
+        1px solid rgba(239,68,68,.3);
+
+    color:var(--text-secondary);
+
+    display:none;
+}
+
+.message-warning.show{
+
+    display:block;
+
+    animation:
+        warningShake .5s ease;
+}
+
+@keyframes warningShake{
+
+    0%{
+        transform:scale(.9);
+        opacity:0;
+    }
+
+    60%{
+        transform:scale(1.04);
+    }
+
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+   FLOW CARDS
+========================================================= */
+
+.flow{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+}
+
+.flow-card{
+
+    background:
+        linear-gradient(
+            145deg,
+            #111C2E,
+            #0D1727
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.flow-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue),
+            transparent
+        );
+
+    transition:.6s;
+}
+
+.flow-card:hover::before{
+    left:100%;
+}
+
+.flow-card:hover{
+
+    transform:
+        translateY(-10px);
+
+    border-color:var(--blue);
+
+    box-shadow:
+        0 20px 40px
+        rgba(79,140,255,.15);
+}
+
+.flow-icon{
+
+    font-size:40px;
+
+    margin-bottom:12px;
+
+    transition:.4s;
+}
+
+.flow-card:hover .flow-icon{
+
+    transform:
+        scale(1.2)
+        rotate(5deg);
+}
+
+.flow-number{
+
+    position:absolute;
+
+    top:12px;
+    right:15px;
+
+    color:var(--blue);
+
+    font-weight:bold;
+}
+
+.flow-card h3{
+    margin-bottom:8px;
+}
+
+.flow-card p{
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   FLAGS
+========================================================= */
+
+.flags{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+}
+
+.flag{
+
+    background:
+        linear-gradient(
+            145deg,
+            #111C2E,
+            #0D1727
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:25px;
+
+    cursor:pointer;
+
+    transition:.4s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.flag::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:0;
+    height:0;
+
+    border-radius:50%;
+
+    background:
+        rgba(239,68,68,.08);
+
+    top:50%;
+    left:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    transition:.5s;
+}
+
+.flag:hover::after{
+
+    width:400px;
+    height:400px;
+}
+
+.flag:hover{
+
+    transform:
+        translateY(-8px);
+
+    border-color:var(--red);
+
+    box-shadow:
+        0 20px 40px
+        rgba(239,68,68,.12);
+}
+
+.flag-icon{
+
+    font-size:35px;
+
+    margin-bottom:10px;
+
+    position:relative;
+
+    z-index:2;
+
+    transition:.4s;
+}
+
+.flag:hover .flag-icon{
+
+    transform:
+        scale(1.2)
+        rotate(-5deg);
+}
+
+.flag h3,
+.flag p{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.flag h3{
+
+    margin-bottom:8px;
+
+    color:var(--text);
+}
+
+.flag p{
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+.flag-answer{
+
+    margin-top:15px;
+
+    padding:12px;
+
+    background:
+        rgba(239,68,68,.08);
+
+    border-left:
+        3px solid var(--red);
+
+    color:var(--red-light);
+
+    display:none;
+
+    font-size:13px;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.flag.active .flag-answer{
+
+    display:block;
+
+    animation:
+        popIn .4s ease;
+}
+
+@keyframes popIn{
+
+    from{
+        opacity:0;
+        transform:scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+
+/* =========================================================
+   RULES
+========================================================= */
+
+.rules{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:20px;
+}
+
+.rule{
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:25px;
+
+    display:flex;
+
+    gap:18px;
+
+    transition:.4s;
+}
+
+.rule:hover{
+
+    border-color:var(--teal);
+
+    transform:
+        translateX(8px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(34,211,167,.08);
+}
+
+.rule-icon{
+
+    min-width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        rgba(34,211,167,.1);
+
+    color:var(--teal);
+
+    font-size:21px;
+
+    transition:.4s;
+}
+
+.rule:hover .rule-icon{
+
+    transform:
+        rotate(360deg)
+        scale(1.1);
+
+    box-shadow:
+        0 0 20px
+        rgba(34,211,167,.2);
+}
+
+.rule h3{
+    margin-bottom:5px;
+}
+
+.rule p{
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+.quiz-section{
+    background:#0E1728;
+}
+
+.quiz-box{
+
+    max-width:850px;
+
+    margin:auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111C2E,
+            #0C1524
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:35px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.2);
+
+    transition:.3s;
+}
+
+.quiz-box:hover{
+
+    box-shadow:
+        0 25px 70px
+        rgba(79,140,255,.08);
+}
+
+.quiz-progress{
+
+    height:8px;
+
+    background:#1E293B;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    margin-bottom:25px;
+}
+
+.quiz-progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--teal)
+        );
+
+    transition:.6s;
+
+    box-shadow:
+        0 0 15px
+        rgba(79,140,255,.5);
+}
+
+.quiz-question{
+
+    font-size:23px;
+
+    margin-bottom:25px;
+}
+
+.quiz-options{
+
+    display:grid;
+
+    gap:12px;
+}
+
+.quiz-option{
+
+    padding:16px;
+
+    text-align:left;
+
+    border:
+        1px solid #334155;
+
+    background:#0B1220;
+
+    color:var(--text-secondary);
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.quiz-option::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:0;
+    height:100%;
+
+    left:0;
+    top:0;
+
+    background:
+        rgba(79,140,255,.08);
+
+    transition:.3s;
+}
+
+.quiz-option:hover::before{
+    width:100%;
+}
+
+.quiz-option:hover{
+
+    border-color:var(--blue);
+
+    transform:
+        translateX(7px);
+}
+
+.quiz-option.correct{
+
+    background:
+        rgba(34,211,167,.1);
+
+    border-color:var(--teal);
+
+    color:var(--teal);
+
+    animation:
+        correctPulse .5s ease;
+}
+
+.quiz-option.wrong{
+
+    background:
+        rgba(239,68,68,.1);
+
+    border-color:var(--red);
+
+    color:var(--red-light);
+
+    animation:
+        wrongShake .4s ease;
+}
+
+@keyframes correctPulse{
+
+    50%{
+        transform:scale(1.02);
+    }
+}
+
+@keyframes wrongShake{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    25%{
+        transform:translateX(-8px);
+    }
+
+    75%{
+        transform:translateX(8px);
+    }
+}
+
+.quiz-feedback{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:9px;
+
+    background:#0B1220;
+
+    color:var(--text-secondary);
+
+    display:none;
+}
+
+.quiz-feedback.show{
+
+    display:block;
+
+    animation:
+        popIn .4s ease;
+}
+
+.quiz-next{
+
+    margin-top:20px;
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:var(--blue);
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    display:none;
+
+    transition:.3s;
+}
+
+.quiz-next:hover{
+
+    background:var(--blue-light);
+
+    transform:
+        translateY(-3px);
+}
+
+.quiz-result{
+
+    text-align:center;
+
+    display:none;
+}
+
+.quiz-result.show{
+
+    display:block;
+
+    animation:
+        resultAppear .7s ease;
+}
+
+@keyframes resultAppear{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.quiz-score{
+
+    font-size:55px;
+
+    color:var(--teal);
+
+    font-weight:bold;
+
+    margin:20px;
+
+    text-shadow:
+        0 0 25px
+        rgba(34,211,167,.4);
+}
+
+
+/* =========================================================
+   ACTION BOX
+========================================================= */
+
+.action-box{
+
+    max-width:900px;
+
+    margin:auto;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid
+        rgba(34,211,167,.3);
+
+    border-left:
+        5px solid var(--teal);
+
+    border-radius:15px;
+
+    padding:35px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.15);
+}
+
+.action-box h2{
+
+    color:var(--teal);
+
+    margin-bottom:20px;
+}
+
+.action-list{
+
+    display:grid;
+
+    gap:14px;
+}
+
+.action{
+
+    padding:17px;
+
+    background:#0B1220;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:9px;
+
+    color:var(--text-secondary);
+
+    transition:.3s;
+}
+
+.action:hover{
+
+    border-color:var(--teal);
+
+    transform:
+        translateX(8px);
+
+    box-shadow:
+        0 5px 20px
+        rgba(34,211,167,.08);
+}
+
+
+/* =========================================================
+   FINAL MESSAGE
+========================================================= */
+
+.final-message{
+
+    background:#0E1728;
+}
+
+.final-message strong{
+
+    display:inline-block;
+
+    animation:
+        finalGlow 2s infinite;
+}
+
+@keyframes finalGlow{
+
+    0%,100%{
+        text-shadow:
+            0 0 5px rgba(34,211,167,.2);
+    }
+
+    50%{
+        text-shadow:
+            0 0 20px rgba(34,211,167,.8);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION BUTTONS
+========================================================= */
+
+.bottom-navigation{
+
+    background:#0E1728;
+
+    padding:35px 25px 45px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.bottom-navigation-container{
+
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+}
+
+.bottom-nav-button{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:52px;
+
+    padding:14px 20px;
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            #111C2E,
+            #0D1727
+        );
+
+    color:var(--text);
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.bottom-nav-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-100%;
+
+    width:100%;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue),
+            transparent
+        );
+
+    transition:.5s;
+}
+
+.bottom-nav-button:hover::before{
+    left:100%;
+}
+
+.bottom-nav-button:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:var(--blue);
+
+    background:#142238;
+
+    box-shadow:
+        0 12px 30px
+        rgba(79,140,255,.18);
+
+    color:white;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    background:var(--footer);
+
+    border-top:
+        1px solid var(--border);
+
+    padding:40px 25px;
+
+    text-align:center;
+}
+
+footer h3{
+
+    color:var(--teal);
+
+    margin-bottom:10px;
+
+    font-size:24px;
+}
+
+footer p{
+
+    color:#71859A;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .flow{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .flags{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .rules{
+        grid-template-columns:1fr;
+    }
+
+    .bottom-navigation-container{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .nav-links{
+        display:none;
+    }
+
+    section{
+        padding:65px 18px;
+    }
+
+    .hero{
+        min-height:600px;
+        padding:80px 18px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .radar{
+
+        width:300px;
+        height:300px;
+    }
+
+    .flow,
+    .flags{
+        grid-template-columns:1fr;
+    }
+
+    .quiz-box{
+        padding:25px;
+    }
+
+    .quiz-question{
+        font-size:19px;
+    }
+
+    .action-box{
+        padding:25px;
+    }
+
+    .bottom-navigation{
+        padding:30px 18px 40px;
+    }
+
+    .bottom-navigation-container{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms!important;
+
+        animation-iteration-count:1!important;
+
+        transition-duration:.01ms!important;
+    }
+}
+
+</style>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     PARTICLES
+========================================================= -->
+
+<div id="particles"></div>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav id="navbar">
+
+<div class="nav-container">
+
+<div class="logo">
+🛡️ Safe<span>Shield</span>
+</div>
+
+<ul class="nav-links">
+
+<li>
+<a href="home.html">Home</a>
+</li>
+
+<li>
+<a href="protect.html">Protect</a>
+</li>
+
+<li>
+<a href="scam.html">Scams</a>
+</li>
+
+<li>
+<a href="tool.html">Tools</a>
+</li>
+
+<li>
+<a href="checklist.html">Checklist</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="radar"></div>
+
+<div class="hero-content">
+
+<div class="alert-badge">
+
+<span class="alert-dot"></span>
+
+UPI SECURITY • STAY ALERT
+
+</div>
+
+<h1>
+
+Don't Let a Fake
+<span>Payment</span>
+Fool You.
+
+</h1>
+
+<p>
+
+UPI has made digital payments incredibly
+convenient — and scammers know it.
+
+<br><br>
+
+Learn how fake payment requests,
+QR-code tricks and "refund" scams
+can turn a simple transaction into
+a financial loss.
+
+</p>
+
+<a
+href="#scenario"
+class="hero-button"
+>
+
+💳 See the Scam
+
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SCAM SCENARIO
+========================================================= -->
+
+<section id="scenario">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+📱 Would You Trust This Message?
+</h2>
+
+<p>
+Tap the button inside the message
+to reveal why it is dangerous.
+</p>
+
+</div>
+
+
+<div class="message-wrapper reveal">
+
+<div class="phone">
+
+<div class="phone-top">
+
+10:42 AM &nbsp; • &nbsp; UPI MESSAGE
+
+</div>
+
+
+<div class="upi-message">
+
+<div class="sender">
+
+<div class="sender-icon">
+💰
+</div>
+
+<div>
+
+<div class="sender-name">
+Payment Support
+</div>
+
+<div class="sender-number">
++91 XXXXX XXXXX
+</div>
+
+</div>
+
+</div>
+
+
+<p>
+
+⚠️ Your UPI account has received
+a payment request.
+
+<br><br>
+
+To cancel an unauthorized transaction,
+
+<span class="danger">
+approve the request below.
+</span>
+
+<br><br>
+
+Failure to approve within 5 minutes
+may result in your account being
+restricted.
+
+</p>
+
+
+<div
+class="fake-upi-button"
+onclick="showMessageWarning()"
+>
+
+⚠️ Approve / Cancel Payment
+
+</div>
+
+
+<div
+class="message-warning"
+id="messageWarning"
+>
+
+🚨 <strong>SCAM ALERT!</strong>
+
+<br><br>
+
+A UPI payment request is asking you
+to authorize a transaction.
+
+<br><br>
+
+Remember:
+
+<strong>
+You do NOT receive money by entering
+your UPI PIN.
+</strong>
+
+Your UPI PIN is generally used to
+authorize payments from your account.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     HOW SCAM WORKS
+========================================================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🔍 How a UPI Scam Works
+</h2>
+
+<p>
+The scam usually follows a simple pattern.
+</p>
+
+</div>
+
+
+<div class="flow">
+
+
+<div class="flow-card reveal">
+
+<span class="flow-number">
+01
+</span>
+
+<div class="flow-icon">
+📩
+</div>
+
+<h3>
+Contact
+</h3>
+
+<p>
+The scammer contacts you with a
+believable story.
+</p>
+
+</div>
+
+
+<div class="flow-card reveal">
+
+<span class="flow-number">
+02
+</span>
+
+<div class="flow-icon">
+😨
+</div>
+
+<h3>
+Create Pressure
+</h3>
+
+<p>
+They create fear, urgency or excitement
+to make you act quickly.
+</p>
+
+</div>
+
+
+<div class="flow-card reveal">
+
+<span class="flow-number">
+03
+</span>
+
+<div class="flow-icon">
+📲
+</div>
+
+<h3>
+Send Request
+</h3>
+
+<p>
+They send a payment request,
+QR code or suspicious link.
+</p>
+
+</div>
+
+
+<div class="flow-card reveal">
+
+<span class="flow-number">
+04
+</span>
+
+<div class="flow-icon">
+💸
+</div>
+
+<h3>
+Money Lost
+</h3>
+
+<p>
+If you authorize the transaction,
+money can leave your account.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     COMMON SCAMS
+========================================================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🚨 Common UPI Scam Tricks
+</h2>
+
+<p>
+Click each card to reveal the warning sign.
+</p>
+
+</div>
+
+
+<div class="flags">
+
+
+<div
+class="flag reveal"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-icon">
+📲
+</div>
+
+<h3>
+Fake Payment Request
+</h3>
+
+<p>
+Someone claims they are sending you
+money and asks you to approve a request.
+</p>
+
+<div class="flag-answer">
+
+🚨 <strong>Red Flag:</strong>
+
+Approving a UPI request can authorize
+money leaving your account.
+
+</div>
+
+</div>
+
+
+<div
+class="flag reveal"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-icon">
+🔳
+</div>
+
+<h3>
+QR Code Scam
+</h3>
+
+<p>
+A person sends a QR code and says
+"scan this to receive money."
+</p>
+
+<div class="flag-answer">
+
+🚨 <strong>Red Flag:</strong>
+
+Scanning a QR code may initiate a
+payment rather than receive one.
+
+</div>
+
+</div>
+
+
+<div
+class="flag reveal"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-icon">
+💰
+</div>
+
+<h3>
+Fake Refund
+</h3>
+
+<p>
+Someone claims that you have a refund
+waiting and asks you to approve a payment.
+</p>
+
+<div class="flag-answer">
+
+🚨 <strong>Red Flag:</strong>
+
+A refund should not require you to
+send money to receive money.
+
+</div>
+
+</div>
+
+
+<div
+class="flag reveal"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-icon">
+🏦
+</div>
+
+<h3>
+Fake Bank Support
+</h3>
+
+<p>
+Someone pretends to be bank support and
+asks for your UPI PIN or OTP.
+</p>
+
+<div class="flag-answer">
+
+🚨 <strong>Red Flag:</strong>
+
+Never disclose your UPI PIN,
+password or OTP to an unexpected caller.
+
+</div>
+
+</div>
+
+
+<div
+class="flag reveal"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-icon">
+🎁
+</div>
+
+<h3>
+Prize Scam
+</h3>
+
+<p>
+You are told that you won money but must
+make a UPI payment to claim it.
+</p>
+
+<div class="flag-answer">
+
+🚨 <strong>Red Flag:</strong>
+
+Unexpected prizes that require payment
+are a major warning sign.
+
+</div>
+
+</div>
+
+
+<div
+class="flag reveal"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-icon">
+👨‍💼
+</div>
+
+<h3>
+Fake Buyer Scam
+</h3>
+
+<p>
+A supposed buyer sends a payment request
+while pretending to pay for your product.
+</p>
+
+<div class="flag-answer">
+
+🚨 <strong>Red Flag:</strong>
+
+Never approve a payment request simply
+because someone claims it is a payment.
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SAFETY RULES
+========================================================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🛡️ UPI Safety Rules
+</h2>
+
+<p>
+Keep these rules in mind whenever
+you make or receive a digital payment.
+</p>
+
+</div>
+
+
+<div class="rules">
+
+
+<div class="rule reveal">
+
+<div class="rule-icon">
+🔐
+</div>
+
+<div>
+
+<h3>
+Never Share Your UPI PIN
+</h3>
+
+<p>
+Your UPI PIN is confidential.
+Do not share it with callers,
+merchants or anyone else.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule reveal">
+
+<div class="rule-icon">
+🔢
+</div>
+
+<div>
+
+<h3>
+Never Share OTPs
+</h3>
+
+<p>
+Treat OTPs and verification codes
+as private security information.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule reveal">
+
+<div class="rule-icon">
+🔳
+</div>
+
+<div>
+
+<h3>
+Be Careful With QR Codes
+</h3>
+
+<p>
+Don't scan an unknown QR code just
+because someone says it will send
+money to you.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule reveal">
+
+<div class="rule-icon">
+👀
+</div>
+
+<div>
+
+<h3>
+Check Before Paying
+</h3>
+
+<p>
+Always verify the recipient, amount
+and transaction details before
+authorizing a payment.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule reveal">
+
+<div class="rule-icon">
+📞
+</div>
+
+<div>
+
+<h3>
+Verify Unexpected Calls
+</h3>
+
+<p>
+If someone claims to represent your
+bank, contact the bank independently.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule reveal">
+
+<div class="rule-icon">
+⏰
+</div>
+
+<div>
+
+<h3>
+Don't Rush
+</h3>
+
+<p>
+Scammers often use urgency.
+Take a moment to verify the request.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     QUIZ
+========================================================= -->
+
+<section
+class="quiz-section"
+id="quiz"
+>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🎯 Can You Beat the Scam?
+</h2>
+
+<p>
+Test your UPI scam awareness.
+</p>
+
+</div>
+
+
+<div class="quiz-box reveal">
+
+<div
+class="quiz-progress"
+id="quizProgressContainer"
+>
+
+<div
+class="quiz-progress-bar"
+id="quizProgress"
+></div>
+
+</div>
+
+
+<div id="quizContent">
+
+<div
+class="quiz-question"
+id="quizQuestion"
+>
+Loading question...
+</div>
+
+
+<div
+class="quiz-options"
+id="quizOptions"
+>
+</div>
+
+
+<div
+class="quiz-feedback"
+id="quizFeedback"
+>
+</div>
+
+
+<button
+class="quiz-next"
+id="quizNext"
+onclick="nextQuizQuestion()"
+>
+
+Next Question →
+
+</button>
+
+</div>
+
+
+<div
+class="quiz-result"
+id="quizResult"
+>
+
+<h2>
+Your UPI Safety Score
+</h2>
+
+<div
+class="quiz-score"
+id="quizScore"
+>
+0%
+</div>
+
+<p id="quizResultText"></p>
+
+<button
+class="hero-button"
+onclick="restartQuiz()"
+>
+
+🔄 Try Again
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     WHAT TO DO
+========================================================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🚨 What If You Made a Payment to a Scammer?
+</h2>
+
+<p>
+Don't panic. Take action quickly.
+</p>
+
+</div>
+
+
+<div class="action-box reveal">
+
+<h2>
+🛡️ Act Quickly
+</h2>
+
+
+<div class="action-list">
+
+
+<div class="action">
+
+<strong>
+1. Stop further communication.
+</strong>
+
+<br>
+
+Don't continue following instructions
+from the suspected scammer.
+
+</div>
+
+
+<div class="action">
+
+<strong>
+2. Contact your bank or payment provider.
+</strong>
+
+<br>
+
+Use an official app, website or
+verified contact channel.
+
+</div>
+
+
+<div class="action">
+
+<strong>
+3. Secure your accounts.
+</strong>
+
+<br>
+
+If you shared credentials or sensitive
+information, change them immediately.
+
+</div>
+
+
+<div class="action">
+
+<strong>
+4. Save the evidence.
+</strong>
+
+<br>
+
+Keep transaction details, messages,
+screenshots and other relevant information.
+
+</div>
+
+
+<div class="action">
+
+<strong>
+5. Report the incident.
+</strong>
+
+<br>
+
+Report suspicious activity through
+the appropriate financial institution,
+platform or official authority.
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL MESSAGE
+========================================================= -->
+
+<section class="final-message">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🔐 Remember One Thing
+</h2>
+
+<p>
+
+Receiving money and authorizing a payment
+are not the same thing.
+
+<br><br>
+
+<strong style="color:#22D3A7;font-size:22px;">
+
+Stop. Check. Verify. Then Pay.
+
+</strong>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     BOTTOM PAGE NAVIGATION
+========================================================= -->
+
+<div class="bottom-navigation">
+
+<div class="bottom-navigation-container">
+
+<a
+href="home.html"
+class="bottom-nav-button"
+>
+🏠 Home
+</a>
+
+<a
+href="QR.html"
+class="bottom-nav-button"
+>
+← QR Scam
+</a>
+
+<a
+href="scam.html"
+class="bottom-nav-button"
+>
+🚨 Scam
+</a>
+
+<a
+href="impersonation.html"
+class="bottom-nav-button"
+>
+Impersonation Scam →
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+<h3>
+🛡️ SafeShield
+</h3>
+
+<p>
+Stay alert. Protect your information.
+Think before you click.
+</p>
+
+<p style="margin-top:10px;">
+
+© 2026 SafeShield |
+Educational Privacy & Scam Awareness Website
+
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+const particleContainer =
+document.getElementById("particles");
+
+for(let i=0;i<45;i++){
+
+    const particle =
+    document.createElement("div");
+
+    particle.className="particle";
+
+    particle.style.left =
+    Math.random()*100+"%";
+
+    particle.style.animationDuration =
+    (8+Math.random()*15)+"s";
+
+    particle.style.animationDelay =
+    Math.random()*10+"s";
+
+    particle.style.opacity =
+    Math.random();
+
+    particleContainer.appendChild(particle);
+}
+
+
+/* =========================================================
+   NAVBAR SCROLL
+========================================================= */
+
+const navbar =
+document.getElementById("navbar");
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY>80){
+
+        navbar.classList.add("scrolled");
+
+    }
+
+    else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+document.querySelectorAll(
+    ".reveal,.section-title"
+);
+
+const revealObserver =
+new IntersectionObserver(
+
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add(
+                    "visible"
+                );
+
+                revealObserver.unobserve(
+                    entry.target
+                );
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold:.15
+    }
+
+);
+
+revealElements.forEach(
+    element=>{
+        revealObserver.observe(element);
+    }
+);
+
+
+/* =========================================================
+   MESSAGE WARNING
+========================================================= */
+
+function showMessageWarning(){
+
+    const warning =
+    document.getElementById(
+        "messageWarning"
+    );
+
+    warning.classList.toggle("show");
+
+}
+
+
+/* =========================================================
+   RED FLAG CARDS
+========================================================= */
+
+function toggleFlag(card){
+
+    card.classList.toggle("active");
+
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+const quizQuestions=[
+
+{
+
+question:
+"Someone sends you a QR code and says, 'Scan this to receive ₹2,000.' What should you do?",
+
+options:[
+
+"Scan it immediately",
+
+"Scan it and enter your UPI PIN",
+
+"Verify the request before doing anything",
+
+"Forward it to a friend"
+
+],
+
+correct:2,
+
+feedback:
+"Correct! Be cautious with QR codes. Don't assume that scanning one will automatically send money to you."
+
+},
+
+{
+
+question:
+"A caller claiming to be from your bank asks for your UPI PIN. What should you do?",
+
+options:[
+
+"Give them the PIN",
+
+"Give them only half the PIN",
+
+"Hang up and contact the bank through an official channel",
+
+"Ask them for their employee ID and then share it"
+
+],
+
+correct:2,
+
+feedback:
+"Correct! Never share your UPI PIN with someone who contacts you unexpectedly."
+
+},
+
+{
+
+question:
+"You receive a payment request from an unknown person. What is the safest action?",
+
+options:[
+
+"Approve it",
+
+"Ignore it and verify why you received it",
+
+"Approve it if the amount is small",
+
+"Ask them for your OTP"
+
+],
+
+correct:1,
+
+feedback:
+"Correct! An unexpected payment request should be verified before you authorize anything."
+
+},
+
+{
+
+question:
+"Someone says you need to pay ₹50 to receive a ₹5,000 refund. What is this likely to be?",
+
+options:[
+
+"Normal refund procedure",
+
+"A loyalty reward",
+
+"A potential scam",
+
+"A bank verification"
+
+],
+
+correct:2,
+
+feedback:
+"Correct! Requests to send money to receive an unexpected refund are a major warning sign."
+
+},
+
+{
+
+question:
+"Before authorizing a UPI payment, what should you check?",
+
+options:[
+
+"Only the logo",
+
+"The recipient and amount",
+
+"Only the sender's profile picture",
+
+"Nothing if the message looks official"
+
+],
+
+correct:1,
+
+feedback:
+"Correct! Always check important transaction details before authorizing a payment."
+
+}
+
+];
+
+
+let quizIndex=0;
+
+let quizScore=0;
+
+let quizAnswered=false;
+
+
+/* =========================================================
+   LOAD QUIZ
+========================================================= */
+
+function loadQuiz(){
+
+    quizAnswered=false;
+
+    const question =
+    quizQuestions[quizIndex];
+
+    document.getElementById(
+        "quizQuestion"
+    ).textContent =
+    question.question;
+
+    const options =
+    document.getElementById(
+        "quizOptions"
+    );
+
+    options.innerHTML="";
+
+
+    question.options.forEach(
+        (option,index)=>{
+
+            const button =
+            document.createElement(
+                "button"
+            );
+
+            button.className=
+            "quiz-option";
+
+            button.textContent=
+            option;
+
+            button.onclick=
+            function(){
+
+                selectQuizAnswer(
+                    index,
+                    button
+                );
+
+            };
+
+            options.appendChild(button);
+
+        }
+    );
+
+
+    document.getElementById(
+        "quizFeedback"
+    ).classList.remove("show");
+
+
+    document.getElementById(
+        "quizFeedback"
+    ).textContent="";
+
+
+    document.getElementById(
+        "quizNext"
+    ).style.display="none";
+
+
+    const progress =
+    (quizIndex/
+    quizQuestions.length)*100;
+
+
+    document.getElementById(
+        "quizProgress"
+    ).style.width=
+    progress+"%";
+
+}
+
+
+/* =========================================================
+   SELECT ANSWER
+========================================================= */
+
+function selectQuizAnswer(
+    index,
+    selectedButton
+){
+
+    if(quizAnswered){
+        return;
+    }
+
+    quizAnswered=true;
+
+    const question =
+    quizQuestions[quizIndex];
+
+    const allButtons =
+    document.querySelectorAll(
+        ".quiz-option"
+    );
+
+
+    allButtons.forEach(
+        button=>{
+            button.disabled=true;
+        }
+    );
+
+
+    if(index===question.correct){
+
+        quizScore++;
+
+        selectedButton.classList.add(
+            "correct"
+        );
+
+    }
+
+    else{
+
+        selectedButton.classList.add(
+            "wrong"
+        );
+
+        allButtons[
+            question.correct
+        ].classList.add(
+            "correct"
+        );
+
+    }
+
+
+    const feedback =
+    document.getElementById(
+        "quizFeedback"
+    );
+
+
+    feedback.textContent=
+    (
+        index===question.correct
+        ? "🟢 "
+        : "🔴 "
+    )+
+    question.feedback;
+
+
+    feedback.classList.add("show");
+
+
+    const nextButton =
+    document.getElementById(
+        "quizNext"
+    );
+
+
+    nextButton.style.display=
+    "inline-block";
+
+
+    if(
+        quizIndex===
+        quizQuestions.length-1
+    ){
+
+        nextButton.textContent=
+        "View My Score →";
+
+    }
+
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+========================================================= */
+
+function nextQuizQuestion(){
+
+    quizIndex++;
+
+    if(
+        quizIndex<
+        quizQuestions.length
+    ){
+
+        loadQuiz();
+
+    }
+
+    else{
+
+        showQuizResult();
+
+    }
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showQuizResult(){
+
+    document.getElementById(
+        "quizContent"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "quizProgressContainer"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "quizResult"
+    ).classList.add("show");
+
+
+    const percentage=
+    Math.round(
+        (quizScore/
+        quizQuestions.length)*100
+    );
+
+
+    document.getElementById(
+        "quizScore"
+    ).textContent=
+    percentage+"%";
+
+
+    let resultText;
+
+
+    if(percentage===100){
+
+        resultText=
+        "🟢 Excellent! You know how to recognize the major UPI scam warning signs.";
+
+    }
+
+    else if(percentage>=60){
+
+        resultText=
+        "🟡 Good job! You understand the basics, but there are still a few scam tricks worth reviewing.";
+
+    }
+
+    else{
+
+        resultText=
+        "🔴 Keep learning! Review the safety rules above and try the quiz again.";
+
+    }
+
+
+    document.getElementById(
+        "quizResultText"
+    ).textContent=
+    resultText;
+
+}
+
+
+/* =========================================================
+   RESTART QUIZ
+========================================================= */
+
+function restartQuiz(){
+
+    quizIndex=0;
+
+    quizScore=0;
+
+    quizAnswered=false;
+
+
+    document.getElementById(
+        "quizContent"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "quizProgressContainer"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "quizResult"
+    ).classList.remove("show");
+
+
+    loadQuiz();
+
+
+    document.getElementById(
+        "quiz"
+    ).scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadQuiz();
+
+</script>
+
+<script src="safeshield-fix.js"></script>
+</body>
+
+</html>

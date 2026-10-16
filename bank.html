@@ -1,0 +1,3813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield | Bank Account Scam Awareness</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:#07101d;
+    color:#f8fafc;
+    line-height:1.65;
+    overflow-x:hidden;
+}
+
+button,
+a{
+    font:inherit;
+}
+
+button{
+    border:0;
+}
+
+::selection{
+    background:rgba(79,140,255,.35);
+    color:#fff;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+
+    --blue:#4f8cff;
+    --blue-light:#72a1ff;
+    --blue-dark:#2868e8;
+
+    --teal:#22d3a7;
+    --teal-light:#50e5c2;
+    --teal-dark:#12a982;
+
+    --red:#ef4444;
+    --red-light:#ff6b6b;
+    --red-dark:#c92f3c;
+
+    --orange:#f59e0b;
+    --yellow:#facc15;
+
+    --bg:#07101d;
+    --bg-soft:#0b1626;
+
+    --card:#101c2d;
+    --card-light:#132238;
+
+    --border:#24364d;
+    --border-light:#304760;
+
+    --secondary:#cbd5e1;
+    --muted:#91a3b8;
+
+    --white:#ffffff;
+
+    --shadow:
+        0 20px 60px rgba(0,0,0,.25);
+
+    --shadow-blue:
+        0 20px 60px rgba(79,140,255,.12);
+
+    --shadow-red:
+        0 20px 60px rgba(239,68,68,.12);
+
+    --shadow-green:
+        0 20px 60px rgba(34,211,167,.12);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:9px;
+}
+
+::-webkit-scrollbar-track{
+    background:#050b13;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#263b55;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue);
+}
+
+
+/* =========================================================
+   BACKGROUND EFFECTS
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-5;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(79,140,255,.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 35%,
+            rgba(34,211,167,.06),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(239,68,68,.05),
+            transparent 30%
+        );
+
+    pointer-events:none;
+}
+
+.background-grid{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:55px 55px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 80%
+        );
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   FLOATING BACKGROUND ORBS
+========================================================= */
+
+.orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(2px);
+    pointer-events:none;
+    z-index:-3;
+}
+
+.orb.one{
+    width:220px;
+    height:220px;
+    top:20%;
+    left:-120px;
+    background:rgba(79,140,255,.07);
+    animation:orbFloat 12s ease-in-out infinite;
+}
+
+.orb.two{
+    width:180px;
+    height:180px;
+    right:-80px;
+    top:50%;
+    background:rgba(34,211,167,.06);
+    animation:orbFloat 15s ease-in-out infinite reverse;
+}
+
+@keyframes orbFloat{
+
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(35px,-45px);
+    }
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+nav{
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    background:
+        rgba(7,16,29,.82);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.18);
+}
+
+.nav{
+
+    width:min(1200px, calc(100% - 40px));
+    margin:auto;
+
+    min-height:76px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:25px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:var(--blue);
+
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:-.6px;
+
+    text-decoration:none;
+
+    white-space:nowrap;
+
+    transition:
+        transform .3s ease,
+        filter .3s ease;
+}
+
+.logo-icon{
+
+    width:39px;
+    height:39px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(79,140,255,.2),
+            rgba(34,211,167,.12)
+        );
+
+    border:
+        1px solid rgba(79,140,255,.3);
+
+    box-shadow:
+        0 8px 25px rgba(79,140,255,.12);
+
+    transition:.35s ease;
+}
+
+.logo span{
+    color:#fff;
+}
+
+.logo:hover{
+    transform:translateY(-2px);
+}
+
+.logo:hover .logo-icon{
+    transform:
+        rotate(-6deg)
+        scale(1.08);
+
+    box-shadow:
+        0 0 30px rgba(79,140,255,.25);
+}
+
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.links{
+
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    list-style:none;
+}
+
+.links a{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:10px 13px;
+
+    color:#b8c5d6;
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:600;
+
+    border-radius:9px;
+
+    transition:
+        color .3s ease,
+        background .3s ease,
+        transform .3s ease;
+}
+
+.links a::before{
+
+    content:"";
+
+    width:0;
+    height:2px;
+
+    position:absolute;
+
+    left:13px;
+    right:13px;
+    bottom:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--teal)
+        );
+
+    border-radius:20px;
+
+    transition:.3s ease;
+}
+
+.links a:hover{
+
+    color:#fff;
+
+    background:
+        rgba(255,255,255,.055);
+
+    transform:translateY(-2px);
+}
+
+.links a:hover::before{
+    width:calc(100% - 26px);
+}
+
+.nav-icon{
+    opacity:.8;
+    transition:.3s ease;
+}
+
+.links a:hover .nav-icon{
+    transform:
+        translateY(-2px)
+        scale(1.1);
+
+    opacity:1;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.menu-toggle{
+
+    display:none;
+
+    width:44px;
+    height:44px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid var(--border);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+}
+
+.menu-toggle:hover{
+    border-color:var(--blue);
+    background:rgba(79,140,255,.1);
+}
+
+.menu-lines{
+    width:20px;
+    margin:auto;
+
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.menu-lines span{
+    height:2px;
+    width:100%;
+    background:#fff;
+    border-radius:10px;
+    transition:.3s ease;
+}
+
+.menu-toggle.active .menu-lines span:nth-child(1){
+    transform:translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.active .menu-lines span:nth-child(2){
+    opacity:0;
+}
+
+.menu-toggle.active .menu-lines span:nth-child(3){
+    transform:translateY(-7px) rotate(-45deg);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    min-height:
+        min(720px, calc(100vh - 76px));
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:100px 20px 110px;
+
+    overflow:hidden;
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:470px;
+    height:470px;
+
+    border-radius:50%;
+
+    border:
+        1px solid rgba(239,68,68,.12);
+
+    box-shadow:
+        0 0 100px rgba(239,68,68,.04);
+
+    animation:
+        heroCircle 7s ease-in-out infinite;
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:720px;
+    height:720px;
+
+    border-radius:50%;
+
+    border:
+        1px solid rgba(79,140,255,.07);
+
+    animation:
+        heroCircle 10s ease-in-out infinite reverse;
+}
+
+@keyframes heroCircle{
+
+    0%,100%{
+        transform:scale(.9);
+        opacity:.25;
+    }
+
+    50%{
+        transform:scale(1.05);
+        opacity:.7;
+    }
+}
+
+.hero-content{
+
+    position:relative;
+    z-index:2;
+
+    width:min(900px,100%);
+
+    animation:
+        heroContent .9s ease both;
+}
+
+@keyframes heroContent{
+
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   ALERT BADGE
+========================================================= */
+
+.alert{
+
+    position:relative;
+
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    padding:9px 17px;
+
+    margin-bottom:28px;
+
+    color:#ff8a8a;
+
+    background:
+        rgba(239,68,68,.08);
+
+    border:
+        1px solid rgba(239,68,68,.35);
+
+    border-radius:50px;
+
+    font-size:12px;
+    font-weight:800;
+
+    letter-spacing:1.2px;
+
+    box-shadow:
+        0 0 0 rgba(239,68,68,0);
+
+    animation:
+        alertGlow 2.4s ease-in-out infinite;
+
+    transition:
+        transform .3s ease,
+        background .3s ease;
+}
+
+.alert:hover{
+
+    transform:
+        translateY(-3px)
+        scale(1.03);
+
+    background:
+        rgba(239,68,68,.13);
+
+    box-shadow:
+        0 10px 35px rgba(239,68,68,.16);
+}
+
+.alert-dot{
+
+    width:9px;
+    height:9px;
+
+    background:var(--red);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 0 0 rgba(239,68,68,.7);
+
+    animation:
+        alertPulse 1.5s infinite;
+}
+
+@keyframes alertPulse{
+
+    0%{
+        box-shadow:
+            0 0 0 0 rgba(239,68,68,.7);
+    }
+
+    70%{
+        box-shadow:
+            0 0 0 9px rgba(239,68,68,0);
+    }
+
+    100%{
+        box-shadow:
+            0 0 0 0 rgba(239,68,68,0);
+    }
+}
+
+@keyframes alertGlow{
+
+    0%,100%{
+        box-shadow:
+            0 0 12px rgba(239,68,68,.03);
+    }
+
+    50%{
+        box-shadow:
+            0 0 30px rgba(239,68,68,.16);
+    }
+}
+
+
+/* =========================================================
+   HERO BANK ICON
+========================================================= */
+
+.hero-icon-wrap{
+
+    width:105px;
+    height:105px;
+
+    margin:0 auto 25px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(79,140,255,.12),
+            rgba(239,68,68,.07)
+        );
+
+    border:
+        1px solid rgba(79,140,255,.25);
+
+    box-shadow:
+        0 20px 60px rgba(79,140,255,.12);
+
+    animation:
+        iconFloat 3.5s ease-in-out infinite;
+
+    transition:.4s ease;
+}
+
+.hero-icon-wrap:hover{
+
+    transform:
+        translateY(-8px)
+        rotate(-2deg)
+        scale(1.06);
+
+    border-color:
+        rgba(239,68,68,.4);
+
+    box-shadow:
+        0 25px 70px rgba(239,68,68,.15);
+}
+
+.hero-icon{
+
+    font-size:56px;
+
+    display:block;
+
+    filter:
+        drop-shadow(
+            0 8px 20px rgba(79,140,255,.3)
+        );
+}
+
+@keyframes iconFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.hero h1{
+
+    font-size:
+        clamp(42px, 7vw, 76px);
+
+    line-height:1.03;
+
+    letter-spacing:-3px;
+
+    margin-bottom:24px;
+
+    font-weight:850;
+}
+
+.hero h1 span{
+
+    color:var(--red-light);
+
+    position:relative;
+
+    display:inline-block;
+
+    text-shadow:
+        0 0 35px rgba(239,68,68,.2);
+
+    animation:
+        warningText 3s ease-in-out infinite;
+}
+
+@keyframes warningText{
+
+    0%,100%{
+        text-shadow:
+            0 0 20px rgba(239,68,68,.15);
+    }
+
+    50%{
+        text-shadow:
+            0 0 35px rgba(239,68,68,.45);
+    }
+}
+
+.hero p{
+
+    width:min(760px,100%);
+
+    margin:auto;
+
+    color:#b8c5d6;
+
+    font-size:
+        clamp(15px, 2vw, 18px);
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.hero-btn{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+
+    margin-top:32px;
+
+    padding:15px 24px;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--blue-dark)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius:11px;
+
+    font-weight:750;
+
+    box-shadow:
+        0 12px 35px rgba(79,140,255,.2);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        filter .3s ease;
+}
+
+.hero-btn:hover{
+
+    transform:
+        translateY(-5px);
+
+    filter:brightness(1.08);
+
+    box-shadow:
+        0 18px 45px rgba(79,140,255,.32);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+section{
+    padding:85px 20px;
+}
+
+.container{
+
+    width:min(980px,100%);
+    margin:auto;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card{
+
+    position:relative;
+
+    padding:36px;
+
+    margin-bottom:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,29,46,.96),
+            rgba(11,23,39,.96)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.075);
+
+    border-radius:19px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.16);
+
+    overflow:hidden;
+
+    opacity:0;
+    transform:translateY(35px);
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-90px;
+    top:-90px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(79,140,255,.08),
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+.card.visible{
+
+    opacity:1;
+    transform:translateY(0);
+}
+
+.card:hover{
+
+    border-color:
+        rgba(79,140,255,.28);
+
+    box-shadow:
+        0 25px 65px rgba(0,0,0,.25),
+        0 0 35px rgba(79,140,255,.04);
+}
+
+.card h2{
+
+    position:relative;
+
+    color:#78a4ff;
+
+    font-size:28px;
+
+    line-height:1.2;
+
+    margin-bottom:15px;
+
+    letter-spacing:-.6px;
+}
+
+.card p{
+    color:var(--secondary);
+}
+
+.card strong{
+    color:#f8fafc;
+}
+
+
+/* =========================================================
+   MESSAGE / SCAM BOX
+========================================================= */
+
+.message{
+
+    position:relative;
+
+    margin-top:27px;
+
+    padding:27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #091321,
+            #0b1728
+        );
+
+    border:
+        1px solid rgba(239,68,68,.22);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:
+        inset 0 0 35px rgba(239,68,68,.025);
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.message::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:4px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--red-light),
+            var(--red)
+        );
+
+    box-shadow:
+        0 0 20px rgba(239,68,68,.55);
+}
+
+.message::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-80px;
+    right:-80px;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(239,68,68,.12),
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+.message:hover{
+
+    transform:translateY(-5px);
+
+    border-color:
+        rgba(239,68,68,.42);
+
+    box-shadow:
+        0 20px 50px rgba(239,68,68,.08);
+}
+
+.message-header{
+
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+
+    color:var(--muted);
+
+    font-size:12px;
+    font-weight:700;
+
+    letter-spacing:.6px;
+
+    margin-bottom:15px;
+}
+
+.message-title{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:var(--red-light);
+
+    font-size:20px;
+    font-weight:800;
+
+    margin-bottom:12px;
+
+    animation:
+        scamWarning 2s ease-in-out infinite;
+}
+
+@keyframes scamWarning{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    5%{
+        transform:translateX(-2px);
+    }
+
+    10%{
+        transform:translateX(2px);
+    }
+
+    15%{
+        transform:translateX(-2px);
+    }
+
+    20%{
+        transform:translateX(0);
+    }
+}
+
+.danger{
+
+    color:#ff8585 !important;
+
+    font-weight:800;
+
+    padding:12px 14px;
+
+    background:
+        rgba(239,68,68,.055);
+
+    border-left:
+        3px solid rgba(239,68,68,.5);
+
+    border-radius:7px;
+}
+
+
+/* =========================================================
+   FAKE LINK
+========================================================= */
+
+.fake-link{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:21px;
+
+    padding:14px;
+
+    color:#ff8585;
+
+    background:
+        rgba(239,68,68,.07);
+
+    border:
+        1px solid rgba(239,68,68,.35);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:750;
+
+    overflow:hidden;
+
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+.fake-link::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:70%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.08),
+            transparent
+        );
+
+    transition:.6s ease;
+}
+
+.fake-link:hover{
+
+    transform:
+        translateY(-3px);
+
+    background:
+        rgba(239,68,68,.13);
+
+    border-color:
+        rgba(239,68,68,.6);
+
+    box-shadow:
+        0 10px 30px rgba(239,68,68,.1);
+}
+
+.fake-link:hover::before{
+    left:130%;
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    opacity:0;
+
+    transition:
+        max-height .55s ease,
+        opacity .4s ease;
+}
+
+.reveal.open{
+
+    max-height:320px;
+
+    opacity:1;
+
+    margin-top:15px;
+}
+
+.explanation{
+
+    padding:19px;
+
+    color:#b8c8d8;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,211,167,.07),
+            rgba(34,211,167,.025)
+        );
+
+    border:
+        1px solid rgba(34,211,167,.25);
+
+    border-radius:11px;
+
+    box-shadow:
+        0 10px 30px rgba(34,211,167,.04);
+}
+
+.explanation strong{
+    color:var(--teal-light);
+}
+
+
+/* =========================================================
+   RED FLAGS
+========================================================= */
+
+.flags{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+    gap:15px;
+
+    margin-top:22px;
+}
+
+.flag{
+
+    position:relative;
+
+    padding:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0d1929,
+            #0b1625
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:13px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        border-color .35s ease,
+        background .35s ease,
+        box-shadow .35s ease;
+}
+
+.flag::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--red-light),
+            var(--red)
+        );
+
+    transform:scaleY(0);
+
+    transform-origin:center;
+
+    transition:.35s ease;
+}
+
+.flag::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:90px;
+    height:90px;
+
+    right:-45px;
+    bottom:-45px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(239,68,68,.12),
+            transparent 70%
+        );
+
+    opacity:0;
+
+    transition:.35s ease;
+}
+
+.flag:hover{
+
+    transform:
+        translateY(-7px)
+        scale(1.01);
+
+    border-color:
+        rgba(239,68,68,.55);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(239,68,68,.09),
+            #0d1929
+        );
+
+    box-shadow:
+        0 15px 35px rgba(239,68,68,.08);
+}
+
+.flag:hover::before,
+.flag.active::before{
+    transform:scaleY(1);
+}
+
+.flag:hover::after,
+.flag.active::after{
+    opacity:1;
+}
+
+.flag.active{
+
+    border-color:
+        rgba(34,211,167,.55);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34,211,167,.08),
+            #0d1929
+        );
+
+    box-shadow:
+        0 15px 35px rgba(34,211,167,.08);
+}
+
+.flag.active::before{
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--teal-light),
+            var(--teal)
+        );
+}
+
+.flag-title{
+
+    position:relative;
+    z-index:2;
+
+    font-weight:800;
+
+    color:#edf2f7;
+
+    margin-bottom:4px;
+
+    transition:.3s ease;
+}
+
+.flag:hover .flag-title{
+    color:#ff8a8a;
+}
+
+.flag.active .flag-title{
+    color:var(--teal-light);
+}
+
+.flag-info{
+
+    position:relative;
+    z-index:2;
+
+    max-height:0;
+
+    overflow:hidden;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    opacity:0;
+
+    transition:
+        max-height .45s ease,
+        opacity .35s ease,
+        margin .35s ease;
+}
+
+.flag.active .flag-info{
+
+    max-height:130px;
+
+    margin-top:9px;
+
+    opacity:1;
+}
+
+
+/* =========================================================
+   RISK METER
+========================================================= */
+
+.risk-box{
+
+    margin-top:25px;
+
+    padding:23px;
+
+    background:
+        rgba(5,13,24,.65);
+
+    border:
+        1px solid rgba(239,68,68,.16);
+
+    border-radius:13px;
+}
+
+.risk-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:11px;
+
+    color:var(--secondary);
+
+    font-size:14px;
+}
+
+.risk-header strong{
+    color:var(--red-light);
+}
+
+.risk-bar{
+
+    height:13px;
+
+    background:#182437;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+        inset 0 2px 6px rgba(0,0,0,.35);
+}
+
+.risk-fill{
+
+    width:95%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--orange),
+            var(--red),
+            #ff5b68
+        );
+
+    border-radius:30px;
+
+    box-shadow:
+        0 0 18px rgba(239,68,68,.28);
+
+    animation:
+        riskLoad 1.6s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes riskLoad{
+
+    from{
+        width:0;
+    }
+
+    to{
+        width:95%;
+    }
+}
+
+.risk-label{
+
+    margin-top:9px;
+
+    text-align:right;
+
+    color:#ff8585;
+
+    font-size:13px;
+    font-weight:800;
+}
+
+
+/* =========================================================
+   PROTECTION / GREEN TIPS
+========================================================= */
+
+.protection-list{
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:21px;
+}
+
+.protection{
+
+    position:relative;
+
+    padding:17px 19px;
+
+    color:#cbd5e1;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0d1929,
+            #0b1625
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.protection::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--teal-light),
+            var(--teal)
+        );
+
+    transform:scaleY(0);
+
+    transition:.35s ease;
+}
+
+.protection::after{
+
+    content:"✓";
+
+    position:absolute;
+
+    right:20px;
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        scale(.4);
+
+    color:var(--teal-light);
+
+    font-weight:900;
+
+    opacity:0;
+
+    transition:.3s ease;
+}
+
+.protection:hover{
+
+    transform:
+        translateX(7px)
+        translateY(-2px);
+
+    border-color:
+        rgba(34,211,167,.5);
+
+    color:#effff9;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34,211,167,.08),
+            #0d1929
+        );
+
+    box-shadow:
+        0 12px 30px rgba(34,211,167,.07);
+}
+
+.protection:hover::before{
+    transform:scaleY(1);
+}
+
+.protection.done{
+
+    border-color:
+        rgba(34,211,167,.55);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34,211,167,.11),
+            rgba(34,211,167,.035)
+        );
+
+    color:var(--teal-light);
+
+    transform:translateX(5px);
+}
+
+.protection.done::before{
+    transform:scaleY(1);
+}
+
+.protection.done::after{
+
+    opacity:1;
+
+    transform:
+        translateY(-50%)
+        scale(1);
+}
+
+
+/* =========================================================
+   WHAT TO DO
+========================================================= */
+
+.action-step{
+
+    padding:17px 18px;
+
+    margin-top:13px;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        background .3s ease;
+}
+
+.action-step:hover{
+
+    transform:
+        translateX(7px);
+
+    border-color:
+        rgba(79,140,255,.3);
+
+    background:
+        rgba(79,140,255,.045);
+}
+
+.action-step strong{
+    color:#8fb1ff;
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+.quiz{
+
+    text-align:center;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(79,140,255,.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 90%,
+            rgba(34,211,167,.07),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #101d30,
+            #0b1727
+        );
+}
+
+.quiz h2{
+    color:var(--teal-light);
+}
+
+.quiz-question{
+
+    margin-top:21px;
+
+    padding:25px;
+
+    color:#f8fafc;
+
+    background:
+        rgba(6,15,27,.7);
+
+    border:
+        1px solid rgba(79,140,255,.16);
+
+    border-radius:13px;
+
+    box-shadow:
+        inset 0 0 30px rgba(79,140,255,.025);
+}
+
+.options{
+
+    display:grid;
+
+    gap:11px;
+
+    margin-top:20px;
+}
+
+.option{
+
+    width:100%;
+
+    padding:16px 18px;
+
+    text-align:left;
+
+    color:#e6edf5;
+
+    background:
+        #0a1422;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.option:hover{
+
+    transform:
+        translateX(7px);
+
+    border-color:
+        rgba(79,140,255,.65);
+
+    background:
+        rgba(79,140,255,.07);
+
+    box-shadow:
+        0 8px 25px rgba(79,140,255,.07);
+}
+
+.option.correct{
+
+    border-color:
+        var(--teal);
+
+    color:var(--teal-light);
+
+    background:
+        rgba(34,211,167,.09);
+
+    box-shadow:
+        0 8px 30px rgba(34,211,167,.08);
+}
+
+.option.wrong{
+
+    border-color:
+        var(--red);
+
+    color:var(--red-light);
+
+    background:
+        rgba(239,68,68,.09);
+
+    animation:
+        shake .35s ease;
+}
+
+@keyframes shake{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    25%{
+        transform:translateX(-6px);
+    }
+
+    75%{
+        transform:translateX(6px);
+    }
+}
+
+.option:disabled{
+    cursor:default;
+}
+
+.option:disabled:hover{
+    transform:none;
+}
+
+
+/* =========================================================
+   QUIZ RESULT
+========================================================= */
+
+#result{
+
+    display:none;
+
+    margin-top:20px;
+
+    padding:16px;
+
+    border-radius:11px;
+
+    font-weight:750;
+
+    animation:
+        resultIn .4s ease;
+}
+
+@keyframes resultIn{
+
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   BUTTON SYSTEM
+========================================================= */
+
+.button-row{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:14px;
+
+    margin-top:28px;
+}
+
+.button{
+
+    position:relative;
+
+    min-height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:800;
+
+    overflow:hidden;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        border-color .3s ease,
+        background .3s ease;
+}
+
+.button::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-100%;
+
+    top:0;
+
+    width:70%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.12),
+            transparent
+        );
+
+    transition:.65s ease;
+}
+
+.button:hover::before{
+    left:130%;
+}
+
+.button:hover{
+    transform:translateY(-5px);
+}
+
+
+/* HOME */
+
+.button.home{
+
+    color:#062118;
+
+    background:
+        linear-gradient(
+            135deg,
+            #31dfb2,
+            #16b890
+        );
+
+    border:
+        1px solid rgba(78,236,195,.45);
+
+    box-shadow:
+        0 12px 35px rgba(34,211,167,.13);
+}
+
+.button.home:hover{
+
+    box-shadow:
+        0 18px 45px rgba(34,211,167,.25);
+
+    filter:brightness(1.06);
+}
+
+
+/* SCAMS */
+
+.button.secondary{
+
+    color:#dbe5ef;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.13);
+}
+
+.button.secondary:hover{
+
+    color:#ff9a9a;
+
+    border-color:
+        rgba(239,68,68,.55);
+
+    background:
+        rgba(239,68,68,.07);
+
+    box-shadow:
+        0 15px 40px rgba(239,68,68,.1);
+}
+
+
+/* NEXT */
+
+.button.next{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #2868e8
+        );
+
+    border:
+        1px solid rgba(114,161,255,.4);
+
+    box-shadow:
+        0 12px 35px rgba(79,140,255,.15);
+}
+
+.button.next:hover{
+
+    box-shadow:
+        0 18px 45px rgba(79,140,255,.28);
+
+    filter:brightness(1.08);
+}
+
+
+/* =========================================================
+   TRY AGAIN BUTTON
+========================================================= */
+
+.try-again{
+
+    margin-top:20px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid var(--border);
+
+    color:#cbd5e1;
+
+    padding:12px 20px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.3s ease;
+}
+
+.try-again:hover{
+
+    color:#fff;
+
+    border-color:var(--blue);
+
+    background:
+        rgba(79,140,255,.08);
+
+    transform:translateY(-3px);
+}
+
+
+/* =========================================================
+   FINAL MESSAGE
+========================================================= */
+
+.final-message{
+
+    position:relative;
+
+    padding:40px;
+
+    margin-top:28px;
+    margin-bottom:25px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,211,167,.07),
+            rgba(79,140,255,.04)
+        );
+
+    border:
+        1px solid rgba(34,211,167,.22);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 20px 55px rgba(34,211,167,.05);
+}
+
+.final-message::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+    height:250px;
+
+    border-radius:50%;
+
+    top:-150px;
+    right:-100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(34,211,167,.13),
+            transparent 70%
+        );
+}
+
+.final-message h2{
+
+    position:relative;
+
+    color:var(--teal-light);
+
+    margin-bottom:10px;
+
+    font-size:25px;
+}
+
+.final-message p{
+
+    position:relative;
+
+    color:var(--secondary);
+
+    max-width:700px;
+
+    margin:auto;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    position:relative;
+
+    padding:45px 20px;
+
+    text-align:center;
+
+    background:
+        #050b14;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+}
+
+.footer-logo{
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    color:var(--teal-light);
+
+    font-size:20px;
+    font-weight:800;
+
+    margin-bottom:7px;
+}
+
+footer p{
+
+    color:#71859a;
+
+    font-size:13px;
+}
+
+.footer-small{
+    margin-top:9px;
+}
+
+
+/* =========================================================
+   FOCUS STATES
+========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+.flag:focus-visible,
+.protection:focus-visible,
+.fake-link:focus-visible{
+
+    outline:
+        2px solid var(--teal);
+
+    outline-offset:4px;
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+@media(max-width:850px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .links{
+
+        position:absolute;
+
+        left:20px;
+        right:20px;
+        top:70px;
+
+        padding:10px;
+
+        display:flex;
+        flex-direction:column;
+        align-items:stretch;
+
+        background:
+            rgba(8,17,30,.96);
+
+        border:
+            1px solid rgba(255,255,255,.1);
+
+        border-radius:15px;
+
+        backdrop-filter:blur(20px);
+
+        box-shadow:
+            0 20px 50px rgba(0,0,0,.35);
+
+        opacity:0;
+        visibility:hidden;
+
+        transform:
+            translateY(-10px)
+            scale(.98);
+
+        transition:
+            opacity .3s ease,
+            transform .3s ease,
+            visibility .3s ease;
+    }
+
+    .links.active{
+
+        opacity:1;
+        visibility:visible;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    .links a{
+
+        padding:13px 15px;
+
+        border-radius:10px;
+    }
+
+    .links a::before{
+        display:none;
+    }
+
+    .links a:hover{
+        transform:none;
+    }
+
+    .button-row{
+        grid-template-columns:1fr;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:700px){
+
+    .nav{
+        width:min(100% - 28px,1200px);
+    }
+
+    section{
+        padding:65px 16px;
+    }
+
+    .hero{
+        min-height:600px;
+        padding:75px 18px 90px;
+    }
+
+    .hero::before{
+        width:330px;
+        height:330px;
+    }
+
+    .hero::after{
+        width:500px;
+        height:500px;
+    }
+
+    .hero h1{
+
+        font-size:
+            clamp(40px, 12vw, 58px);
+
+        letter-spacing:-2px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .hero-icon-wrap{
+        width:90px;
+        height:90px;
+    }
+
+    .hero-icon{
+        font-size:48px;
+    }
+
+    .card{
+        padding:25px;
+        border-radius:16px;
+    }
+
+    .card h2{
+        font-size:24px;
+    }
+
+    .flags{
+        grid-template-columns:1fr;
+    }
+
+    .message{
+        padding:22px;
+    }
+
+    .message-header{
+        flex-direction:column;
+        gap:3px;
+    }
+
+    .final-message{
+        padding:30px 22px;
+    }
+
+    .button{
+        width:100%;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media(max-width:420px){
+
+    .logo{
+        font-size:20px;
+    }
+
+    .logo-icon{
+        width:35px;
+        height:35px;
+    }
+
+    .hero{
+        padding-top:65px;
+    }
+
+    .alert{
+        font-size:10px;
+        letter-spacing:.8px;
+    }
+
+    .hero h1{
+        font-size:39px;
+    }
+
+    .hero-btn{
+        width:100%;
+    }
+
+    .card{
+        padding:21px;
+    }
+
+    .risk-box{
+        padding:18px;
+    }
+
+    .protection{
+        padding-right:48px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+
+        scroll-behavior:auto !important;
+
+        transition-duration:.01ms !important;
+    }
+}
+
+</style>
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+<div class="background-grid"></div>
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+
+            <span class="logo-icon">🛡️</span>
+
+            Safe<span>Shield</span>
+
+        </a>
+
+
+        <ul class="links" id="navLinks">
+
+            <li>
+                <a href="home.html">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="protect.html">
+                    <span class="nav-icon">🛡️</span>
+                    Protect
+                </a>
+            </li>
+
+            <li>
+                <a href="scam.html">
+                    <span class="nav-icon">🚨</span>
+                    Scams
+                </a>
+            </li>
+
+            <li>
+                <a href="tool.html">
+                    <span class="nav-icon">🧰</span>
+                    Tools
+                </a>
+            </li>
+
+            <li>
+                <a href="checklist.html">
+                    <span class="nav-icon">✓</span>
+                    Checklist
+                </a>
+            </li>
+
+        </ul>
+
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+
+            <span class="menu-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+
+        <div class="alert">
+
+            <span class="alert-dot"></span>
+
+            SCAM ALERT • BANK FRAUD
+
+        </div>
+
+
+        <div class="hero-icon-wrap">
+
+            <span class="hero-icon">🏦</span>
+
+        </div>
+
+
+        <h1>
+
+            Your Bank Account
+            <br>
+
+            Isn't <span>Blocked.</span>
+
+        </h1>
+
+
+        <p>
+
+            Bank scammers create fear by pretending to be your bank
+            and claiming that your account has suspicious activity.
+
+            They want you to panic, click a link, share an OTP or reveal
+            your banking information before you have time to think.
+
+        </p>
+
+
+        <a
+            href="#challenge"
+            class="hero-btn"
+        >
+
+            🎯
+            Test Your Scam-Sensing Skills
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main>
+
+<section>
+
+<div class="container">
+
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<div class="card reveal-card">
+
+    <h2>
+        🏦 How Does a Bank Scam Work?
+    </h2>
+
+    <p>
+
+        A bank scam usually begins with an unexpected SMS,
+        email, phone call or social media message.
+
+        The scammer pretends to represent your bank and claims
+        there is a problem with your account.
+
+    </p>
+
+    <br>
+
+    <p>
+
+        They may say:
+
+        <strong>
+            "Your account has been blocked."
+        </strong>
+
+        or
+
+        <strong>
+            "Suspicious activity has been detected."
+        </strong>
+
+    </p>
+
+    <br>
+
+    <p>
+
+        The goal is to make you panic so that you click a fake
+        link or provide sensitive information such as your
+        password, card details or OTP.
+
+    </p>
+
+
+    <div class="message">
+
+        <div class="message-header">
+
+            <span>
+                📩 UNKNOWN BANK MESSAGE
+            </span>
+
+            <span>
+                Just now
+            </span>
+
+        </div>
+
+
+        <div class="message-title">
+
+            ⚠️ URGENT: ACCOUNT SECURITY ALERT
+
+        </div>
+
+
+        <p>
+
+            Your bank account has been temporarily restricted
+            because suspicious activity was detected.
+
+        </p>
+
+
+        <br>
+
+
+        <p class="danger">
+
+            Your account may be permanently blocked.
+            Verify your account immediately.
+
+        </p>
+
+
+        <div
+            class="fake-link"
+            id="fakeLink"
+            tabindex="0"
+            role="button"
+        >
+
+            🔗 Verify Account
+
+        </div>
+
+
+        <div
+            class="reveal"
+            id="bankReveal"
+        >
+
+            <div class="explanation">
+
+                <strong>🚨 STOP!</strong>
+
+                This message is using fear and urgency
+                to make you act quickly.
+
+                A genuine bank communication should not
+                require you to reveal your OTP, password
+                or banking credentials through an unexpected link.
+
+                Instead, open your official banking app yourself
+                or contact your bank through a trusted method.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     RED FLAGS
+========================================================= -->
+
+<div class="card reveal-card">
+
+    <h2>
+        🚨 Hunt For The Red Flags
+    </h2>
+
+    <p>
+
+        Hover over each warning sign, then click it to
+        reveal why scammers use it.
+
+    </p>
+
+
+    <div class="flags">
+
+
+        <div
+            class="flag"
+            tabindex="0"
+            role="button"
+        >
+
+            <div class="flag-title">
+                ⏰ Urgent Deadline
+            </div>
+
+            <div class="flag-info">
+
+                Scammers create a short deadline to stop you
+                from thinking carefully or checking with your bank.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flag"
+            tabindex="0"
+            role="button"
+        >
+
+            <div class="flag-title">
+                🔢 OTP Request
+            </div>
+
+            <div class="flag-info">
+
+                Never share an OTP with someone who contacts
+                you unexpectedly. An OTP can be used to authorize
+                transactions or access accounts.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flag"
+            tabindex="0"
+            role="button"
+        >
+
+            <div class="flag-title">
+                🔗 Unexpected Link
+            </div>
+
+            <div class="flag-info">
+
+                The link may lead to a fake banking website
+                designed to steal your login details or card information.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flag"
+            tabindex="0"
+            role="button"
+        >
+
+            <div class="flag-title">
+                🔑 Password Request
+            </div>
+
+            <div class="flag-info">
+
+                Your password should remain private.
+                Never provide your banking password through
+                a message or unexpected call.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flag"
+            tabindex="0"
+            role="button"
+        >
+
+            <div class="flag-title">
+                📱 Fake Customer Support
+            </div>
+
+            <div class="flag-info">
+
+                Scammers may pretend to be bank employees
+                and ask you to install software or share
+                sensitive information.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flag"
+            tabindex="0"
+            role="button"
+        >
+
+            <div class="flag-title">
+                😨 Fear & Panic
+            </div>
+
+            <div class="flag-info">
+
+                Threats such as "your account will be closed"
+                are designed to make you react emotionally
+                instead of verifying the message.
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="risk-box">
+
+        <div class="risk-header">
+
+            <span>
+                🚨 Scam Risk
+            </span>
+
+            <strong>
+                VERY HIGH
+            </strong>
+
+        </div>
+
+
+        <div class="risk-bar">
+
+            <div class="risk-fill"></div>
+
+        </div>
+
+
+        <div class="risk-label">
+
+            95% Suspicious
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     PROTECTION
+========================================================= -->
+
+<div class="card reveal-card">
+
+    <h2>
+        🛡️ How To Protect Yourself
+    </h2>
+
+    <p>
+
+        Tap each safety rule after you've checked it.
+
+        These green safety tips are designed to help
+        you build safer banking habits.
+
+    </p>
+
+
+    <div class="protection-list">
+
+
+        <div
+            class="protection"
+            tabindex="0"
+            role="button"
+        >
+
+            ⬜ Never share your OTP.
+
+        </div>
+
+
+        <div
+            class="protection"
+            tabindex="0"
+            role="button"
+        >
+
+            ⬜ Never share your banking password.
+
+        </div>
+
+
+        <div
+            class="protection"
+            tabindex="0"
+            role="button"
+        >
+
+            ⬜ Don't use unexpected banking links.
+
+        </div>
+
+
+        <div
+            class="protection"
+            tabindex="0"
+            role="button"
+        >
+
+            ⬜ Open your banking app yourself.
+
+        </div>
+
+
+        <div
+            class="protection"
+            tabindex="0"
+            role="button"
+        >
+
+            ⬜ Contact your bank through a trusted method.
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     WHAT TO DO
+========================================================= -->
+
+<div class="card reveal-card">
+
+    <h2>
+        🔐 What Should You Do?
+    </h2>
+
+
+    <div class="action-step">
+
+        <strong>1. STOP</strong>
+
+        <br>
+
+        Don't click the link or call the phone
+        number included in the suspicious message.
+
+    </div>
+
+
+    <div class="action-step">
+
+        <strong>2. OPEN YOUR BANK APP</strong>
+
+        <br>
+
+        Access your bank's official application yourself
+        rather than using a link from the message.
+
+    </div>
+
+
+    <div class="action-step">
+
+        <strong>3. VERIFY</strong>
+
+        <br>
+
+        If you're still concerned, contact your bank using
+        the number printed on your card or another trusted source.
+
+    </div>
+
+
+    <div class="action-step">
+
+        <strong>4. NEVER SHARE OTPs</strong>
+
+        <br>
+
+        A legitimate bank employee should not ask you to
+        reveal a confidential OTP over an unexpected message
+        or call.
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     QUIZ
+========================================================= -->
+
+<div
+    class="card quiz reveal-card"
+    id="challenge"
+>
+
+    <h2>
+        🎯 Can You Beat The Scam?
+    </h2>
+
+    <p>
+        You receive this message:
+    </p>
+
+
+    <div class="quiz-question">
+
+        <strong>
+
+            ⚠️ "Your bank account will be blocked today.
+            Click here immediately to verify your account."
+
+        </strong>
+
+    </div>
+
+
+    <p style="margin-top:20px;">
+
+        What's the safest response?
+
+    </p>
+
+
+    <div class="options">
+
+
+        <button
+            class="option"
+            data-correct="false"
+        >
+
+            🔗 Click the link immediately
+
+        </button>
+
+
+        <button
+            class="option"
+            data-correct="true"
+        >
+
+            🏦 Open your official banking app yourself
+
+        </button>
+
+
+        <button
+            class="option"
+            data-correct="false"
+        >
+
+            🔢 Reply with your OTP
+
+        </button>
+
+
+        <button
+            class="option"
+            data-correct="false"
+        >
+
+            📞 Call the number in the message
+
+        </button>
+
+
+    </div>
+
+
+    <div id="result"></div>
+
+
+    <button
+        class="try-again"
+        id="resetQuiz"
+    >
+
+        🔄 Try Again
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================================================
+     FINAL MESSAGE
+========================================================= -->
+
+<div class="final-message">
+
+    <h2>
+        🧠 Remember This
+    </h2>
+
+    <p>
+
+        Your bank should never be the reason you panic.
+
+        <br><br>
+
+        <strong>
+            Stop. Verify. Use official channels.
+        </strong>
+
+        <br><br>
+
+        Never let a frightening message push you into
+        revealing an OTP, password or banking information.
+
+    </p>
+
+</div>
+
+
+
+<!-- =========================================================
+     BOTTOM NAVIGATION
+========================================================= -->
+
+<div class="button-row">
+
+
+    <a
+        href="home.html"
+        class="button home"
+    >
+
+        🏠
+        <span>Home Page</span>
+
+    </a>
+
+
+    <a
+        href="scam.html"
+        class="button secondary"
+    >
+
+        🚨
+        <span>All Scams</span>
+
+    </a>
+
+
+    <a
+        href="prize.html"
+        class="button next"
+    >
+
+        <span>Next Scam → 🎁 Prize Scam</span>
+
+    </a>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="footer-logo">
+
+        🛡️ SafeShield
+
+    </div>
+
+    <p>
+
+        Stay alert. Protect your information.
+        Think before you click.
+
+    </p>
+
+    <p class="footer-small">
+
+        © 2026 SafeShield |
+        Educational Privacy & Scam Awareness Website
+
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+const menuToggle =
+    document.getElementById("menuToggle");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+menuToggle.addEventListener("click", () => {
+
+    const isOpen =
+        navLinks.classList.toggle("active");
+
+    menuToggle.classList.toggle(
+        "active",
+        isOpen
+    );
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        isOpen
+    );
+
+});
+
+
+/* Close mobile menu after clicking a link */
+
+document.querySelectorAll(".links a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        navLinks.classList.remove("active");
+
+        menuToggle.classList.remove("active");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   BANK MESSAGE REVEAL
+========================================================= */
+
+const fakeLink =
+    document.getElementById("fakeLink");
+
+const bankReveal =
+    document.getElementById("bankReveal");
+
+
+function revealBank(){
+
+    bankReveal.classList.toggle("open");
+
+}
+
+
+fakeLink.addEventListener("click", revealBank);
+
+
+fakeLink.addEventListener("keydown", (event) => {
+
+    if(
+        event.key === "Enter" ||
+        event.key === " "
+    ){
+
+        event.preventDefault();
+
+        revealBank();
+
+    }
+
+});
+
+
+/* =========================================================
+   RED FLAGS
+========================================================= */
+
+const flags =
+    document.querySelectorAll(".flag");
+
+
+flags.forEach(flag => {
+
+    function toggle(){
+
+        flag.classList.toggle("active");
+
+    }
+
+
+    flag.addEventListener("click", toggle);
+
+
+    flag.addEventListener("keydown", event => {
+
+        if(
+            event.key === "Enter" ||
+            event.key === " "
+        ){
+
+            event.preventDefault();
+
+            toggle();
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   PROTECTION CHECKLIST
+========================================================= */
+
+const protections =
+    document.querySelectorAll(".protection");
+
+
+protections.forEach(item => {
+
+    function toggleProtection(){
+
+        item.classList.toggle("done");
+
+
+        if(item.classList.contains("done")){
+
+            item.innerHTML =
+                "✅ " +
+                item.innerText
+                    .replace("⬜ ", "")
+                    .replace("✅ ", "");
+
+        }
+        else{
+
+            item.innerHTML =
+                "⬜ " +
+                item.innerText
+                    .replace("⬜ ", "")
+                    .replace("✅ ", "");
+
+        }
+
+    }
+
+
+    item.addEventListener(
+        "click",
+        toggleProtection
+    );
+
+
+    item.addEventListener(
+        "keydown",
+        event => {
+
+            if(
+                event.key === "Enter" ||
+                event.key === " "
+            ){
+
+                event.preventDefault();
+
+                toggleProtection();
+
+            }
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+const options =
+    document.querySelectorAll(".option");
+
+const result =
+    document.getElementById("result");
+
+const resetQuiz =
+    document.getElementById("resetQuiz");
+
+
+options.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        options.forEach(item => {
+
+            item.disabled = true;
+
+        });
+
+
+        const correct =
+            option.dataset.correct === "true";
+
+
+        if(correct){
+
+            option.classList.add("correct");
+
+            result.innerHTML =
+                "🟢 Excellent! You spotted the trap. " +
+                "Use your bank's official app or a trusted " +
+                "contact method instead of following an " +
+                "unexpected message.";
+
+            result.style.color =
+                "#50e5c2";
+
+            result.style.background =
+                "rgba(34,211,167,.08)";
+
+            result.style.border =
+                "1px solid rgba(34,211,167,.2)";
+
+        }
+        else{
+
+            option.classList.add("wrong");
+
+            result.innerHTML =
+                "🔴 Not quite. Don't use links or phone " +
+                "numbers provided in suspicious messages. " +
+                "Verify through an official banking channel.";
+
+            result.style.color =
+                "#ff8585";
+
+            result.style.background =
+                "rgba(239,68,68,.08)";
+
+            result.style.border =
+                "1px solid rgba(239,68,68,.2)";
+
+        }
+
+
+        result.style.display =
+            "block";
+
+    });
+
+});
+
+
+/* =========================================================
+   RESET QUIZ
+========================================================= */
+
+resetQuiz.addEventListener("click", () => {
+
+    options.forEach(option => {
+
+        option.disabled = false;
+
+        option.classList.remove("correct");
+
+        option.classList.remove("wrong");
+
+    });
+
+
+    result.style.display =
+        "none";
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const cards =
+    document.querySelectorAll(".reveal-card");
+
+
+const observer =
+    new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+cards.forEach(card => {
+
+    observer.observe(card);
+
+});
+
+
+/* =========================================================
+   HERO MOUSE PARALLAX
+========================================================= */
+
+const heroIconWrap =
+    document.querySelector(".hero-icon-wrap");
+
+
+document.addEventListener("mousemove", event => {
+
+    if(window.innerWidth <= 700){
+
+        return;
+
+    }
+
+
+    const x =
+        (window.innerWidth / 2 - event.clientX) / 80;
+
+    const y =
+        (window.innerHeight / 2 - event.clientY) / 80;
+
+
+    heroIconWrap.style.transform =
+        `translate(${x}px, ${y}px)`;
+
+});
+
+
+/* Reset hero icon when mouse leaves */
+
+document.addEventListener("mouseleave", () => {
+
+    heroIconWrap.style.transform =
+        "";
+
+});
+
+
+/* =========================================================
+   CLOSE MOBILE MENU WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener("click", event => {
+
+    if(
+        !event.target.closest(".nav") &&
+        navLinks.classList.contains("active")
+    ){
+
+        navLinks.classList.remove("active");
+
+        menuToggle.classList.remove("active");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   ESCAPE KEY CLOSES MOBILE MENU
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+    if(event.key === "Escape"){
+
+        navLinks.classList.remove("active");
+
+        menuToggle.classList.remove("active");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+});
+
+</script>
+
+<script src="safeshield-fix.js"></script>
+</body>
+</html>

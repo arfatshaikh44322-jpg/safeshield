@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - Prize Scam</title>
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0B1220;
+    color:#F8FAFC;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+
+    --blue:#4F8CFF;
+    --blue-light:#6A9CFF;
+
+    --teal:#22D3A7;
+
+    --red:#EF4444;
+    --red-light:#FF6B6B;
+
+    --orange:#F59E0B;
+    --yellow:#FACC15;
+
+    --bg:#0B1220;
+    --card:#111C2E;
+    --card-light:#0E1728;
+
+    --border:#26364D;
+
+    --secondary:#CBD5E1;
+    --muted:#94A3B8;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#080E19;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#26364D;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue);
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+nav{
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    background:rgba(11,18,32,.94);
+
+    border-bottom:1px solid var(--border);
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+    0 5px 25px rgba(0,0,0,.15);
+}
+
+.nav{
+
+    max-width:1200px;
+    margin:auto;
+
+    padding:16px 25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+
+/* LOGO */
+
+.logo{
+
+    font-size:24px;
+    font-weight:bold;
+
+    color:var(--blue);
+
+    cursor:pointer;
+
+    transition:
+    transform .3s ease,
+    text-shadow .3s ease;
+}
+
+.logo span{
+    color:white;
+}
+
+.logo:hover{
+
+    transform:scale(1.04);
+
+    text-shadow:
+    0 0 20px
+    rgba(79,140,255,.55);
+}
+
+
+/* NAV LINKS */
+
+.links{
+
+    display:flex;
+
+    gap:28px;
+
+    list-style:none;
+}
+
+.links a{
+
+    position:relative;
+
+    color:var(--secondary);
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    padding:5px 0;
+
+    transition:
+    color .3s ease,
+    transform .3s ease;
+}
+
+.links a:hover{
+
+    color:var(--teal);
+
+    transform:translateY(-2px);
+}
+
+
+/* NAV UNDERLINE */
+
+.links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-6px;
+
+    width:0;
+    height:2px;
+
+    background:var(--teal);
+
+    border-radius:10px;
+
+    transform:translateX(-50%);
+
+    transition:
+    width .3s ease;
+}
+
+.links a:hover::after{
+    width:100%;
+}
+
+
+/* ACTIVE PAGE */
+
+.links a.active{
+
+    color:var(--blue);
+}
+
+.links a.active::after{
+
+    width:100%;
+
+    background:var(--blue);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    position:relative;
+
+    min-height:560px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:100px 20px;
+
+    overflow:hidden;
+
+    background:
+
+    radial-gradient(
+        circle at 50% 30%,
+        rgba(239,68,68,.16),
+        transparent 32%
+    ),
+
+    radial-gradient(
+        circle at 50% 80%,
+        rgba(79,140,255,.09),
+        transparent 50%
+    );
+}
+
+
+/* HERO CIRCLES */
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    border-radius:50%;
+
+    border:
+    1px solid
+    rgba(239,68,68,.12);
+
+    animation:
+    pulseCircle 4s infinite;
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:620px;
+    height:620px;
+
+    border-radius:50%;
+
+    border:
+    1px solid
+    rgba(79,140,255,.06);
+
+    animation:
+    pulseCircle 5s infinite reverse;
+}
+
+
+@keyframes pulseCircle{
+
+    0%,100%{
+        transform:scale(.9);
+        opacity:.3;
+    }
+
+    50%{
+        transform:scale(1.05);
+        opacity:.8;
+    }
+}
+
+
+/* HERO CONTENT */
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:850px;
+
+    transform:
+    translate(
+        var(--mouse-x,0px),
+        var(--mouse-y,0px)
+    );
+
+    transition:
+    transform .2s ease;
+}
+
+
+/* HERO ICON */
+
+.hero-icon{
+
+    font-size:80px;
+
+    margin-bottom:15px;
+
+    display:inline-block;
+
+    animation:
+    giftFloat 3s ease-in-out infinite;
+
+    filter:
+    drop-shadow(
+        0 0 20px
+        rgba(239,68,68,.35)
+    );
+}
+
+
+@keyframes giftFloat{
+
+    0%,100%{
+
+        transform:
+        translateY(0)
+        rotate(-3deg);
+    }
+
+    50%{
+
+        transform:
+        translateY(-18px)
+        rotate(3deg);
+    }
+}
+
+
+/* ALERT */
+
+.alert{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    background:
+    rgba(239,68,68,.08);
+
+    border:
+    1px solid
+    rgba(239,68,68,.4);
+
+    color:var(--red-light);
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+    margin-bottom:20px;
+
+    animation:
+    alertGlow 2s infinite;
+}
+
+
+.alert-dot{
+
+    width:8px;
+    height:8px;
+
+    background:var(--red);
+
+    border-radius:50%;
+
+    box-shadow:
+    0 0 12px
+    var(--red);
+
+    animation:
+    blink 1s infinite;
+}
+
+
+@keyframes blink{
+
+    50%{
+        opacity:.3;
+        transform:scale(.7);
+    }
+}
+
+
+@keyframes alertGlow{
+
+    0%,100%{
+
+        box-shadow:
+        0 0 5px
+        rgba(239,68,68,.05);
+    }
+
+    50%{
+
+        box-shadow:
+        0 0 25px
+        rgba(239,68,68,.25);
+    }
+}
+
+
+/* HERO TITLE */
+
+.hero h1{
+
+    font-size:
+    clamp(42px,7vw,70px);
+
+    line-height:1.1;
+
+    margin-bottom:20px;
+
+    animation:
+    heroEnter .8s ease both;
+}
+
+.hero h1 span{
+
+    color:var(--red-light);
+
+    text-shadow:
+    0 0 25px
+    rgba(239,68,68,.25);
+}
+
+
+.hero p{
+
+    max-width:760px;
+
+    margin:auto;
+
+    color:var(--secondary);
+
+    font-size:18px;
+
+    animation:
+    heroEnter .8s ease .15s both;
+}
+
+
+@keyframes heroEnter{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(25px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+    }
+}
+
+
+/* =====================================================
+   HERO BUTTON
+===================================================== */
+
+.hero-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    margin-top:30px;
+
+    padding:13px 22px;
+
+    min-height:46px;
+
+    background:var(--blue);
+
+    border:1px solid var(--blue);
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:9px;
+
+    font-weight:bold;
+
+    transition:
+    transform .3s ease,
+    background .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.hero-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:var(--blue-light);
+
+    border-color:var(--blue-light);
+
+    box-shadow:
+    0 10px 30px
+    rgba(79,140,255,.28);
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+section{
+
+    padding:80px 20px;
+}
+
+.container{
+
+    max-width:950px;
+
+    margin:auto;
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+
+    background:var(--card);
+
+    border:
+    1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:35px;
+
+    margin-bottom:25px;
+
+    opacity:0;
+
+    transform:
+    translateY(35px)
+    scale(.98);
+
+    transition:
+    opacity .7s ease,
+    transform .7s cubic-bezier(.2,.8,.2,1),
+    border-color .35s ease,
+    box-shadow .35s ease;
+}
+
+
+.card.visible{
+
+    opacity:1;
+
+    transform:
+    translateY(0)
+    scale(1);
+}
+
+
+.card:hover{
+
+    transform:
+    translateY(-7px)
+    scale(1.005);
+
+    border-color:
+    rgba(79,140,255,.6);
+
+    box-shadow:
+    0 18px 45px
+    rgba(79,140,255,.10);
+}
+
+
+.card h2{
+
+    color:var(--blue);
+
+    margin-bottom:15px;
+
+    font-size:28px;
+}
+
+
+.card p{
+
+    color:var(--secondary);
+}
+
+
+/* =====================================================
+   FAKE PRIZE MESSAGE
+===================================================== */
+
+.message{
+
+    margin-top:25px;
+
+    background:#091321;
+
+    border:
+    1px solid #334155;
+
+    border-radius:14px;
+
+    padding:25px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+.message::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:4px;
+    height:100%;
+
+    background:var(--red);
+
+    box-shadow:
+    0 0 20px
+    rgba(239,68,68,.6);
+}
+
+
+.message-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-bottom:15px;
+}
+
+
+.message-title{
+
+    color:var(--red-light);
+
+    font-size:21px;
+
+    font-weight:bold;
+
+    margin-bottom:12px;
+}
+
+
+.prize-money{
+
+    font-size:38px;
+
+    font-weight:bold;
+
+    color:var(--yellow);
+
+    text-shadow:
+    0 0 20px
+    rgba(250,204,21,.25);
+
+    margin:15px 0;
+
+    animation:
+    moneyGlow 2s infinite;
+}
+
+
+@keyframes moneyGlow{
+
+    50%{
+
+        text-shadow:
+        0 0 35px
+        rgba(250,204,21,.45);
+    }
+}
+
+
+.danger{
+
+    color:var(--red-light);
+
+    font-weight:bold;
+}
+
+
+/* FAKE BUTTON */
+
+.fake-button{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    padding:13px;
+
+    background:
+    rgba(239,68,68,.1);
+
+    border:
+    1px solid
+    rgba(239,68,68,.4);
+
+    border-radius:8px;
+
+    color:var(--red-light);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+
+.fake-button:hover{
+
+    background:
+    rgba(239,68,68,.18);
+
+    transform:
+    translateY(-3px);
+
+    box-shadow:
+    0 0 20px
+    rgba(239,68,68,.15);
+}
+
+
+/* =====================================================
+   REVEAL
+===================================================== */
+
+.reveal{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    transition:
+    max-height .5s ease;
+
+    margin-top:15px;
+}
+
+
+.reveal.open{
+
+    max-height:300px;
+}
+
+
+.explanation{
+
+    padding:18px;
+
+    background:
+    rgba(34,211,167,.06);
+
+    border:
+    1px solid
+    rgba(34,211,167,.25);
+
+    border-radius:10px;
+
+    color:var(--secondary);
+}
+
+
+.explanation strong{
+
+    color:var(--teal);
+}
+
+
+/* =====================================================
+   RED FLAGS
+===================================================== */
+
+.flags{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.flag{
+
+    padding:20px;
+
+    background:#0E1728;
+
+    border:
+    1px solid var(--border);
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    position:relative;
+}
+
+
+.flag:hover{
+
+    transform:
+    translateY(-5px);
+
+    border-color:
+    var(--red);
+
+    box-shadow:
+    0 10px 25px
+    rgba(239,68,68,.08);
+}
+
+
+.flag.active{
+
+    border-color:
+    var(--teal);
+
+    background:
+    rgba(34,211,167,.07);
+
+    box-shadow:
+    0 0 20px
+    rgba(34,211,167,.08);
+}
+
+
+.flag-title{
+
+    font-weight:bold;
+
+    margin-bottom:5px;
+}
+
+
+.flag.active .flag-title{
+
+    color:var(--teal);
+}
+
+
+.flag-info{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    transition:
+    max-height .4s ease;
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+.flag.active .flag-info{
+
+    max-height:100px;
+
+    margin-top:8px;
+}
+
+
+/* =====================================================
+   RISK METER
+===================================================== */
+
+.risk-box{
+
+    margin-top:25px;
+
+    padding:22px;
+
+    background:#091321;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+}
+
+
+.risk-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+
+    color:var(--secondary);
+}
+
+
+.risk-bar{
+
+    height:12px;
+
+    background:#1E293B;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+
+.risk-fill{
+
+    width:92%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        var(--orange),
+        var(--red)
+    );
+
+    border-radius:20px;
+
+    animation:
+    riskLoad 1.5s ease;
+}
+
+
+@keyframes riskLoad{
+
+    from{
+        width:0;
+    }
+
+    to{
+        width:92%;
+    }
+}
+
+
+.risk-label{
+
+    color:var(--red-light);
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+    text-align:right;
+}
+
+
+/* =====================================================
+   CHECKLIST
+===================================================== */
+
+.checklist{
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+
+.check{
+
+    padding:16px 18px;
+
+    background:#0E1728;
+
+    border:
+    1px solid var(--border);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+
+.check:hover{
+
+    transform:
+    translateX(6px);
+
+    border-color:
+    var(--teal);
+}
+
+
+.check.done{
+
+    border-color:
+    var(--teal);
+
+    background:
+    rgba(34,211,167,.08);
+
+    color:var(--teal);
+}
+
+
+.progress{
+
+    margin-top:20px;
+
+    height:8px;
+
+    background:#1E293B;
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+
+.progress-fill{
+
+    width:0%;
+
+    height:100%;
+
+    background:var(--teal);
+
+    transition:.5s;
+}
+
+
+.progress-text{
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+.quiz{
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(79,140,255,.08),
+        rgba(34,211,167,.05)
+    );
+}
+
+
+.quiz h2{
+
+    color:var(--teal);
+}
+
+
+.quiz-question{
+
+    margin-top:20px;
+
+    padding:25px;
+
+    background:#0E1728;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+}
+
+
+.options{
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+
+.option{
+
+    width:100%;
+
+    padding:15px;
+
+    background:#0B1220;
+
+    border:
+    1px solid var(--border);
+
+    color:white;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    text-align:left;
+}
+
+
+.option:hover{
+
+    transform:
+    translateX(6px);
+
+    border-color:
+    var(--blue);
+
+    box-shadow:
+    0 5px 20px
+    rgba(79,140,255,.08);
+}
+
+
+.option:active{
+
+    transform:scale(.97);
+}
+
+
+.option.correct{
+
+    border-color:
+    var(--teal);
+
+    color:var(--teal);
+
+    background:
+    rgba(34,211,167,.1);
+}
+
+
+.option.wrong{
+
+    border-color:
+    var(--red);
+
+    color:var(--red-light);
+
+    background:
+    rgba(239,68,68,.1);
+}
+
+
+#result{
+
+    display:none;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   CONSTANT BUTTON SYSTEM
+===================================================== */
+
+.button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    padding:13px 22px;
+
+    min-height:46px;
+
+    border-radius:9px;
+
+    background:var(--blue);
+
+    border:1px solid var(--blue);
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:
+    transform .3s ease,
+    background .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+
+.button:hover{
+
+    transform:translateY(-4px);
+
+    background:var(--blue-light);
+
+    border-color:var(--blue-light);
+
+    box-shadow:
+    0 10px 30px
+    rgba(79,140,255,.28);
+}
+
+
+.button:active{
+
+    transform:scale(.96);
+}
+
+
+/* SECONDARY */
+
+.button.secondary{
+
+    background:transparent;
+
+    border:1px solid var(--border);
+
+    color:var(--secondary);
+}
+
+
+.button.secondary:hover{
+
+    background:
+    rgba(34,211,167,.06);
+
+    border-color:var(--teal);
+
+    color:var(--teal);
+
+    box-shadow:
+    0 10px 25px
+    rgba(34,211,167,.12);
+}
+
+
+/* HOME */
+
+.button.home{
+
+    background:var(--teal);
+
+    border-color:var(--teal);
+
+    color:#06150F;
+}
+
+
+.button.home:hover{
+
+    background:#36E6B8;
+
+    border-color:#36E6B8;
+
+    color:#06150F;
+
+    box-shadow:
+    0 10px 30px
+    rgba(34,211,167,.25);
+}
+
+
+/* PREVIOUS */
+
+.button.previous{
+
+    background:
+    rgba(239,68,68,.10);
+
+    border:
+    1px solid
+    rgba(239,68,68,.45);
+
+    color:var(--red-light);
+}
+
+
+.button.previous:hover{
+
+    background:
+    rgba(239,68,68,.18);
+
+    border-color:var(--red);
+
+    color:white;
+
+    box-shadow:
+    0 10px 30px
+    rgba(239,68,68,.18);
+}
+
+
+/* NEXT */
+
+.button.next{
+
+    background:var(--blue);
+
+    border-color:var(--blue);
+
+    color:white;
+}
+
+
+.button.next:hover{
+
+    background:var(--blue-light);
+
+    border-color:var(--blue-light);
+}
+
+
+/* BUTTON ROW */
+
+.button-row{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-top:40px;
+}
+
+
+/* =====================================================
+   FINAL MESSAGE
+===================================================== */
+
+.final-message{
+
+    text-align:center;
+
+    padding:40px;
+
+    border:
+    1px solid
+    rgba(34,211,167,.25);
+
+    background:
+    rgba(34,211,167,.04);
+
+    border-radius:16px;
+
+    animation:
+    finalGlow 4s infinite;
+}
+
+
+@keyframes finalGlow{
+
+    0%,100%{
+
+        box-shadow:
+        0 0 0
+        rgba(34,211,167,0);
+    }
+
+    50%{
+
+        box-shadow:
+        0 0 35px
+        rgba(34,211,167,.07);
+    }
+}
+
+
+.final-message h2{
+
+    color:var(--teal);
+
+    margin-bottom:10px;
+}
+
+
+.final-message p{
+
+    color:var(--secondary);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    background:#080E19;
+
+    border-top:
+    1px solid var(--border);
+
+    padding:40px;
+
+    text-align:center;
+}
+
+
+footer h3{
+
+    color:var(--teal);
+}
+
+
+footer p{
+
+    color:#71859A;
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    .links{
+
+        display:none;
+    }
+
+    .flags{
+
+        grid-template-columns:1fr;
+    }
+
+    .card{
+
+        padding:25px;
+    }
+
+    section{
+
+        padding:60px 18px;
+    }
+
+    .hero{
+
+        min-height:500px;
+    }
+
+    .hero-icon{
+
+        font-size:65px;
+    }
+
+    .hero h1{
+
+        font-size:42px;
+    }
+
+    .button-row{
+
+        flex-direction:column;
+    }
+
+    .button{
+
+        width:100%;
+
+        text-align:center;
+    }
+
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+    }
+
+}
+
+</style>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+
+<div class="nav">
+
+<div class="logo">
+🛡️ Safe<span>Shield</span>
+</div>
+
+<ul class="links">
+
+<li>
+<a href="home.html">Home</a>
+</li>
+
+<li>
+<a href="protect.html">Protect</a>
+</li>
+
+<li>
+<a href="scam.html" class="active">Scams</a>
+</li>
+
+<li>
+<a href="tool.html">Tools</a>
+</li>
+
+<li>
+<a href="checklist.html">Checklist</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<div class="hero">
+
+<div class="hero-content">
+
+<div class="alert">
+
+<span class="alert-dot"></span>
+
+SCAM ALERT • PRIZE FRAUD
+
+</div>
+
+
+<div class="hero-icon">
+🎁
+</div>
+
+
+<h1>
+
+You Didn't Enter.
+<br>
+
+So Why Did You <span>Win?</span>
+
+</h1>
+
+
+<p>
+
+Prize scams are designed to make you feel
+excited before you have time to think.
+
+A message promises money, a phone, a gift card
+or a luxury prize — then asks for your money
+or personal information.
+
+</p>
+
+
+<a
+href="#challenge"
+class="hero-btn"
+>
+
+🎯 Test Your Scam-Sensing Skills
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<!-- HOW IT WORKS -->
+
+<div class="card">
+
+<h2>
+🎁 How Does a Prize Scam Work?
+</h2>
+
+<p>
+
+The scam usually starts with an unexpected
+message claiming that you've won something.
+
+The scammer may pretend to represent a
+company, lottery, shopping website,
+celebrity or competition.
+
+</p>
+
+<br>
+
+<p>
+
+The next step is usually a request:
+
+<strong>
+"Pay a small fee to receive your prize."
+</strong>
+
+</p>
+
+
+<div class="message">
+
+<div class="message-header">
+
+<span>
+📩 UNKNOWN MESSAGE
+</span>
+
+<span>
+Just now
+</span>
+
+</div>
+
+
+<div class="message-title">
+
+🎉 CONGRATULATIONS! YOU'VE WON!
+
+</div>
+
+
+<p>
+
+You have been selected as the winner
+of our special customer reward.
+
+</p>
+
+
+<div class="prize-money">
+
+₹5,00,000
+
+</div>
+
+
+<p>
+
+Claim your prize before the offer expires.
+
+</p>
+
+
+<p class="danger">
+
+⚠️ Pay ₹999 processing fee to release
+your prize.
+
+</p>
+
+
+<div
+class="fake-button"
+onclick="revealPrize()"
+>
+
+🎁 Claim Your Prize
+
+</div>
+
+
+<div
+class="reveal"
+id="prizeReveal"
+>
+
+<div class="explanation">
+
+<strong>🚨 STOP!</strong>
+
+<br><br>
+
+This is where the scam becomes obvious.
+
+The message is asking you to pay money
+before receiving an unexpected reward.
+
+A legitimate prize should not require
+you to hand over sensitive financial
+information or send money simply to
+"unlock" it.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RED FLAGS -->
+
+<div class="card">
+
+<h2>
+🚨 Hunt For The Red Flags
+</h2>
+
+<p>
+
+Click each warning sign to see why
+a scammer uses it.
+
+</p>
+
+
+<div class="flags">
+
+
+<div
+class="flag"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-title">
+🎁 Unexpected Prize
+</div>
+
+<div class="flag-info">
+
+If you never entered a contest,
+an unexpected winning message
+should immediately make you suspicious.
+
+</div>
+
+</div>
+
+
+<div
+class="flag"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-title">
+💰 Pay Before You Receive
+</div>
+
+<div class="flag-info">
+
+Requests for processing fees,
+release fees or taxes should
+be independently verified.
+
+</div>
+
+</div>
+
+
+<div
+class="flag"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-title">
+⏰ Artificial Deadline
+</div>
+
+<div class="flag-info">
+
+"Only 10 minutes left!" is designed
+to make you act before you think.
+
+</div>
+
+</div>
+
+
+<div
+class="flag"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-title">
+🔗 Suspicious Link
+</div>
+
+<div class="flag-info">
+
+The link may lead to a fake website
+designed to steal your information.
+
+</div>
+
+</div>
+
+
+<div
+class="flag"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-title">
+🔑 Personal Information
+</div>
+
+<div class="flag-info">
+
+Scammers may ask for your bank details,
+passwords, card information or identity
+documents.
+
+</div>
+
+</div>
+
+
+<div
+class="flag"
+onclick="toggleFlag(this)"
+>
+
+<div class="flag-title">
+🤫 Keep It Secret
+</div>
+
+<div class="flag-info">
+
+Scammers may discourage you from
+checking with friends, family or
+the actual organization.
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="risk-box">
+
+<div class="risk-header">
+
+<span>
+🚨 Scam Risk
+</span>
+
+<strong>
+VERY HIGH
+</strong>
+
+</div>
+
+
+<div class="risk-bar">
+
+<div class="risk-fill"></div>
+
+</div>
+
+
+<div class="risk-label">
+
+92% Suspicious
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CHECKLIST -->
+
+<div class="card">
+
+<h2>
+🛡️ Before You Believe It...
+</h2>
+
+<p>
+
+Tap each statement after checking it.
+Can you complete the safety checklist?
+
+</p>
+
+
+<div class="checklist">
+
+
+<div
+class="check"
+onclick="toggleCheck(this)"
+>
+
+⬜ Did I actually enter this contest?
+
+</div>
+
+
+<div
+class="check"
+onclick="toggleCheck(this)"
+>
+
+⬜ Do I know the organization sending this?
+
+</div>
+
+
+<div
+class="check"
+onclick="toggleCheck(this)"
+>
+
+⬜ Have I independently verified the prize?
+
+</div>
+
+
+<div
+class="check"
+onclick="toggleCheck(this)"
+>
+
+⬜ Am I being asked to send money?
+
+</div>
+
+
+<div
+class="check"
+onclick="toggleCheck(this)"
+>
+
+⬜ Am I being asked for sensitive information?
+
+</div>
+
+
+</div>
+
+
+<div class="progress">
+
+<div
+class="progress-fill"
+id="progressFill"
+></div>
+
+</div>
+
+
+<div
+class="progress-text"
+id="progressText"
+>
+
+0 / 5 checks completed
+
+</div>
+
+</div>
+
+
+<!-- WHAT TO DO -->
+
+<div class="card">
+
+<h2>
+🔐 What Should You Do?
+</h2>
+
+
+<p>
+
+<strong>1. STOP</strong><br>
+
+Don't click the link or contact the number
+provided in the message.
+
+</p>
+
+<br>
+
+
+<p>
+
+<strong>2. VERIFY</strong><br>
+
+Find the organization's official website
+yourself and check whether the promotion
+actually exists.
+
+</p>
+
+<br>
+
+
+<p>
+
+<strong>3. DON'T PAY</strong><br>
+
+Don't send money simply because someone
+claims you have won a prize.
+
+</p>
+
+<br>
+
+
+<p>
+
+<strong>4. DON'T SHARE</strong><br>
+
+Never provide passwords, OTPs or sensitive
+banking information to claim an unexpected
+reward.
+
+</p>
+
+</div>
+
+
+<!-- QUIZ -->
+
+<div
+class="card quiz"
+id="challenge"
+>
+
+<h2>
+🎯 Can You Beat The Scam?
+</h2>
+
+
+<p>
+You receive this message:
+</p>
+
+
+<div class="quiz-question">
+
+<strong>
+
+🎉 "Congratulations! You have won
+₹10,00,000! Pay ₹2,000 today to
+release your prize."
+
+</strong>
+
+</div>
+
+
+<p>
+
+What's the safest response?
+
+</p>
+
+
+<div class="options">
+
+
+<button
+class="option"
+onclick="answer(this,false)"
+>
+
+💰 Pay the ₹2,000 fee
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,true)"
+>
+
+🔍 Ignore the payment request and
+verify the claim independently
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,false)"
+>
+
+🔢 Send your OTP to prove your identity
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,false)"
+>
+
+🔗 Click the link immediately
+
+</button>
+
+
+</div>
+
+
+<div id="result">
+</div>
+
+
+<button
+class="button"
+onclick="resetQuiz()"
+style="margin-top:20px;"
+>
+
+🔄 Try Again
+
+</button>
+
+</div>
+
+
+<!-- FINAL MESSAGE -->
+
+<div class="final-message">
+
+<h2>
+🧠 Remember This
+</h2>
+
+
+<p>
+
+If you didn't enter it,
+you probably didn't win it.
+
+<br><br>
+
+If you have to pay to receive it,
+stop and verify it.
+
+<br><br>
+
+Your excitement should never
+override your security.
+
+</p>
+
+</div>
+
+
+<!-- PAGE NAVIGATION -->
+
+<div class="button-row">
+
+
+<a
+href="home.html"
+class="button home"
+>
+
+🏠 Home
+
+</a>
+
+
+<a
+href="bank.html"
+class="button previous"
+>
+
+← Previous: Bank Scam
+
+</a>
+
+
+<a
+href="scam.html"
+class="button secondary"
+>
+
+🚨 All Scams
+
+</a>
+
+
+<a
+href="job.html"
+class="button next"
+>
+
+Next: Job Scam →
+
+</a>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+<h3>
+🛡️ SafeShield
+</h3>
+
+
+<p>
+
+Stay alert. Protect your information.
+Think before you click.
+
+</p>
+
+
+<p style="margin-top:10px;">
+
+© 2026 SafeShield |
+Educational Privacy & Scam Awareness Website
+
+</p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   REVEAL PRIZE
+===================================================== */
+
+function revealPrize(){
+
+    const reveal =
+    document.getElementById("prizeReveal");
+
+    reveal.classList.toggle("open");
+
+}
+
+
+/* =====================================================
+   RED FLAGS
+===================================================== */
+
+function toggleFlag(flag){
+
+    flag.classList.toggle("active");
+
+}
+
+
+/* =====================================================
+   CHECKLIST
+===================================================== */
+
+function toggleCheck(check){
+
+    check.classList.toggle("done");
+
+    if(check.classList.contains("done")){
+
+        check.innerHTML =
+        "✅ " +
+        check.innerText.replace("⬜ ","");
+
+    }
+
+    else{
+
+        check.innerHTML =
+        "⬜ " +
+        check.innerText.replace("✅ ","");
+
+    }
+
+    updateProgress();
+
+}
+
+
+function updateProgress(){
+
+    const checks =
+    document.querySelectorAll(".check");
+
+    const completed =
+    document.querySelectorAll(".check.done").length;
+
+    const percentage =
+    (completed / checks.length) * 100;
+
+    document.getElementById("progressFill")
+    .style.width =
+    percentage + "%";
+
+    document.getElementById("progressText")
+    .innerText =
+    completed +
+    " / " +
+    checks.length +
+    " checks completed";
+
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+function answer(button,correct){
+
+    const options =
+    document.querySelectorAll(".option");
+
+    options.forEach(option => {
+
+        option.disabled = true;
+
+    });
+
+
+    const result =
+    document.getElementById("result");
+
+
+    if(correct){
+
+        button.classList.add("correct");
+
+        result.innerHTML =
+        "🟢 Excellent! You spotted the trap. " +
+        "An unexpected prize combined with a payment request " +
+        "is a major warning sign.";
+
+        result.style.color =
+        "#22D3A7";
+
+        result.style.background =
+        "rgba(34,211,167,.08)";
+
+    }
+
+    else{
+
+        button.classList.add("wrong");
+
+        result.innerHTML =
+        "🔴 Not quite. The safest response is to stop " +
+        "and independently verify the prize without " +
+        "using links or contact details from the message.";
+
+        result.style.color =
+        "#FF6B6B";
+
+        result.style.background =
+        "rgba(239,68,68,.08)";
+
+    }
+
+
+    result.style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   RESET QUIZ
+===================================================== */
+
+function resetQuiz(){
+
+    const options =
+    document.querySelectorAll(".option");
+
+    options.forEach(option => {
+
+        option.disabled = false;
+
+        option.classList.remove("correct");
+
+        option.classList.remove("wrong");
+
+    });
+
+
+    const result =
+    document.getElementById("result");
+
+    result.style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+const cards =
+document.querySelectorAll(".card");
+
+
+const observer =
+new IntersectionObserver(
+
+    entries => {
+
+        entries.forEach(entry => {
+
+            if(entry.isIntersecting){
+
+                const index =
+                [...cards].indexOf(entry.target);
+
+                setTimeout(() => {
+
+                    entry.target.classList.add("visible");
+
+                }, index * 100);
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold:.12
+    }
+
+);
+
+
+cards.forEach(card => {
+
+    observer.observe(card);
+
+});
+
+
+/* =====================================================
+   HERO MOUSE PARALLAX
+===================================================== */
+
+document.addEventListener(
+"mousemove",
+function(e){
+
+    const hero =
+    document.querySelector(".hero");
+
+    if(!hero) return;
+
+
+    const x =
+    (e.clientX / window.innerWidth - .5) * 10;
+
+    const y =
+    (e.clientY / window.innerHeight - .5) * 10;
+
+
+    hero.style.setProperty(
+        "--mouse-x",
+        `${x}px`
+    );
+
+
+    hero.style.setProperty(
+        "--mouse-y",
+        `${y}px`
+    );
+
+});
+
+
+</script>
+
+
+<script src="safeshield-fix.js"></script>
+</body>
+
+</html>

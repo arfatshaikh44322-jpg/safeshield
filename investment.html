@@ -1,0 +1,2786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - Investment Scam</title>
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #0B1220;
+    color: #F8FAFC;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   COLORS
+===================================================== */
+
+:root {
+    --bg: #0B1220;
+    --bg-secondary: #0E1728;
+    --card: #111C2E;
+
+    --blue: #4F8CFF;
+    --blue-light: #6A9CFF;
+
+    --teal: #22D3A7;
+
+    --text: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --muted: #94A3B8;
+
+    --border: #26364D;
+
+    --red: #EF4444;
+    --red-light: #FF6B6B;
+
+    --orange: #F59E0B;
+
+    --footer: #080E19;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(11,18,32,0.95);
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(12px);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--blue);
+
+    transition: 0.3s;
+}
+
+.logo:hover {
+    text-shadow: 0 0 18px rgba(79,140,255,0.8);
+    transform: scale(1.03);
+}
+
+.logo span {
+    color: white;
+}
+
+
+/* =====================================================
+   NAV LINKS
+===================================================== */
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    color: var(--text-secondary);
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--teal);
+}
+
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--teal);
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    position: relative;
+
+    min-height: 70vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 100px 25px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(239,68,68,0.15),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 20% 70%,
+            rgba(79,140,255,0.12),
+            transparent 35%
+        );
+}
+
+
+/* =====================================================
+   RADAR
+===================================================== */
+
+.radar {
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%,-50%);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.12);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    animation:
+        radarPulse 4s ease-in-out infinite;
+}
+
+.radar::before,
+.radar::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(239,68,68,0.08);
+}
+
+.radar::before {
+    width: 350px;
+    height: 350px;
+}
+
+.radar::after {
+    width: 200px;
+    height: 200px;
+}
+
+@keyframes radarPulse {
+
+    0%,100% {
+        opacity: 0.2;
+
+        transform:
+            translate(-50%,-50%)
+            scale(0.9);
+    }
+
+    50% {
+        opacity: 0.8;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+}
+
+
+/* =====================================================
+   FLOATING CIRCLES
+===================================================== */
+
+.circle {
+    position: absolute;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(79,140,255,0.12);
+
+    pointer-events: none;
+
+    animation:
+        floatCircle 6s ease-in-out infinite;
+}
+
+.circle.one {
+    width: 420px;
+    height: 420px;
+
+    left: -150px;
+    top: 50px;
+}
+
+.circle.two {
+    width: 300px;
+    height: 300px;
+
+    right: -100px;
+    bottom: 50px;
+
+    animation-delay: 1s;
+}
+
+.circle.three {
+    width: 180px;
+    height: 180px;
+
+    right: 25%;
+    top: 15%;
+
+    animation-delay: 2s;
+}
+
+@keyframes floatCircle {
+
+    0%,100% {
+        transform: translateY(0);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: translateY(-20px);
+        opacity: 0.8;
+    }
+}
+
+
+/* =====================================================
+   HERO CONTENT
+===================================================== */
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 850px;
+
+    animation:
+        heroEnter 0.8s ease both;
+}
+
+@keyframes heroEnter {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =====================================================
+   WARNING BADGE
+===================================================== */
+
+.warning-badge {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 9px;
+
+    padding: 8px 17px;
+
+    margin-bottom: 22px;
+
+    border-radius: 30px;
+
+    color: var(--red-light);
+
+    background:
+        rgba(239,68,68,0.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.5);
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    animation:
+        badgeGlow 2s infinite;
+}
+
+.warning-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    box-shadow:
+        0 0 15px
+        var(--red);
+
+    animation:
+        blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
+}
+
+@keyframes badgeGlow {
+
+    0%,100% {
+        box-shadow:
+            0 0 8px
+            rgba(239,68,68,0.05);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px
+            rgba(239,68,68,0.3);
+    }
+}
+
+
+/* =====================================================
+   HERO TEXT
+===================================================== */
+
+.hero h1 {
+    font-size:
+        clamp(42px,6vw,70px);
+
+    line-height: 1.05;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: var(--red-light);
+
+    text-shadow:
+        0 0 25px
+        rgba(239,68,68,0.3);
+}
+
+.hero p {
+    max-width: 720px;
+
+    margin: auto;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.button-group {
+    margin-top: 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.hero-button {
+    display: inline-block;
+
+    padding: 14px 27px;
+
+    border-radius: 8px;
+
+    background: var(--blue);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+
+    border: 1px solid transparent;
+
+    box-shadow:
+        0 8px 25px
+        rgba(79,140,255,0.18);
+
+    cursor: pointer;
+}
+
+.hero-button:hover {
+    transform: translateY(-4px);
+
+    background: var(--blue-light);
+
+    box-shadow:
+        0 12px 35px
+        rgba(79,140,255,0.4);
+}
+
+.hero-button.secondary {
+    background:
+        rgba(34,211,167,0.08);
+
+    border:
+        1px solid
+        rgba(34,211,167,0.4);
+
+    color:
+        var(--teal);
+
+    box-shadow: none;
+}
+
+.hero-button.secondary:hover {
+    background: var(--teal);
+
+    color: #06150F;
+
+    box-shadow:
+        0 10px 30px
+        rgba(34,211,167,0.3);
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+section {
+    padding: 90px 25px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: var(--muted);
+}
+
+
+/* =====================================================
+   FAKE INVESTMENT MESSAGE
+===================================================== */
+
+.message-container {
+    max-width: 750px;
+
+    margin: auto;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 15px 50px
+        rgba(0,0,0,0.25);
+
+    transition: 0.4s;
+}
+
+.message-container:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 25px 65px
+        rgba(239,68,68,0.1);
+}
+
+.message-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.fake-investment {
+    margin-top: 20px;
+
+    background: #091321;
+
+    border:
+        1px solid
+        #334155;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.fake-investment::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 2px;
+
+    background: var(--red);
+
+    box-shadow:
+        0 0 15px
+        var(--red);
+
+    animation:
+        scanLine 3s linear infinite;
+}
+
+@keyframes scanLine {
+
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.fake-investment h3 {
+    color: var(--teal);
+    margin-bottom: 10px;
+}
+
+.profit {
+    font-size: 42px;
+
+    font-weight: bold;
+
+    color: var(--teal);
+
+    margin: 15px 0;
+
+    text-shadow:
+        0 0 20px
+        rgba(34,211,167,0.3);
+
+    animation:
+        profitPulse 2s ease-in-out infinite;
+}
+
+@keyframes profitPulse {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+.fake-investment p {
+    color: var(--text-secondary);
+}
+
+.fake-button {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 11px 20px;
+
+    background: var(--teal);
+
+    color: #06150F;
+
+    border-radius: 7px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.fake-button:hover {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 25px
+        rgba(34,211,167,0.4);
+}
+
+.scam-warning {
+    margin-top: 20px;
+
+    padding: 17px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(239,68,68,0.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.35);
+
+    color: var(--red-light);
+
+    animation:
+        warningPulse 2s infinite;
+}
+
+@keyframes warningPulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 5px
+            rgba(239,68,68,0.05);
+    }
+
+    50% {
+        box-shadow:
+            0 0 22px
+            rgba(239,68,68,0.15);
+    }
+}
+
+
+/* =====================================================
+   PATTERN CARDS
+===================================================== */
+
+.pattern-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+}
+
+.pattern {
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition: 0.35s;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.pattern::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: var(--red);
+
+    transform: scaleX(0);
+
+    transition: 0.35s;
+}
+
+.pattern:hover::before {
+    transform: scaleX(1);
+}
+
+.pattern:hover {
+    transform: translateY(-8px);
+
+    border-color: var(--red);
+
+    box-shadow:
+        0 15px 35px
+        rgba(239,68,68,0.12);
+}
+
+.pattern-icon {
+    font-size: 40px;
+
+    margin-bottom: 12px;
+
+    transition: 0.3s;
+}
+
+.pattern:hover .pattern-icon {
+    transform:
+        scale(1.2)
+        rotate(-5deg);
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(239,68,68,0.4)
+        );
+}
+
+.pattern h3 {
+    margin-bottom: 8px;
+}
+
+.pattern p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   CALCULATOR
+===================================================== */
+
+.calculator {
+    max-width: 850px;
+
+    margin: auto;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 16px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.2);
+}
+
+.calculator h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.calculator p {
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.slider-box {
+    margin: 25px 0;
+}
+
+.slider-box label {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+
+    color: var(--text-secondary);
+}
+
+input[type="range"] {
+    width: 100%;
+
+    accent-color: var(--blue);
+
+    cursor: pointer;
+}
+
+.amount {
+    font-size: 30px;
+
+    font-weight: bold;
+
+    color: var(--blue);
+}
+
+.result-box {
+    margin-top: 25px;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    background: #091321;
+
+    border:
+        1px solid
+        var(--border);
+
+    text-align: center;
+}
+
+.fake-profit {
+    font-size: 42px;
+
+    color: var(--red-light);
+
+    font-weight: bold;
+
+    text-shadow:
+        0 0 20px
+        rgba(239,68,68,0.25);
+
+    transition: 0.3s;
+}
+
+.calculator-warning {
+    margin-top: 15px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   RED FLAGS
+===================================================== */
+
+.red-flags {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 18px;
+}
+
+.flag {
+    padding: 22px;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-left:
+        4px solid
+        var(--red);
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.flag:hover {
+    transform: translateX(8px);
+
+    border-color:
+        rgba(239,68,68,0.7);
+
+    box-shadow:
+        0 10px 30px
+        rgba(239,68,68,0.13);
+}
+
+.flag h3 {
+    margin-bottom: 5px;
+    color: var(--red-light);
+}
+
+.flag p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SAFE INVESTING
+===================================================== */
+
+.safe-box {
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 35px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(34,211,167,0.04);
+
+    border:
+        1px solid
+        rgba(34,211,167,0.3);
+
+    box-shadow:
+        0 15px 50px
+        rgba(34,211,167,0.04);
+}
+
+.safe-box h2 {
+    color: var(--teal);
+    margin-bottom: 20px;
+}
+
+.safe-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 15px;
+}
+
+.safe-item {
+    padding: 17px;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+.safe-item:hover {
+    border-color: var(--teal);
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(34,211,167,0.08);
+}
+
+.safe-item strong {
+    color: var(--teal);
+}
+
+.safe-item p {
+    color: var(--muted);
+
+    font-size: 14px;
+
+    margin-top: 5px;
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+.quiz {
+    max-width: 800px;
+
+    margin: auto;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 16px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.2);
+}
+
+.quiz h2 {
+    margin-bottom: 10px;
+}
+
+.quiz p {
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.quiz-buttons {
+    display: grid;
+    gap: 12px;
+}
+
+.quiz-button {
+    padding: 15px;
+
+    background: #091321;
+
+    color: var(--text-secondary);
+
+    border:
+        1px solid
+        #334155;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    font-size: 15px;
+}
+
+.quiz-button:hover {
+    border-color: var(--blue);
+
+    transform: translateX(5px);
+
+    background: #101C30;
+}
+
+.quiz-button.correct {
+    border-color: var(--teal);
+
+    background:
+        rgba(34,211,167,0.1);
+
+    color: var(--teal);
+}
+
+.quiz-button.wrong {
+    border-color: var(--red);
+
+    background:
+        rgba(239,68,68,0.1);
+
+    color: var(--red-light);
+}
+
+.quiz-result {
+    margin-top: 20px;
+
+    padding: 17px;
+
+    border-radius: 10px;
+
+    display: none;
+}
+
+.quiz-result.show {
+    display: block;
+
+    animation:
+        resultAppear 0.4s ease;
+}
+
+@keyframes resultAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =====================================================
+   FINAL MESSAGE
+===================================================== */
+
+.final-box {
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 45px;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(34,211,167,0.3);
+
+    background:
+        rgba(34,211,167,0.04);
+
+    border-radius: 18px;
+
+    transition: 0.3s;
+}
+
+.final-box:hover {
+    box-shadow:
+        0 15px 50px
+        rgba(34,211,167,0.08);
+}
+
+.final-box h2 {
+    color: var(--teal);
+    margin-bottom: 12px;
+}
+
+.final-box p {
+    color: var(--text-secondary);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    background: var(--footer);
+
+    border-top:
+        1px solid
+        var(--border);
+
+    padding:
+        40px 25px;
+
+    text-align: center;
+}
+
+footer h3 {
+    color: var(--teal);
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #71859A;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   BACK TO TOP
+===================================================== */
+
+.back-top {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--blue);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 5px 25px
+        rgba(79,140,255,0.3);
+
+    z-index: 999;
+}
+
+.back-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.back-top:hover {
+    transform: translateY(-5px);
+
+    background: var(--blue-light);
+}
+
+
+/* =====================================================
+   MOBILE MENU BUTTON
+===================================================== */
+
+.menu-button {
+    display: none;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    color: white;
+
+    border-radius: 7px;
+
+    padding: 8px 11px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.mobile-menu {
+    display: none;
+
+    background:
+        rgba(11,18,32,0.98);
+
+    border-top:
+        1px solid var(--border);
+
+    padding: 15px 25px;
+}
+
+.mobile-menu a {
+    display: block;
+
+    padding: 12px 0;
+
+    color: var(--text-secondary);
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid
+        rgba(38,54,77,0.5);
+}
+
+.mobile-menu a:hover {
+    color: var(--teal);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 850px) {
+
+    .pattern-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .safe-list {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .nav-container {
+        padding: 14px 18px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    section {
+        padding: 65px 18px;
+    }
+
+    .hero {
+        padding: 80px 18px;
+    }
+
+    .pattern-grid,
+    .red-flags {
+        grid-template-columns: 1fr;
+    }
+
+    .calculator,
+    .quiz,
+    .message-container {
+        padding: 23px;
+    }
+
+    .radar {
+        width: 350px;
+        height: 350px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .mobile-menu.open {
+        display: block;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
+
+</style>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+
+<div class="nav-container">
+
+<div class="logo">
+🛡️ Safe<span>Shield</span>
+</div>
+
+
+<ul class="nav-links">
+
+<li>
+<a href="home.html">
+🏠 Home
+</a>
+</li>
+
+<li>
+<a href="protect.html">
+🛡️ Protect
+</a>
+</li>
+
+<li>
+<a href="scam.html">
+🚨 Scams
+</a>
+</li>
+
+<li>
+<a href="tool.html">
+🧰 Tools
+</a>
+</li>
+
+<li>
+<a href="checklist.html">
+✅ Checklist
+</a>
+</li>
+
+</ul>
+
+
+<button
+class="menu-button"
+onclick="toggleMobileMenu()"
+>
+☰
+</button>
+
+</div>
+
+
+<div
+class="mobile-menu"
+id="mobileMenu"
+>
+
+<a href="home.html">🏠 Home</a>
+
+<a href="protect.html">🛡️ Protect</a>
+
+<a href="scam.html">🚨 Scams</a>
+
+<a href="tool.html">🧰 Tools</a>
+
+<a href="checklist.html">✅ Checklist</a>
+
+<a href="#quiz">🧠 Test Yourself</a>
+
+</div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero" id="top">
+
+<div class="radar"></div>
+
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+
+
+<div class="hero-content">
+
+
+<div class="warning-badge">
+
+<span class="warning-dot"></span>
+
+INVESTMENT SCAM • HIGH RISK
+
+</div>
+
+
+<h1>
+
+Don't Let a Fake
+<span>Profit</span> Empty Your Wallet.
+
+</h1>
+
+
+<p>
+
+Investment scams promise easy money,
+guaranteed returns and exclusive
+opportunities.
+
+<br><br>
+
+The bigger the promise,
+the more carefully you should verify it.
+
+</p>
+
+
+<div class="button-group">
+
+<a
+href="#example"
+class="hero-button"
+>
+
+📈 See How the Scam Works
+
+</a>
+
+
+<a
+href="#redflags"
+class="hero-button secondary"
+>
+
+🚨 View Red Flags
+
+</a>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FAKE INVESTMENT
+===================================================== -->
+
+<section id="example">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+📱 It Looks Like Easy Money
+</h2>
+
+<p>
+Here's an example of how an investment scam
+might try to attract you.
+</p>
+
+</div>
+
+
+<div class="message-container">
+
+
+<div class="message-header">
+
+<span>
+📩 SOCIAL MEDIA MESSAGE
+</span>
+
+<span>
+Just now
+</span>
+
+</div>
+
+
+<div class="fake-investment">
+
+
+<h3>
+🚀 Exclusive Investment Opportunity
+</h3>
+
+
+<p>
+
+"Invest just ₹5,000 today and our
+automated trading system can turn it
+into ₹50,000 in only 7 days!"
+
+</p>
+
+
+<div class="profit">
++₹45,000
+</div>
+
+
+<p>
+
+✅ Guaranteed returns
+
+<br>
+
+✅ Zero risk
+
+<br>
+
+✅ Limited spaces available
+
+</p>
+
+
+<div
+class="fake-button"
+onclick="showInvestmentWarning()"
+>
+
+💰 INVEST NOW
+
+</div>
+
+
+<div
+class="scam-warning"
+id="investmentWarning"
+>
+
+⚠️ <strong>STOP!</strong>
+
+<br><br>
+
+Guaranteed profits + zero risk +
+pressure to act quickly are major
+warning signs.
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW SCAM WORKS
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🎭 How Investment Scams Work
+</h2>
+
+<p>
+Hover over each stage to explore the pattern.
+</p>
+
+</div>
+
+
+<div class="pattern-grid">
+
+
+<div class="pattern">
+<div class="pattern-icon">🎣</div>
+
+<h3>1. The Hook</h3>
+
+<p>
+You see an advertisement, message or
+social media post promising unusually
+high returns.
+</p>
+
+</div>
+
+
+<div class="pattern">
+<div class="pattern-icon">💰</div>
+
+<h3>2. Small Deposit</h3>
+
+<p>
+You may be encouraged to start with a
+small amount so the opportunity feels safe.
+</p>
+
+</div>
+
+
+<div class="pattern">
+<div class="pattern-icon">📊</div>
+
+<h3>3. Fake Profits</h3>
+
+<p>
+A fake website or app may display growing
+profits to convince you that your investment
+is working.
+</p>
+
+</div>
+
+
+<div class="pattern">
+<div class="pattern-icon">📈</div>
+
+<h3>4. Bigger Investment</h3>
+
+<p>
+Once you trust the platform, you're pushed
+to invest more money.
+</p>
+
+</div>
+
+
+<div class="pattern">
+<div class="pattern-icon">🔒</div>
+
+<h3>5. Withdrawal Problem</h3>
+
+<p>
+When you try to withdraw your money,
+unexpected fees or excuses appear.
+</p>
+
+</div>
+
+
+<div class="pattern">
+<div class="pattern-icon">💸</div>
+
+<h3>6. The Trap</h3>
+
+<p>
+The scammer may demand additional payments
+before disappearing with your money.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CALCULATOR
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🧮 See the "Guaranteed Profit" Trap
+</h2>
+
+<p>
+Move the slider and see how quickly the promised
+profit can become unrealistic.
+</p>
+
+</div>
+
+
+<div class="calculator">
+
+
+<h3>
+What if someone promises to multiply your money?
+</h3>
+
+
+<p>
+This is an educational simulation —
+not a real investment calculator.
+</p>
+
+
+<div class="slider-box">
+
+<label>
+
+<span>
+Your imaginary investment
+</span>
+
+<span
+class="amount"
+id="amount"
+>
+₹5,000
+</span>
+
+</label>
+
+
+<input
+type="range"
+id="investmentSlider"
+min="1000"
+max="100000"
+step="1000"
+value="5000"
+oninput="calculateProfit()"
+>
+
+</div>
+
+
+<div class="result-box">
+
+<p>
+Scam promises a 10× return:
+</p>
+
+
+<div
+class="fake-profit"
+id="fakeProfit"
+>
+
+₹50,000
+
+</div>
+
+
+<p class="calculator-warning">
+
+⚠️ A guaranteed 10× return is not a
+realistic promise simply because someone
+claims it is.
+
+</p>
+
+</div>
+
+
+<div class="button-group">
+
+<a
+href="#redflags"
+class="hero-button"
+>
+
+🚨 Check the Red Flags
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RED FLAGS
+===================================================== -->
+
+<section id="redflags">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🚨 Investment Scam Red Flags
+</h2>
+
+<p>
+If you notice several of these together,
+stop and verify.
+</p>
+
+</div>
+
+
+<div class="red-flags">
+
+
+<div class="flag">
+
+<h3>
+📈 "Guaranteed" Returns
+</h3>
+
+<p>
+No legitimate investment can simply
+guarantee extraordinary profits without risk.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<h3>
+⏰ Limited-Time Pressure
+</h3>
+
+<p>
+"Invest before midnight" or "only two
+spots left" is designed to rush you.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<h3>
+💎 Unrealistic Profits
+</h3>
+
+<p>
+Promises of turning a small amount into
+a huge fortune quickly should raise suspicion.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<h3>
+📱 Random Social Media Contact
+</h3>
+
+<p>
+Be cautious when strangers unexpectedly
+contact you with investment opportunities.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<h3>
+💳 Upfront Fees
+</h3>
+
+<p>
+Be suspicious if you're asked to pay
+unexpected fees before accessing your money.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<h3>
+🔐 Fake Trading Platform
+</h3>
+
+<p>
+A professional-looking app or dashboard
+doesn't automatically prove that an investment
+is legitimate.
+</p>
+
+</div>
+
+
+</div>
+
+
+<div class="button-group">
+
+<a
+href="#safety"
+class="hero-button secondary"
+>
+
+🛡️ Learn How to Stay Safe
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SAFE INVESTING
+===================================================== -->
+
+<section id="safety">
+
+<div class="container">
+
+
+<div class="safe-box">
+
+
+<h2>
+🛡️ Before You Invest, Verify
+</h2>
+
+
+<div class="safe-list">
+
+
+<div class="safe-item">
+
+<strong>
+🔎 Research
+</strong>
+
+<p>
+Research the company, platform and
+people behind the opportunity independently.
+</p>
+
+</div>
+
+
+<div class="safe-item">
+
+<strong>
+🧠 Understand the Investment
+</strong>
+
+<p>
+Don't invest in something you don't
+understand simply because someone promises profit.
+</p>
+
+</div>
+
+
+<div class="safe-item">
+
+<strong>
+🚫 Don't Trust Guaranteed Profits
+</strong>
+
+<p>
+High returns normally involve risk.
+Treat "guaranteed" high returns with caution.
+</p>
+
+</div>
+
+
+<div class="safe-item">
+
+<strong>
+⏸️ Take Your Time
+</strong>
+
+<p>
+Legitimate opportunities should not
+require you to make a rushed decision.
+</p>
+
+</div>
+
+
+<div class="safe-item">
+
+<strong>
+🔐 Protect Your Information
+</strong>
+
+<p>
+Never casually share passwords, OTPs,
+banking credentials or sensitive documents.
+</p>
+
+</div>
+
+
+<div class="safe-item">
+
+<strong>
+👥 Ask Someone You Trust
+</strong>
+
+<p>
+A second opinion can help you notice
+warning signs you may have missed.
+</p>
+
+</div>
+
+
+</div>
+
+
+<div class="button-group">
+
+<a
+href="#quiz"
+class="hero-button"
+>
+
+🧠 Take the Scam Quiz
+
+</a>
+
+
+<a
+href="protect.html"
+class="hero-button secondary"
+>
+
+🛡️ More Protection Tips
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     QUIZ
+===================================================== -->
+
+<section id="quiz">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🧠 Scam or Safe?
+</h2>
+
+<p>
+Test your instincts.
+</p>
+
+</div>
+
+
+<div class="quiz">
+
+
+<h2>
+Someone promises to double your money
+in 24 hours with "zero risk".
+</h2>
+
+
+<p>
+What should you do?
+</p>
+
+
+<div class="quiz-buttons">
+
+
+<button
+class="quiz-button"
+onclick="quizAnswer(this,false)"
+>
+
+💰 Invest immediately
+
+</button>
+
+
+<button
+class="quiz-button"
+onclick="quizAnswer(this,true)"
+>
+
+🛑 Stop and verify the opportunity
+
+</button>
+
+
+<button
+class="quiz-button"
+onclick="quizAnswer(this,false)"
+>
+
+📤 Send them my banking details
+
+</button>
+
+
+</div>
+
+
+<div
+class="quiz-result"
+id="quizResult"
+>
+</div>
+
+
+<div class="button-group">
+
+<a
+href="#top"
+class="hero-button secondary"
+>
+
+⬆️ Back to Top
+
+</a>
+
+<a
+href="scam.html"
+class="hero-button"
+>
+
+🚨 Explore More Scams
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL MESSAGE
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+
+<div class="final-box">
+
+<h2>
+🔐 Remember
+</h2>
+
+<p>
+
+If someone promises huge profits with
+little or no risk, don't let excitement
+replace verification.
+
+<br><br>
+
+<strong>
+Stop. Research. Verify. Then decide.
+</strong>
+
+</p>
+
+
+<div class="button-group">
+
+<a
+href="home.html"
+class="hero-button"
+>
+
+🏠 Back to Home
+
+</a>
+
+<a
+href="delivery.html"
+class="hero-button secondary"
+>
+
+← Delivery Scam
+
+</a>
+
+<a
+href="scam.html"
+class="hero-button secondary"
+>
+
+Back to Scam Awareness
+
+</a>
+
+<a
+href="tech.html"
+class="hero-button secondary"
+>
+
+Tech Support Scam →
+
+</a>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+     BOTTOM NAVIGATION REMOVED
+===================================================== -->
+
+<footer>
+
+<h3>
+🛡️ SafeShield
+</h3>
+
+<p>
+Stay alert. Protect your information.
+Think before you click.
+</p>
+
+<p style="margin-top:10px;">
+
+© 2026 SafeShield |
+Educational Privacy & Scam Awareness Website
+
+</p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     BACK TO TOP
+===================================================== -->
+
+<a
+href="#top"
+class="back-top"
+id="backTop"
+>
+↑
+</a>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   INVESTMENT WARNING
+===================================================== */
+
+function showInvestmentWarning() {
+
+    const warning =
+        document.getElementById(
+            "investmentWarning"
+        );
+
+    warning.style.animation = "none";
+
+    void warning.offsetWidth;
+
+    warning.style.animation =
+        "warningPulse 2s infinite";
+
+
+    warning.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+}
+
+
+
+/* =====================================================
+   INVESTMENT CALCULATOR
+===================================================== */
+
+function calculateProfit() {
+
+    const slider =
+        document.getElementById(
+            "investmentSlider"
+        );
+
+    const amount =
+        Number(slider.value);
+
+    const profit =
+        amount * 10;
+
+
+    document.getElementById(
+        "amount"
+    ).innerText =
+        "₹" +
+        amount.toLocaleString("en-IN");
+
+
+    const fakeProfit =
+        document.getElementById(
+            "fakeProfit"
+        );
+
+    fakeProfit.innerText =
+        "₹" +
+        profit.toLocaleString("en-IN");
+
+
+    fakeProfit.style.transform =
+        "scale(1.08)";
+
+
+    setTimeout(() => {
+
+        fakeProfit.style.transform =
+            "scale(1)";
+
+    },150);
+
+}
+
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+function quizAnswer(button, correct) {
+
+    const buttons =
+        document.querySelectorAll(
+            ".quiz-button"
+        );
+
+    const result =
+        document.getElementById(
+            "quizResult"
+        );
+
+
+    buttons.forEach(btn => {
+
+        btn.disabled = true;
+
+    });
+
+
+    if (correct) {
+
+        button.classList.add("correct");
+
+
+        result.style.background =
+            "rgba(34,211,167,0.08)";
+
+        result.style.border =
+            "1px solid rgba(34,211,167,0.35)";
+
+        result.style.color =
+            "#22D3A7";
+
+
+        result.innerHTML =
+            "🟢 <strong>Correct!</strong><br><br>" +
+            "A guaranteed 2× return in 24 hours " +
+            "with zero risk is a major warning sign. " +
+            "Stop and verify before investing.";
+
+    }
+
+    else {
+
+        button.classList.add("wrong");
+
+
+        result.style.background =
+            "rgba(239,68,68,0.08)";
+
+        result.style.border =
+            "1px solid rgba(239,68,68,0.35)";
+
+        result.style.color =
+            "#FF6B6B";
+
+
+        result.innerHTML =
+            "🔴 <strong>Dangerous choice!</strong><br><br>" +
+            "Don't send money or banking information " +
+            "based only on promises of guaranteed profits. " +
+            "Stop and verify the opportunity first.";
+
+    }
+
+
+    result.classList.add("show");
+
+}
+
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+function toggleMobileMenu() {
+
+    const menu =
+        document.getElementById(
+            "mobileMenu"
+        );
+
+    menu.classList.toggle("open");
+
+}
+
+
+
+/* =====================================================
+   CLOSE MOBILE MENU AFTER CLICK
+===================================================== */
+
+document.querySelectorAll(
+    ".mobile-menu a"
+).forEach(link => {
+
+    link.addEventListener(
+        "click",
+        function() {
+
+            document
+                .getElementById("mobileMenu")
+                .classList.remove("open");
+
+        }
+    );
+
+});
+
+
+
+/* =====================================================
+   BACK TO TOP BUTTON
+===================================================== */
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+        const backTop =
+            document.getElementById(
+                "backTop"
+            );
+
+
+        if (window.scrollY > 500) {
+
+            backTop.classList.add("show");
+
+        }
+
+        else {
+
+            backTop.classList.remove("show");
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   BUTTON RIPPLE EFFECT
+===================================================== */
+
+document.querySelectorAll(
+    ".hero-button, .fake-button"
+).forEach(button => {
+
+    button.addEventListener(
+        "click",
+        function() {
+
+            this.style.transform =
+                "scale(0.96)";
+
+            setTimeout(() => {
+
+                this.style.transform = "";
+
+            },120);
+
+        }
+    );
+
+});
+
+
+
+/* =====================================================
+   INITIAL CALCULATOR
+===================================================== */
+
+calculateProfit();
+
+</script>
+
+
+<script src="safeshield-fix.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,3497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield — Verify Websites</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #070D18;
+    color: #F8FAFC;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+:root {
+    --bg: #070D18;
+    --bg2: #0B1424;
+    --bg3: #0F1B2D;
+
+    --card: rgba(15, 27, 45, 0.78);
+    --card-solid: #101D30;
+
+    --blue: #4F8CFF;
+    --blue-light: #76A7FF;
+
+    --teal: #22D3A7;
+    --teal-light: #5EEAD4;
+
+    --red: #EF4444;
+    --orange: #F59E0B;
+
+    --white: #F8FAFC;
+    --text: #D8E1ED;
+    --muted: #8FA2B8;
+
+    --border: rgba(120, 150, 190, 0.18);
+
+    --shadow:
+        0 25px 80px rgba(0,0,0,0.35);
+}
+
+a {
+    color: inherit;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+::selection {
+    background: rgba(79,140,255,.35);
+    color: white;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(79,140,255,.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(34,211,167,.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(79,140,255,.08),
+            transparent 30%
+        );
+}
+
+.grid-background {
+    position: fixed;
+    inset: 0;
+    z-index: -4;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 60px 60px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 85%
+        );
+
+    opacity: .35;
+}
+
+
+/* =========================================================
+   FLOATING PARTICLES
+========================================================= */
+
+.particle {
+    position: fixed;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: var(--blue);
+
+    box-shadow:
+        0 0 15px var(--blue);
+
+    opacity: .35;
+
+    pointer-events: none;
+
+    z-index: -2;
+
+    animation:
+        particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+
+    from {
+        transform:
+            translateY(110vh)
+            translateX(0);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .35;
+    }
+
+    85% {
+        opacity: .35;
+    }
+
+    to {
+        transform:
+            translateY(-20vh)
+            translateX(100px);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+
+    background:
+        rgba(7,13,24,.78);
+
+    border-bottom:
+        1px solid rgba(120,150,190,.14);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    transition: .3s;
+}
+
+nav.scrolled {
+    background:
+        rgba(7,13,24,.94);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.25);
+}
+
+.nav-container {
+    max-width: 1250px;
+    margin: auto;
+
+    min-height: 74px;
+
+    padding:
+        0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    text-decoration: none;
+
+    font-size: 23px;
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+}
+
+.logo-shield {
+    width: 37px;
+    height: 37px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(79,140,255,.22),
+            rgba(34,211,167,.12)
+        );
+
+    border:
+        1px solid rgba(79,140,255,.35);
+
+    box-shadow:
+        0 0 25px rgba(79,140,255,.15);
+
+    animation:
+        logoPulse 3s infinite;
+}
+
+@keyframes logoPulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 20px rgba(79,140,255,.12);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(79,140,255,.3);
+    }
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 8px 0;
+
+    transition: .3s;
+}
+
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--teal)
+        );
+
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a.active {
+    color: var(--teal-light);
+}
+
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-button {
+    padding:
+        10px 17px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(79,140,255,.10);
+
+    border:
+        1px solid rgba(79,140,255,.3);
+
+    color: var(--blue-light);
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: .3s;
+}
+
+.nav-button:hover {
+    background: var(--blue);
+
+    color: white;
+
+    box-shadow:
+        0 0 25px rgba(79,140,255,.3);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    position: relative;
+
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.hero-container {
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding:
+        95px 25px 85px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.05fr .95fr;
+
+    gap: 55px;
+
+    align-items: center;
+}
+
+.hero-content {
+    animation:
+        heroEnter .9s ease forwards;
+}
+
+@keyframes heroEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+        8px 14px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(34,211,167,.06);
+
+    border:
+        1px solid rgba(34,211,167,.25);
+
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 24px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 12px var(--teal);
+
+    animation:
+        statusBlink 1.6s infinite;
+}
+
+@keyframes statusBlink {
+
+    0%,100% {
+        opacity: 1;
+        transform:
+            scale(1);
+    }
+
+    50% {
+        opacity: .35;
+        transform:
+            scale(.65);
+    }
+}
+
+.hero h1 {
+    max-width: 780px;
+
+    font-size:
+        clamp(45px, 6vw, 78px);
+
+    line-height: .98;
+
+    letter-spacing: -3px;
+
+    margin-bottom: 27px;
+}
+
+.hero h1 .blue {
+    color:
+        var(--blue-light);
+
+    text-shadow:
+        0 0 45px
+        rgba(79,140,255,.18);
+}
+
+.hero h1 .teal {
+    color:
+        var(--teal-light);
+}
+
+.hero-description {
+    max-width: 680px;
+
+    color:
+        var(--text);
+
+    font-size: 18px;
+
+    line-height: 1.8;
+
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    padding:
+        14px 20px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.primary-btn {
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #3678ED
+        );
+
+    color: white;
+
+    border: none;
+
+    box-shadow:
+        0 10px 35px
+        rgba(79,140,255,.2);
+}
+
+.primary-btn:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 16px 45px
+        rgba(79,140,255,.35);
+}
+
+.secondary-btn {
+    background:
+        rgba(255,255,255,.03);
+
+    border:
+        1px solid var(--border);
+
+    color:
+        var(--text);
+}
+
+.secondary-btn:hover {
+    border-color:
+        rgba(34,211,167,.4);
+
+    color:
+        var(--teal-light);
+
+    transform:
+        translateY(-4px);
+}
+
+
+/* =========================================================
+   WEBSITE VISUAL
+========================================================= */
+
+.website-visual {
+    min-height: 470px;
+
+    position: relative;
+
+    display: grid;
+
+    place-items: center;
+
+    animation:
+        visualEnter 1s .2s ease both;
+}
+
+@keyframes visualEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1);
+    }
+}
+
+.scan-ring {
+    position: absolute;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(79,140,255,.18);
+
+    animation:
+        ringSpin linear infinite;
+}
+
+.scan-ring.one {
+    width: 280px;
+    height: 280px;
+
+    animation-duration:
+        14s;
+}
+
+.scan-ring.two {
+    width: 390px;
+    height: 390px;
+
+    border-color:
+        rgba(34,211,167,.12);
+
+    animation-duration:
+        20s;
+
+    animation-direction:
+        reverse;
+}
+
+.scan-ring.three {
+    width: 490px;
+    height: 490px;
+
+    border-color:
+        rgba(79,140,255,.07);
+
+    animation-duration:
+        28s;
+}
+
+@keyframes ringSpin {
+
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+.scan-ring::before {
+    content: "";
+
+    position: absolute;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--blue);
+
+    box-shadow:
+        0 0 18px var(--blue);
+
+    top: 7px;
+    left: 50%;
+}
+
+.scan-ring.two::before {
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 18px var(--teal);
+
+    left: auto;
+    right: 10%;
+    top: 50%;
+}
+
+.browser-card {
+    position: relative;
+
+    width: 390px;
+    max-width: 90%;
+
+    min-height: 275px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #12233B,
+            #091525
+        );
+
+    border:
+        1px solid
+        rgba(79,140,255,.35);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.45),
+        0 0 45px
+        rgba(79,140,255,.12);
+
+    overflow: hidden;
+
+    animation:
+        browserFloat 4s ease-in-out infinite;
+}
+
+@keyframes browserFloat {
+
+    0%,100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-12px);
+    }
+}
+
+.browser-top {
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        0 16px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.browser-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background:
+        #34465E;
+}
+
+.browser-address {
+    flex: 1;
+
+    margin-left: 8px;
+
+    padding:
+        7px 11px;
+
+    border-radius: 8px;
+
+    background:
+        #07111F;
+
+    border:
+        1px solid
+        rgba(120,150,190,.15);
+
+    color:
+        #8295AD;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+}
+
+.browser-content {
+    padding: 28px;
+
+    text-align: center;
+}
+
+.website-shield {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 16px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 20px;
+
+    background:
+        rgba(34,211,167,.08);
+
+    border:
+        1px solid
+        rgba(34,211,167,.3);
+
+    font-size: 35px;
+
+    box-shadow:
+        0 0 35px
+        rgba(34,211,167,.12);
+
+    animation:
+        shieldPulse 2.5s infinite;
+}
+
+@keyframes shieldPulse {
+
+    0%,100% {
+        transform:
+            scale(1);
+    }
+
+    50% {
+        transform:
+            scale(1.06);
+    }
+}
+
+.browser-content h3 {
+    margin-bottom: 7px;
+}
+
+.browser-content p {
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+    margin-bottom: 17px;
+}
+
+.safe-indicator {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        8px 13px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(34,211,167,.08);
+
+    border:
+        1px solid
+        rgba(34,211,167,.25);
+
+    color:
+        var(--teal-light);
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.safe-indicator span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 12px
+        var(--teal);
+}
+
+.visual-badge {
+    position: absolute;
+
+    padding:
+        11px 14px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(10,20,35,.84);
+
+    border:
+        1px solid var(--border);
+
+    backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.3);
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.visual-badge.top {
+    top: 6%;
+    right: 1%;
+
+    color:
+        var(--teal-light);
+}
+
+.visual-badge.bottom {
+    bottom: 7%;
+    left: 1%;
+
+    color:
+        var(--blue-light);
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+    padding:
+        105px 25px;
+}
+
+.container {
+    max-width: 1250px;
+
+    margin: auto;
+}
+
+.section-heading {
+    text-align: center;
+
+    max-width: 720px;
+
+    margin:
+        0 auto 55px;
+}
+
+.section-tag {
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    text-transform:
+        uppercase;
+
+    margin-bottom: 10px;
+}
+
+.section-heading h2 {
+    font-size:
+        clamp(32px, 4vw, 48px);
+
+    line-height: 1.1;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 14px;
+}
+
+.section-heading p {
+    color:
+        var(--muted);
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   WEBSITE CHECKER
+========================================================= */
+
+.checker-panel {
+    max-width: 950px;
+
+    margin:
+        0 auto;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,30,50,.95),
+            rgba(10,20,34,.95)
+        );
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.3);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.checker-panel::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -160px;
+    top: -160px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(79,140,255,.08);
+
+    filter:
+        blur(25px);
+}
+
+.url-form {
+    position: relative;
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+.url-input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding:
+        16px 17px;
+
+    border-radius: 12px;
+
+    background:
+        #07111F;
+
+    border:
+        1px solid
+        rgba(79,140,255,.25);
+
+    outline: none;
+
+    color:
+        white;
+
+    font-size: 15px;
+
+    transition: .3s;
+}
+
+.url-input::placeholder {
+    color:
+        #60738B;
+}
+
+.url-input:focus {
+    border-color:
+        rgba(79,140,255,.65);
+
+    box-shadow:
+        0 0 25px
+        rgba(79,140,255,.08);
+}
+
+.verify-btn {
+    flex:
+        0 0 auto;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.result-panel {
+    position: relative;
+
+    display: none;
+
+    padding:
+        22px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid var(--border);
+
+    animation:
+        resultAppear .5s ease;
+}
+
+.result-panel.show {
+    display: block;
+}
+
+@keyframes resultAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.result-header {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.result-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.result-icon {
+    width: 43px;
+    height: 43px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(34,211,167,.08);
+
+    border:
+        1px solid
+        rgba(34,211,167,.25);
+
+    font-size: 20px;
+}
+
+.result-title h3 {
+    font-size: 17px;
+}
+
+.result-title p {
+    color:
+        var(--muted);
+
+    font-size: 12px;
+}
+
+.result-status {
+    padding:
+        8px 12px;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    color:
+        var(--teal-light);
+
+    background:
+        rgba(34,211,167,.07);
+
+    border:
+        1px solid
+        rgba(34,211,167,.25);
+}
+
+.result-status.warning {
+    color:
+        #FBBF24;
+
+    background:
+        rgba(245,158,11,.07);
+
+    border-color:
+        rgba(245,158,11,.25);
+}
+
+.result-status.danger {
+    color:
+        #F87171;
+
+    background:
+        rgba(239,68,68,.07);
+
+    border-color:
+        rgba(239,68,68,.25);
+}
+
+.check-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 10px;
+}
+
+.check-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        rgba(120,150,190,.12);
+
+    color:
+        var(--text);
+
+    font-size: 13px;
+}
+
+.check-item-icon {
+    width: 25px;
+    height: 25px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(34,211,167,.08);
+
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   VERIFICATION CARDS
+========================================================= */
+
+.verify-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+}
+
+.verify-card {
+    position: relative;
+
+    padding: 30px;
+
+    min-height: 285px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,30,50,.9),
+            rgba(12,22,37,.9)
+        );
+
+    border:
+        1px solid var(--border);
+
+    overflow: hidden;
+
+    transition:
+        .4s
+        cubic-bezier(.2,.8,.2,1);
+
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+}
+
+.verify-card.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+.verify-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -75px;
+    top: -75px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(79,140,255,.07);
+
+    transition: .4s;
+}
+
+.verify-card::after {
+    content: "";
+
+    position: absolute;
+
+    left: -110%;
+
+    top: 0;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.045),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition: .6s;
+}
+
+.verify-card:hover {
+    transform:
+        translateY(-10px);
+
+    border-color:
+        rgba(79,140,255,.5);
+
+    box-shadow:
+        0 25px 55px
+        rgba(0,0,0,.35),
+        0 0 30px
+        rgba(79,140,255,.08);
+}
+
+.verify-card:hover::before {
+    transform:
+        scale(1.5);
+
+    background:
+        rgba(34,211,167,.08);
+}
+
+.verify-card:hover::after {
+    left: 140%;
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(79,140,255,.09);
+
+    border:
+        1px solid
+        rgba(79,140,255,.22);
+
+    font-size: 29px;
+
+    margin-bottom: 20px;
+
+    transition: .35s;
+}
+
+.verify-card:hover .card-icon {
+    transform:
+        rotate(-6deg)
+        scale(1.1);
+
+    border-color:
+        rgba(34,211,167,.4);
+
+    background:
+        rgba(34,211,167,.08);
+
+    box-shadow:
+        0 0 25px
+        rgba(34,211,167,.12);
+}
+
+.verify-card h3 {
+    font-size: 20px;
+
+    margin-bottom: 10px;
+}
+
+.verify-card p {
+    color:
+        var(--text);
+
+    font-size: 14px;
+}
+
+.info-tag {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding:
+        6px 9px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(79,140,255,.07);
+
+    border:
+        1px solid
+        rgba(79,140,255,.16);
+
+    color:
+        var(--blue-light);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .7px;
+}
+
+
+/* =========================================================
+   URL RED FLAGS
+========================================================= */
+
+.redflag-section {
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(14,23,40,.55),
+            transparent
+        );
+}
+
+.redflag-layout {
+    display: grid;
+
+    grid-template-columns:
+        .9fr 1.1fr;
+
+    gap: 45px;
+
+    align-items: center;
+}
+
+.redflag-intro h2 {
+    font-size:
+        clamp(34px,4vw,50px);
+
+    line-height: 1.1;
+
+    margin-bottom: 17px;
+}
+
+.redflag-intro p {
+    color:
+        var(--muted);
+
+    margin-bottom: 25px;
+}
+
+.url-examples {
+    display: grid;
+
+    gap: 12px;
+}
+
+.url-example {
+    padding:
+        16px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(15,27,45,.75);
+
+    border:
+        1px solid var(--border);
+
+    transition: .3s;
+}
+
+.url-example:hover {
+    transform:
+        translateX(6px);
+
+    border-color:
+        rgba(239,68,68,.3);
+}
+
+.url-example small {
+    display: block;
+
+    color:
+        var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+.url-example code {
+    color:
+        #FCA5A5;
+
+    font-size: 12px;
+
+    word-break: break-all;
+}
+
+.url-example.safe code {
+    color:
+        var(--teal-light);
+}
+
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+.checklist-box {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 15px;
+
+    max-width: 950px;
+
+    margin:
+        0 auto;
+}
+
+.check-row {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding:
+        19px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(15,27,45,.62);
+
+    border:
+        1px solid var(--border);
+
+    transition: .3s;
+}
+
+.check-row:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(34,211,167,.3);
+
+    background:
+        rgba(18,32,52,.75);
+}
+
+.check-circle {
+    flex:
+        0 0 auto;
+
+    width: 32px;
+    height: 32px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(34,211,167,.08);
+
+    border:
+        1px solid
+        rgba(34,211,167,.25);
+
+    color:
+        var(--teal-light);
+
+    font-size: 14px;
+
+    font-weight: 900;
+}
+
+.check-row h3 {
+    font-size: 15px;
+
+    margin-bottom: 4px;
+}
+
+.check-row p {
+    color:
+        var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta {
+    position: relative;
+
+    overflow: hidden;
+
+    margin:
+        0 25px 90px;
+
+    border-radius: 24px;
+
+    border:
+        1px solid
+        rgba(79,140,255,.22);
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(79,140,255,.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(34,211,167,.12),
+            transparent 35%
+        ),
+        #0C1729;
+
+    text-align: center;
+
+    padding:
+        70px 25px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.25);
+}
+
+.cta::before {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border:
+        1px solid
+        rgba(79,140,255,.12);
+
+    border-radius: 50%;
+
+    left: -120px;
+    top: -180px;
+
+    animation:
+        rotateCircle
+        20s linear infinite;
+}
+
+@keyframes rotateCircle {
+
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+.cta h2 {
+    position: relative;
+
+    font-size:
+        clamp(30px,4vw,48px);
+
+    margin-bottom: 12px;
+}
+
+.cta p {
+    position: relative;
+
+    color:
+        var(--muted);
+
+    max-width: 650px;
+
+    margin:
+        0 auto 25px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    border-top:
+        1px solid var(--border);
+
+    background:
+        #050A12;
+
+    padding:
+        45px 25px;
+
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.footer-logo span {
+    color:
+        var(--blue);
+}
+
+footer p {
+    color:
+        #708198;
+
+    font-size: 13px;
+}
+
+.footer-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+}
+
+.footer-status i {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 10px
+        var(--teal);
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .hero-container {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .website-visual {
+        min-height: 420px;
+    }
+
+    .verify-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .redflag-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .redflag-intro {
+        text-align: center;
+    }
+
+    .generator-intro {
+        text-align: center;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .nav-links,
+    .nav-button {
+        display: none;
+    }
+
+    .nav-container {
+        min-height: 65px;
+    }
+
+    .hero {
+        min-height: auto;
+    }
+
+    .hero-container {
+        padding:
+            75px 18px;
+    }
+
+    .hero h1 {
+        letter-spacing:
+            -2px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .scan-ring.one {
+        width: 245px;
+        height: 245px;
+    }
+
+    .scan-ring.two {
+        width: 320px;
+        height: 320px;
+    }
+
+    .scan-ring.three {
+        width: 390px;
+        height: 390px;
+    }
+
+    .browser-card {
+        transform:
+            scale(.88);
+    }
+
+    section {
+        padding:
+            75px 18px;
+    }
+
+    .verify-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .check-list {
+        grid-template-columns: 1fr;
+    }
+
+    .checklist-box {
+        grid-template-columns: 1fr;
+    }
+
+    .cta {
+        margin:
+            0 18px 70px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .hero-actions {
+        flex-direction:
+            column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 100%;
+    }
+
+    .browser-card {
+        transform:
+            scale(.78);
+    }
+
+    .checker-panel {
+        padding:
+            20px;
+    }
+
+    .url-form {
+        flex-direction:
+            column;
+    }
+
+    .verify-btn {
+        width: 100%;
+    }
+
+    .result-header {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+}
+
+</style>
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<div class="grid-background"></div>
+
+
+<!-- =======================================================
+     FLOATING PARTICLES
+======================================================= -->
+
+<div class="particle"
+     style="left:8%;animation-duration:14s;">
+</div>
+
+<div class="particle"
+     style="left:18%;animation-duration:19s;animation-delay:3s;">
+</div>
+
+<div class="particle"
+     style="left:34%;animation-duration:16s;animation-delay:7s;">
+</div>
+
+<div class="particle"
+     style="left:52%;animation-duration:21s;animation-delay:2s;">
+</div>
+
+<div class="particle"
+     style="left:67%;animation-duration:17s;animation-delay:5s;">
+</div>
+
+<div class="particle"
+     style="left:81%;animation-duration:23s;animation-delay:8s;">
+</div>
+
+<div class="particle"
+     style="left:94%;animation-duration:18s;animation-delay:4s;">
+</div>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav id="navbar">
+
+    <div class="nav-container">
+
+        <a href="home.html" class="logo">
+
+            <div class="logo-shield">
+                🛡️
+            </div>
+
+            Safe<span>Shield</span>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="home.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="protect.html" class="active">
+                    Protection
+                </a>
+            </li>
+
+            <li>
+                <a href="scam.html">
+                    Scams
+                </a>
+            </li>
+
+            <li>
+                <a href="tool.html">
+                    Tools
+                </a>
+            </li>
+
+            <li>
+                <a href="checklist.html">
+                    Checklist
+                </a>
+            </li>
+
+        </ul>
+
+
+        <a
+            href="checklist.html"
+            class="nav-button"
+        >
+            Security Check →
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<header class="hero">
+
+    <div class="hero-container">
+
+
+        <div class="hero-content">
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                WEBSITE SECURITY
+
+            </div>
+
+
+            <h1>
+
+                Verify Before
+                <span class="blue">
+                    You Trust.
+                </span>
+
+                <br>
+
+                Browse With
+                <span class="teal">
+                    Confidence.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Fake websites can look almost identical to
+                legitimate ones. Learn how to inspect URLs,
+                recognize warning signs and verify a website
+                before entering sensitive information.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a
+                    href="#website-checker"
+                    class="primary-btn"
+                >
+                    🔎 Verify a Website
+                </a>
+
+
+                <a
+                    href="#verification-guide"
+                    class="secondary-btn"
+                >
+                    🛡️ Learn How to Verify
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- WEBSITE SECURITY VISUAL -->
+
+        <div class="website-visual">
+
+            <div class="scan-ring one"></div>
+
+            <div class="scan-ring two"></div>
+
+            <div class="scan-ring three"></div>
+
+
+            <div class="browser-card">
+
+                <div class="browser-top">
+
+                    <span class="browser-dot"></span>
+
+                    <span class="browser-dot"></span>
+
+                    <span class="browser-dot"></span>
+
+                    <div class="browser-address">
+                        https://trusted-site.example
+                    </div>
+
+                </div>
+
+
+                <div class="browser-content">
+
+                    <div class="website-shield">
+                        🛡️
+                    </div>
+
+                    <h3>
+                        Website Verified
+                    </h3>
+
+                    <p>
+                        Check the address carefully
+                        before sharing personal information.
+                    </p>
+
+                    <div class="safe-indicator">
+
+                        <span></span>
+
+                        Verification Ready
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-badge top">
+                ✓ URL Inspection
+            </div>
+
+
+            <div class="visual-badge bottom">
+                🔎 Browse Safely
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     WEBSITE CHECKER
+======================================================= -->
+
+<section id="website-checker">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                WEBSITE VERIFICATION
+            </div>
+
+            <h2>
+                Check a Website Before You Trust It
+            </h2>
+
+            <p>
+                Enter a website address below to perform
+                a basic local safety inspection. This tool
+                does not contact or scan the website.
+            </p>
+
+        </div>
+
+
+        <div class="checker-panel reveal">
+
+            <div class="url-form">
+
+                <input
+                    type="text"
+                    id="urlInput"
+                    class="url-input"
+                    placeholder="Example: https://example.com"
+                    autocomplete="off"
+                >
+
+                <button
+                    class="primary-btn verify-btn"
+                    id="verifyBtn"
+                    type="button"
+                >
+                    🔎 Verify Website
+                </button>
+
+            </div>
+
+
+            <div
+                class="result-panel"
+                id="resultPanel"
+            >
+
+                <div class="result-header">
+
+                    <div class="result-title">
+
+                        <div
+                            class="result-icon"
+                            id="resultIcon"
+                        >
+                            🛡️
+                        </div>
+
+                        <div>
+
+                            <h3 id="resultTitle">
+                                Website Analysis
+                            </h3>
+
+                            <p id="resultDescription">
+                                Reviewing the address structure
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="result-status"
+                        id="resultStatus"
+                    >
+                        READY
+                    </div>
+
+                </div>
+
+
+                <div class="check-list">
+
+                    <div class="check-item">
+
+                        <div class="check-item-icon"
+                             id="protocolIcon">
+                            ✓
+                        </div>
+
+                        <span id="protocolText">
+                            HTTPS protocol
+                        </span>
+
+                    </div>
+
+
+                    <div class="check-item">
+
+                        <div class="check-item-icon"
+                             id="domainIcon">
+                            ✓
+                        </div>
+
+                        <span id="domainText">
+                            Domain structure
+                        </span>
+
+                    </div>
+
+
+                    <div class="check-item">
+
+                        <div class="check-item-icon">
+                            ✓
+                        </div>
+
+                        <span>
+                            Avoid entering sensitive data
+                            on unfamiliar websites
+                        </span>
+
+                    </div>
+
+
+                    <div class="check-item">
+
+                        <div class="check-item-icon">
+                            ✓
+                        </div>
+
+                        <span>
+                            Confirm the website address
+                            independently
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     VERIFICATION GUIDE
+======================================================= -->
+
+<section id="verification-guide">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                VERIFICATION GUIDE
+            </div>
+
+            <h2>
+                Know What to Look For
+            </h2>
+
+            <p>
+                A trustworthy-looking design does not
+                automatically mean a website is legitimate.
+                Check several signals before continuing.
+            </p>
+
+        </div>
+
+
+        <div class="verify-grid">
+
+
+            <article class="verify-card reveal">
+
+                <div class="card-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    Inspect the URL
+                </h3>
+
+                <p>
+                    Look closely at the spelling and structure
+                    of the website address. Attackers may use
+                    extra words, misspellings or deceptive
+                    domain names to imitate trusted websites.
+                </p>
+
+                <span class="info-tag">
+                    CHECK THE ADDRESS
+                </span>
+
+            </article>
+
+
+            <article class="verify-card reveal">
+
+                <div class="card-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Look for HTTPS
+                </h3>
+
+                <p>
+                    HTTPS encrypts the connection between your
+                    browser and a website. However, HTTPS alone
+                    does not prove that the website itself is
+                    legitimate.
+                </p>
+
+                <span class="info-tag">
+                    CONNECTION SECURITY
+                </span>
+
+            </article>
+
+
+            <article class="verify-card reveal">
+
+                <div class="card-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Confirm the Domain
+                </h3>
+
+                <p>
+                    When visiting a company or service, make
+                    sure the domain matches the organization
+                    you intended to visit rather than relying
+                    only on logos or page design.
+                </p>
+
+                <span class="info-tag">
+                    VERIFY IDENTITY
+                </span>
+
+            </article>
+
+
+            <article class="verify-card reveal">
+
+                <div class="card-icon">
+                    📩
+                </div>
+
+                <h3>
+                    Avoid Unexpected Links
+                </h3>
+
+                <p>
+                    Be cautious with links received through
+                    unexpected emails, messages or social
+                    media posts. When possible, navigate
+                    directly to the official website.
+                </p>
+
+                <span class="info-tag">
+                    AVOID SHORTCUTS
+                </span>
+
+            </article>
+
+
+            <article class="verify-card reveal">
+
+                <div class="card-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Watch for Pressure
+                </h3>
+
+                <p>
+                    Urgent warnings, countdowns, threats or
+                    requests for immediate payment can be
+                    signs of a scam. Slow down and verify
+                    before taking action.
+                </p>
+
+                <span class="info-tag">
+                    STOP & THINK
+                </span>
+
+            </article>
+
+
+            <article class="verify-card reveal">
+
+                <div class="card-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Verify Independently
+                </h3>
+
+                <p>
+                    If a website asks for sensitive information,
+                    verify the organization through a trusted
+                    source before signing in or submitting
+                    personal details.
+                </p>
+
+                <span class="info-tag">
+                    DOUBLE CHECK
+                </span>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     URL RED FLAGS
+======================================================= -->
+
+<section class="redflag-section">
+
+    <div class="container">
+
+        <div class="redflag-layout">
+
+
+            <div class="redflag-intro reveal">
+
+                <div class="section-tag">
+                    URL RED FLAGS
+                </div>
+
+                <h2>
+                    Small URL Changes Can Matter.
+                </h2>
+
+                <p>
+                    Scam websites may use addresses that look
+                    convincing at first glance. Always inspect
+                    the complete domain before trusting a page.
+                </p>
+
+                <a
+                    href="#checklist"
+                    class="primary-btn"
+                >
+                    🛡️ View Verification Checklist
+                </a>
+
+            </div>
+
+
+            <div class="url-examples reveal">
+
+
+                <div class="url-example safe">
+
+                    <small>
+                        EXAMPLE OF A CLEAR DOMAIN
+                    </small>
+
+                    <code>
+                        https://www.example.com/account
+                    </code>
+
+                </div>
+
+
+                <div class="url-example">
+
+                    <small>
+                        WATCH FOR MISSPELLINGS
+                    </small>
+
+                    <code>
+                        https://www.examp1e.com/account
+                    </code>
+
+                </div>
+
+
+                <div class="url-example">
+
+                    <small>
+                        WATCH FOR UNEXPECTED DOMAINS
+                    </small>
+
+                    <code>
+                        https://example.security-check.example.net
+                    </code>
+
+                </div>
+
+
+                <div class="url-example">
+
+                    <small>
+                        WATCH FOR UNEXPECTED SUBDOMAINS
+                    </small>
+
+                    <code>
+                        https://login.example.attacker-site.com
+                    </code>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CHECKLIST
+======================================================= -->
+
+<section id="checklist">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                BEFORE YOU SIGN IN
+            </div>
+
+            <h2>
+                Use This Quick Verification Checklist
+            </h2>
+
+            <p>
+                Take a few seconds to verify a website before
+                entering passwords, payment information or
+                other sensitive data.
+            </p>
+
+        </div>
+
+
+        <div class="checklist-box">
+
+
+            <div class="check-row reveal">
+
+                <div class="check-circle">
+                    01
+                </div>
+
+                <div>
+
+                    <h3>
+                        Check the exact domain
+                    </h3>
+
+                    <p>
+                        Make sure the website address belongs
+                        to the organization you intended to visit.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="check-row reveal">
+
+                <div class="check-circle">
+                    02
+                </div>
+
+                <div>
+
+                    <h3>
+                        Look for HTTPS
+                    </h3>
+
+                    <p>
+                        Check that the connection is encrypted,
+                        while remembering that HTTPS is not proof
+                        that a site is legitimate.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="check-row reveal">
+
+                <div class="check-circle">
+                    03
+                </div>
+
+                <div>
+
+                    <h3>
+                        Question unexpected links
+                    </h3>
+
+                    <p>
+                        Avoid clicking unfamiliar links from
+                        unexpected messages whenever possible.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="check-row reveal">
+
+                <div class="check-circle">
+                    04
+                </div>
+
+                <div>
+
+                    <h3>
+                        Look for suspicious pressure
+                    </h3>
+
+                    <p>
+                        Be cautious when a page tries to rush
+                        you into making a decision.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="check-row reveal">
+
+                <div class="check-circle">
+                    05
+                </div>
+
+                <div>
+
+                    <h3>
+                        Verify through another source
+                    </h3>
+
+                    <p>
+                        Use an independently trusted source
+                        to confirm that a website or request
+                        is genuine.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="check-row reveal">
+
+                <div class="check-circle">
+                    06
+                </div>
+
+                <div>
+
+                    <h3>
+                        Stop if something feels wrong
+                    </h3>
+
+                    <p>
+                        Do not enter sensitive information when
+                        the website or request seems suspicious.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CTA
+======================================================= -->
+
+<div class="cta reveal">
+
+    <h2>
+        Don't Trust the Design.
+        Verify the Website.
+    </h2>
+
+    <p>
+        A professional-looking page can still be deceptive.
+        Slow down, inspect the address and verify before
+        sharing sensitive information.
+    </p>
+
+    <a
+        href="checklist.html"
+        class="primary-btn"
+    >
+        🛡️ Open Security Checklist
+    </a>
+
+</div>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🛡️ Safe<span>Shield</span>
+    </div>
+
+    <p>
+        Stay aware. Protect your information.
+        Think before you click.
+    </p>
+
+    <div class="footer-status">
+
+        <i></i>
+
+        Website Security Awareness
+
+    </div>
+
+    <p style="margin-top:18px;">
+
+        © 2026 SafeShield · Educational
+        Digital Privacy & Security Website
+
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   NAVBAR SCROLL EFFECT
+========================================================= */
+
+const navbar =
+    document.getElementById("navbar");
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (window.scrollY > 30) {
+
+            navbar.classList.add(
+                "scrolled"
+            );
+
+        } else {
+
+            navbar.classList.remove(
+                "scrolled"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".reveal, .verify-card"
+    );
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+revealElements.forEach(
+    element => {
+
+        revealObserver.observe(
+            element
+        );
+
+    }
+);
+
+
+/* =========================================================
+   WEBSITE VERIFICATION TOOL
+========================================================= */
+
+const urlInput =
+    document.getElementById(
+        "urlInput"
+    );
+
+const verifyBtn =
+    document.getElementById(
+        "verifyBtn"
+    );
+
+const resultPanel =
+    document.getElementById(
+        "resultPanel"
+    );
+
+const resultIcon =
+    document.getElementById(
+        "resultIcon"
+    );
+
+const resultTitle =
+    document.getElementById(
+        "resultTitle"
+    );
+
+const resultDescription =
+    document.getElementById(
+        "resultDescription"
+    );
+
+const resultStatus =
+    document.getElementById(
+        "resultStatus"
+    );
+
+const protocolText =
+    document.getElementById(
+        "protocolText"
+    );
+
+const domainText =
+    document.getElementById(
+        "domainText"
+    );
+
+
+function verifyWebsite() {
+
+    const rawURL =
+        urlInput.value.trim();
+
+
+    if (!rawURL) {
+
+        resultPanel.classList.add(
+            "show"
+        );
+
+        resultIcon.textContent =
+            "⚠️";
+
+        resultTitle.textContent =
+            "Enter a Website Address";
+
+        resultDescription.textContent =
+            "Type a URL before starting the verification.";
+
+        resultStatus.textContent =
+            "NO URL";
+
+        resultStatus.className =
+            "result-status warning";
+
+        protocolText.textContent =
+            "No website address provided";
+
+        domainText.textContent =
+            "No domain available";
+
+        return;
+    }
+
+
+    let parsedURL;
+
+
+    try {
+
+        let formattedURL =
+            rawURL;
+
+        if (
+            !/^https?:\/\//i.test(
+                formattedURL
+            )
+        ) {
+
+            formattedURL =
+                "https://" +
+                formattedURL;
+
+        }
+
+        parsedURL =
+            new URL(
+                formattedURL
+            );
+
+    } catch (error) {
+
+        resultPanel.classList.add(
+            "show"
+        );
+
+        resultIcon.textContent =
+            "⚠️";
+
+        resultTitle.textContent =
+            "Invalid Website Address";
+
+        resultDescription.textContent =
+            "The address could not be interpreted as a valid URL.";
+
+        resultStatus.textContent =
+            "CHECK URL";
+
+        resultStatus.className =
+            "result-status danger";
+
+        protocolText.textContent =
+            "Invalid URL structure";
+
+        domainText.textContent =
+            "Could not identify domain";
+
+        return;
+    }
+
+
+    resultPanel.classList.add(
+        "show"
+    );
+
+
+    const protocol =
+        parsedURL.protocol;
+
+    const hostname =
+        parsedURL.hostname;
+
+    const isHTTPS =
+        protocol === "https:";
+
+
+    const suspiciousTerms = [
+        "login",
+        "verify",
+        "verification",
+        "secure",
+        "account",
+        "update",
+        "password",
+        "confirm",
+        "wallet"
+    ];
+
+
+    const hostnameLower =
+        hostname.toLowerCase();
+
+
+    const hasSuspiciousTerm =
+        suspiciousTerms.some(
+            term =>
+                hostnameLower.includes(
+                    term
+                )
+        );
+
+
+    resultIcon.textContent =
+        isHTTPS
+            ? "🛡️"
+            : "⚠️";
+
+
+    protocolText.textContent =
+        isHTTPS
+            ? "HTTPS connection detected"
+            : "Website is not using HTTPS";
+
+
+    domainText.textContent =
+        "Domain: " +
+        hostname;
+
+
+    if (!isHTTPS) {
+
+        resultTitle.textContent =
+            "Proceed With Caution";
+
+        resultDescription.textContent =
+            "This address does not use HTTPS. Do not enter sensitive information.";
+
+        resultStatus.textContent =
+            "WARNING";
+
+        resultStatus.className =
+            "result-status warning";
+
+    } else if (
+        hasSuspiciousTerm
+    ) {
+
+        resultTitle.textContent =
+            "Review This Website Carefully";
+
+        resultDescription.textContent =
+            "The address uses HTTPS, but its domain contains terms commonly seen in login or verification requests.";
+
+        resultStatus.textContent =
+            "REVIEW";
+
+        resultStatus.className =
+            "result-status warning";
+
+    } else {
+
+        resultTitle.textContent =
+            "Basic Checks Passed";
+
+        resultDescription.textContent =
+            "The address uses HTTPS and has a readable domain structure. Continue verifying the site independently.";
+
+        resultStatus.textContent =
+            "CHECKED";
+
+        resultStatus.className =
+            "result-status";
+
+    }
+
+}
+
+
+verifyBtn.addEventListener(
+    "click",
+    verifyWebsite
+);
+
+
+urlInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            verifyWebsite();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BUTTON PRESS ANIMATION
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".primary-btn, .secondary-btn"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    this.animate(
+                        [
+                            {
+                                transform:
+                                    "scale(1)"
+                            },
+
+                            {
+                                transform:
+                                    "scale(.96)"
+                            },
+
+                            {
+                                transform:
+                                    "scale(1)"
+                            }
+                        ],
+                        {
+                            duration: 220
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   SMOOTH INTERNAL NAVIGATION
+========================================================= */
+
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(
+        link => {
+
+            link.addEventListener(
+                "click",
+                function(event) {
+
+                    const target =
+                        document.querySelector(
+                            this.getAttribute(
+                                "href"
+                            )
+                        );
+
+                    if (target) {
+
+                        event.preventDefault();
+
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+<script src="safeshield-fix.js"></script>
+</body>
+</html>

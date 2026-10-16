@@ -1,0 +1,3115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - Phishing Awareness</title>
+
+<style>
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0B1220;
+  color: #F8FAFC;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+:root {
+
+  --bg: #0B1220;
+  --bg-secondary: #0E1728;
+  --card: #111C2E;
+
+  --blue: #4F8CFF;
+  --blue-light: #6A9CFF;
+
+  --teal: #22D3A7;
+
+  --text: #F8FAFC;
+  --secondary: #CBD5E1;
+  --muted: #94A3B8;
+
+  --border: #26364D;
+
+  --red: #EF4444;
+  --red-light: #FF6B6B;
+
+  --orange: #F59E0B;
+
+  --green: #22D3A7;
+
+  --footer: #080E19;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+nav {
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background:
+    rgba(11,18,32,0.94);
+
+  border-bottom:
+    1px solid var(--border);
+
+  backdrop-filter:
+    blur(14px);
+}
+
+.nav-container {
+
+  max-width: 1200px;
+  margin: auto;
+
+  padding: 16px 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+
+  color: var(--blue);
+
+  font-size: 24px;
+
+  font-weight: bold;
+
+  transition: 0.3s;
+}
+
+.logo:hover {
+
+  text-shadow:
+    0 0 20px
+    rgba(79,140,255,0.7);
+}
+
+.logo span {
+  color: white;
+}
+
+.nav-links {
+
+  display: flex;
+
+  gap: 25px;
+
+  list-style: none;
+}
+
+.nav-links a {
+
+  position: relative;
+
+  color: var(--secondary);
+
+  text-decoration: none;
+
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--teal);
+}
+
+.nav-links a::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -6px;
+
+  width: 0;
+  height: 2px;
+
+  background: var(--teal);
+
+  transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+
+  position: relative;
+
+  min-height: 600px;
+
+  padding:
+    110px 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  background:
+
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(239,68,68,0.16),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 50% 75%,
+      rgba(79,140,255,0.10),
+      transparent 50%
+    );
+}
+
+
+/* Radar circles */
+
+.radar {
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border:
+    1px solid
+    rgba(239,68,68,0.12);
+
+  border-radius: 50%;
+
+  animation:
+    radarPulse 4s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+.radar::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  border:
+    1px solid
+    rgba(239,68,68,0.10);
+
+  border-radius: 50%;
+}
+
+.radar::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  border:
+    1px solid
+    rgba(239,68,68,0.08);
+
+  border-radius: 50%;
+}
+
+@keyframes radarPulse {
+
+  0%,100% {
+
+    transform:
+      scale(0.9);
+
+    opacity: 0.35;
+  }
+
+  50% {
+
+    transform:
+      scale(1.05);
+
+    opacity: 0.8;
+  }
+}
+
+
+/* Floating particles */
+
+.particle {
+
+  position: absolute;
+
+  width: 4px;
+  height: 4px;
+
+  background:
+    var(--red);
+
+  border-radius: 50%;
+
+  opacity: 0.5;
+
+  animation:
+    particleFloat 7s linear infinite;
+}
+
+.particle:nth-child(1) {
+  left: 15%;
+  top: 25%;
+  animation-delay: 1s;
+}
+
+.particle:nth-child(2) {
+  left: 80%;
+  top: 35%;
+  animation-delay: 2s;
+}
+
+.particle:nth-child(3) {
+  left: 25%;
+  top: 70%;
+  animation-delay: 3s;
+}
+
+.particle:nth-child(4) {
+  left: 70%;
+  top: 75%;
+  animation-delay: 4s;
+}
+
+@keyframes particleFloat {
+
+  0% {
+    transform:
+      translateY(30px);
+
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.7;
+  }
+
+  70% {
+    opacity: 0.7;
+  }
+
+  100% {
+
+    transform:
+      translateY(-100px);
+
+    opacity: 0;
+  }
+}
+
+
+/* Hero content */
+
+.hero-content {
+
+  position: relative;
+
+  z-index: 5;
+
+  max-width: 850px;
+}
+
+.icon {
+
+  display: inline-block;
+
+  font-size: 75px;
+
+  margin-bottom: 15px;
+
+  animation:
+    floatIcon 3s ease-in-out infinite;
+
+  filter:
+    drop-shadow(
+      0 0 18px
+      rgba(239,68,68,0.35)
+    );
+}
+
+@keyframes floatIcon {
+
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
+
+  50% {
+    transform:
+      translateY(-12px)
+      rotate(-5deg);
+  }
+}
+
+
+/* Threat badge */
+
+.threat-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding:
+    8px 17px;
+
+  margin-bottom: 20px;
+
+  border-radius: 30px;
+
+  background:
+    rgba(239,68,68,0.08);
+
+  border:
+    1px solid
+    rgba(239,68,68,0.45);
+
+  color:
+    var(--red-light);
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+
+  animation:
+    threatGlow 2s infinite;
+}
+
+.threat-dot {
+
+  width: 8px;
+  height: 8px;
+
+  background:
+    var(--red);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 12px
+    var(--red);
+
+  animation:
+    blink 1s infinite;
+}
+
+@keyframes threatGlow {
+
+  0%,100% {
+    box-shadow:
+      0 0 8px
+      rgba(239,68,68,0.1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 25px
+      rgba(239,68,68,0.3);
+  }
+}
+
+@keyframes blink {
+
+  0%,100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+
+.hero h1 {
+
+  font-size:
+    clamp(44px,7vw,70px);
+
+  line-height: 1.1;
+
+  margin-bottom: 20px;
+
+  animation:
+    heroEnter 0.8s ease;
+}
+
+.hero h1 span {
+
+  color:
+    var(--red-light);
+
+  text-shadow:
+    0 0 25px
+    rgba(239,68,68,0.25);
+}
+
+.hero p {
+
+  max-width: 760px;
+
+  margin: auto;
+
+  color:
+    var(--secondary);
+
+  font-size: 18px;
+
+  animation:
+    heroEnter 0.8s ease 0.15s both;
+}
+
+@keyframes heroEnter {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(25px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn {
+
+  display: inline-block;
+
+  padding:
+    13px 24px;
+
+  margin-top: 25px;
+
+  border-radius: 8px;
+
+  background:
+    var(--blue);
+
+  color: white;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  border: none;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+
+  box-shadow:
+    0 8px 25px
+    rgba(79,140,255,0.15);
+}
+
+.btn:hover {
+
+  background:
+    var(--blue-light);
+
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 12px 35px
+    rgba(79,140,255,0.3);
+}
+
+
+/* =========================================
+   GENERAL
+========================================= */
+
+section {
+
+  padding:
+    85px 25px;
+}
+
+.container {
+
+  max-width:
+    1000px;
+
+  margin:
+    auto;
+}
+
+.section-title {
+
+  text-align: center;
+
+  margin-bottom:
+    45px;
+}
+
+.section-title h2 {
+
+  font-size:
+    36px;
+
+  margin-bottom:
+    10px;
+}
+
+.section-title p {
+
+  color:
+    var(--muted);
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
+
+  position: relative;
+
+  background:
+    var(--card);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    16px;
+
+  padding:
+    30px;
+
+  margin-bottom:
+    25px;
+
+  transition:
+    transform 0.35s,
+    border-color 0.35s,
+    box-shadow 0.35s;
+
+  overflow: hidden;
+}
+
+.card::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 60%;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--blue),
+      transparent
+    );
+
+  transition:
+    left 0.7s;
+}
+
+.card:hover::before {
+  left: 140%;
+}
+
+.card:hover {
+
+  transform:
+    translateY(-6px);
+
+  border-color:
+    rgba(79,140,255,0.6);
+
+  box-shadow:
+    0 18px 45px
+    rgba(79,140,255,0.10);
+}
+
+.card h2 {
+
+  color:
+    var(--blue);
+
+  margin-bottom:
+    15px;
+}
+
+.card p {
+
+  color:
+    var(--secondary);
+}
+
+
+/* =========================================
+   PHISHING MESSAGE
+========================================= */
+
+.message-card {
+
+  background:
+    #091321;
+
+  border:
+    1px solid #334155;
+
+  border-radius:
+    14px;
+
+  overflow:
+    hidden;
+
+  margin-top:
+    25px;
+
+  box-shadow:
+    0 20px 50px
+    rgba(0,0,0,0.25);
+}
+
+.message-header {
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  padding:
+    14px 18px;
+
+  background:
+    #111C2E;
+
+  border-bottom:
+    1px solid var(--border);
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+}
+
+.message-body {
+
+  padding:
+    25px;
+}
+
+.sender {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom:
+    20px;
+}
+
+.sender-icon {
+
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(239,68,68,0.12);
+
+  border:
+    1px solid
+    rgba(239,68,68,0.3);
+
+  border-radius:
+    50%;
+
+  font-size:
+    22px;
+}
+
+.sender strong {
+  display: block;
+}
+
+.sender small {
+  color:
+    var(--muted);
+}
+
+.message-body h3 {
+
+  color:
+    var(--red-light);
+
+  margin-bottom:
+    10px;
+}
+
+.fake-link {
+
+  display: block;
+
+  margin-top:
+    18px;
+
+  padding:
+    12px;
+
+  background:
+    rgba(239,68,68,0.08);
+
+  border:
+    1px solid
+    rgba(239,68,68,0.35);
+
+  border-radius:
+    8px;
+
+  color:
+    var(--red-light);
+
+  font-size:
+    13px;
+
+  word-break:
+    break-all;
+}
+
+
+/* Inspect button */
+
+.inspect-btn {
+
+  width: 100%;
+
+  margin-top:
+    18px;
+
+  padding:
+    13px;
+
+  background:
+    rgba(239,68,68,0.10);
+
+  color:
+    var(--red-light);
+
+  border:
+    1px solid
+    rgba(239,68,68,0.4);
+
+  border-radius:
+    8px;
+
+  cursor:
+    pointer;
+
+  font-weight:
+    bold;
+
+  transition:
+    0.3s;
+}
+
+.inspect-btn:hover {
+
+  background:
+    rgba(239,68,68,0.18);
+
+  box-shadow:
+    0 0 20px
+    rgba(239,68,68,0.15);
+}
+
+.clues {
+
+  display:
+    none;
+
+  margin-top:
+    20px;
+
+  animation:
+    reveal 0.5s ease;
+}
+
+.clues.show {
+  display:
+    block;
+}
+
+@keyframes reveal {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+.clue {
+
+  display:
+    flex;
+
+  gap:
+    12px;
+
+  padding:
+    14px;
+
+  margin-bottom:
+    10px;
+
+  background:
+    #0E1728;
+
+  border-radius:
+    8px;
+
+  border-left:
+    3px solid var(--red);
+}
+
+.clue strong {
+  color:
+    var(--red-light);
+}
+
+
+/* =========================================
+   RED FLAGS
+========================================= */
+
+.flags {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:
+    15px;
+}
+
+.flag {
+
+  padding:
+    20px;
+
+  background:
+    #0E1728;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    10px;
+
+  transition:
+    0.3s;
+
+  cursor:
+    default;
+}
+
+.flag:hover {
+
+  border-color:
+    var(--red);
+
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 10px 25px
+    rgba(239,68,68,0.10);
+}
+
+.flag-icon {
+
+  font-size:
+    28px;
+
+  margin-bottom:
+    7px;
+}
+
+.flag strong {
+
+  color:
+    var(--red-light);
+
+  font-size:
+    17px;
+}
+
+.flag p {
+
+  margin-top:
+    5px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+}
+
+
+/* =========================================
+   THREAT METER
+========================================= */
+
+.threat-meter {
+
+  margin-top:
+    25px;
+
+  padding:
+    20px;
+
+  background:
+    #0E1728;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    12px;
+}
+
+.meter-header {
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  margin-bottom:
+    10px;
+}
+
+.meter-header span:last-child {
+
+  color:
+    var(--red-light);
+
+  font-weight:
+    bold;
+}
+
+.meter-bar {
+
+  height:
+    12px;
+
+  background:
+    #1E293B;
+
+  border-radius:
+    20px;
+
+  overflow:
+    hidden;
+}
+
+.meter-fill {
+
+  width:
+    92%;
+
+  height:
+    100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--orange),
+      var(--red)
+    );
+
+  border-radius:
+    20px;
+
+  animation:
+    meterLoad 1.5s ease;
+}
+
+@keyframes meterLoad {
+
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 92%;
+  }
+}
+
+
+/* =========================================
+   QUIZ
+========================================= */
+
+.quiz {
+
+  text-align:
+    center;
+}
+
+.quiz h2 {
+
+  color:
+    var(--teal);
+}
+
+.quiz-intro {
+
+  color:
+    var(--muted);
+
+  margin-bottom:
+    20px;
+}
+
+.quiz-question {
+
+  background:
+    #0E1728;
+
+  padding:
+    25px;
+
+  border-radius:
+    12px;
+
+  margin:
+    20px 0;
+}
+
+.question-number {
+
+  color:
+    var(--blue);
+
+  font-size:
+    13px;
+
+  font-weight:
+    bold;
+
+  margin-bottom:
+    10px;
+}
+
+.option {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  padding:
+    15px;
+
+  margin:
+    10px 0;
+
+  background:
+    var(--card);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    8px;
+
+  color:
+    white;
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.3s;
+}
+
+.option:hover {
+
+  border-color:
+    var(--blue);
+
+  transform:
+    translateX(6px);
+}
+
+.option.correct {
+
+  background:
+    rgba(34,211,167,0.12);
+
+  border-color:
+    var(--teal);
+
+  color:
+    var(--teal);
+}
+
+.option.wrong {
+
+  background:
+    rgba(239,68,68,0.12);
+
+  border-color:
+    var(--red);
+
+  color:
+    var(--red-light);
+}
+
+.feedback {
+
+  display:
+    none;
+
+  padding:
+    15px;
+
+  margin-top:
+    15px;
+
+  border-radius:
+    8px;
+
+  background:
+    #091321;
+
+  color:
+    var(--secondary);
+
+  animation:
+    reveal 0.4s ease;
+}
+
+.feedback.show {
+  display:
+    block;
+}
+
+.score {
+
+  display:
+    none;
+
+  margin-top:
+    20px;
+
+  padding:
+    20px;
+
+  background:
+    rgba(34,211,167,0.07);
+
+  border:
+    1px solid
+    rgba(34,211,167,0.3);
+
+  border-radius:
+    10px;
+
+  color:
+    var(--teal);
+
+  font-size:
+    18px;
+
+  font-weight:
+    bold;
+}
+
+
+/* =========================================
+   SCENARIO
+========================================= */
+
+.scenario {
+
+  border:
+    1px solid
+    rgba(245,158,11,0.35);
+
+  background:
+    linear-gradient(
+      135deg,
+      #111C2E,
+      #151D2B
+    );
+}
+
+.scenario h2 {
+
+  color:
+    var(--orange);
+}
+
+.scenario-box {
+
+  margin-top:
+    20px;
+
+  padding:
+    22px;
+
+  background:
+    #091321;
+
+  border-radius:
+    10px;
+
+  border:
+    1px solid var(--border);
+}
+
+.scenario-options {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:
+    12px;
+
+  margin-top:
+    18px;
+}
+
+.scenario-btn {
+
+  padding:
+    14px;
+
+  background:
+    var(--card);
+
+  color:
+    white;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    8px;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.3s;
+}
+
+.scenario-btn:hover {
+
+  border-color:
+    var(--orange);
+
+  transform:
+    translateY(-3px);
+}
+
+.scenario-result {
+
+  display:
+    none;
+
+  margin-top:
+    18px;
+
+  padding:
+    15px;
+
+  border-radius:
+    8px;
+
+  background:
+    #0E1728;
+}
+
+
+/* =========================================
+   SAFETY CHECKLIST
+========================================= */
+
+.checklist {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:
+    12px;
+}
+
+.check-item {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    12px;
+
+  padding:
+    15px;
+
+  background:
+    #0E1728;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    8px;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.3s;
+}
+
+.check-item:hover {
+
+  border-color:
+    var(--teal);
+}
+
+.check-item input {
+
+  width:
+    18px;
+
+  height:
+    18px;
+
+  accent-color:
+    var(--teal);
+
+  cursor:
+    pointer;
+}
+
+.check-item:has(input:checked) {
+
+  border-color:
+    var(--teal);
+
+  background:
+    rgba(34,211,167,0.07);
+}
+
+.check-item:has(input:checked) span {
+
+  color:
+    var(--teal);
+
+  text-decoration:
+    line-through;
+}
+
+
+/* =========================================
+   FINAL MESSAGE
+========================================= */
+
+.final-box {
+
+  text-align:
+    center;
+
+  padding:
+    40px;
+
+  border:
+    1px solid
+    rgba(34,211,167,0.3);
+
+  background:
+    rgba(34,211,167,0.04);
+
+  border-radius:
+    16px;
+}
+
+.final-box h2 {
+
+  color:
+    var(--teal);
+
+  margin-bottom:
+    12px;
+}
+
+.final-box p {
+
+  color:
+    var(--secondary);
+}
+
+
+/* =========================================
+   FINAL NAVIGATION BUTTONS
+========================================= */
+
+.final-navigation {
+
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  gap:
+    15px;
+
+  flex-wrap:
+    wrap;
+
+  margin-top:
+    25px;
+}
+
+.final-navigation .btn {
+
+  margin-top:
+    0;
+}
+
+.previous-btn {
+
+  background:
+    #475569;
+}
+
+.previous-btn:hover {
+
+  background:
+    #64748B;
+}
+
+.home-btn {
+
+  background:
+    var(--blue);
+}
+
+.scam-btn {
+
+  background:
+    var(--teal);
+
+  color:
+    #06131A;
+}
+
+.scam-btn:hover {
+
+  background:
+    #4BE6C0;
+
+  box-shadow:
+    0 12px 35px
+    rgba(34,211,167,0.3);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+  text-align:
+    center;
+
+  padding:
+    45px 20px;
+
+  border-top:
+    1px solid var(--border);
+
+  background:
+    var(--footer);
+}
+
+footer h3 {
+
+  color:
+    var(--teal);
+
+  margin-bottom:
+    10px;
+}
+
+footer p {
+
+  color:
+    #71859A;
+
+  font-size:
+    14px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:700px) {
+
+  .nav-links {
+    display:
+      none;
+  }
+
+  .hero {
+    min-height:
+      520px;
+
+    padding:
+      80px 18px;
+  }
+
+  .flags {
+    grid-template-columns:
+      1fr;
+  }
+
+  .scenario-options {
+    grid-template-columns:
+      1fr;
+  }
+
+  .checklist {
+    grid-template-columns:
+      1fr;
+  }
+
+  section {
+    padding:
+      60px 18px;
+  }
+
+  .card {
+    padding:
+      22px;
+  }
+
+  .final-navigation {
+    flex-direction:
+      column;
+  }
+
+  .final-navigation .btn {
+    width:
+      100%;
+    max-width:
+      300px;
+
+    text-align:
+      center;
+  }
+
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media(prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+
+}
+
+</style>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVIGATION
+========================================= -->
+
+<nav>
+
+<div class="nav-container">
+
+<div class="logo">
+🛡️ Safe<span>Shield</span>
+</div>
+
+<ul class="nav-links">
+
+<li>
+<a href="home.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="protect.html">
+Protect
+</a>
+</li>
+
+<li>
+<a href="scam.html">
+Scams
+</a>
+</li>
+
+<li>
+<a href="tool.html">
+Tools
+</a>
+</li>
+
+<li>
+<a href="checklist.html">
+Checklist
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="hero">
+
+<div class="radar"></div>
+
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+
+
+<div class="hero-content">
+
+<div class="threat-badge">
+
+<span class="threat-dot"></span>
+
+THREAT TYPE • PHISHING
+
+</div>
+
+
+<div class="icon">
+🎣
+</div>
+
+
+<h1>
+
+Don't Take the
+<span>Bait.</span>
+
+</h1>
+
+
+<p>
+
+A phishing message can look like it came from
+your bank, delivery company, university,
+employer or even someone you know.
+
+The goal is simple:
+
+<strong>
+make you trust the message long enough
+to give away something valuable.
+</strong>
+
+</p>
+
+
+<a href="#learn"
+class="btn">
+
+🔍 Investigate the Scam
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     HOW IT WORKS
+========================================= -->
+
+<section id="learn">
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🎣 How Phishing Works
+</h2>
+
+<p>
+The scam usually follows a simple psychological pattern.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+1️⃣ The Bait
+</h2>
+
+<p>
+
+You receive an unexpected email, SMS,
+social-media message or notification.
+
+The message is designed to look familiar
+and trustworthy.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+2️⃣ The Pressure
+</h2>
+
+<p>
+
+The scammer creates an emotional reaction.
+
+Maybe your account is supposedly blocked,
+you've won a prize, your package is stuck,
+or something requires immediate attention.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+3️⃣ The Trap
+</h2>
+
+<p>
+
+You are directed to a fake website,
+asked to download something, or encouraged
+to reveal information.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+4️⃣ The Theft
+</h2>
+
+<p>
+
+The information may then be used to access
+accounts, steal money, impersonate you,
+or commit further fraud.
+
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     INTERACTIVE FAKE MESSAGE
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+📩 Inspect This Message
+</h2>
+
+<p>
+Can you identify the phishing clues before revealing them?
+</p>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="message-card">
+
+
+<div class="message-header">
+
+<span>
+📩 New Message
+</span>
+
+<span>
+9:41 AM
+</span>
+
+</div>
+
+
+<div class="message-body">
+
+
+<div class="sender">
+
+<div class="sender-icon">
+🏦
+</div>
+
+<div>
+
+<strong>
+SecureBank Alerts
+</strong>
+
+<small>
+security-alerts@securebank-support.com
+</small>
+
+</div>
+
+</div>
+
+
+<h3>
+⚠️ URGENT: Account Verification Required
+</h3>
+
+
+<p>
+
+We detected unusual activity on your account.
+
+For your security, your account will be
+temporarily suspended unless you verify
+your information immediately.
+
+</p>
+
+
+<p>
+
+You must complete verification within
+<strong>10 minutes</strong>.
+
+</p>
+
+
+<div class="fake-link">
+
+🔗 securebank-verify-account-login.com
+
+</div>
+
+
+<button
+class="inspect-btn"
+onclick="inspectMessage()">
+
+🔎 Inspect This Message
+
+</button>
+
+
+<div
+class="clues"
+id="clues">
+
+
+<div class="clue">
+
+<span>🚨</span>
+
+<div>
+
+<strong>Urgency</strong>
+
+<br>
+
+The message pressures you to act within
+10 minutes.
+
+</div>
+
+</div>
+
+
+<div class="clue">
+
+<span>🔗</span>
+
+<div>
+
+<strong>Suspicious Domain</strong>
+
+<br>
+
+The domain does not clearly match the
+official bank website.
+
+</div>
+
+</div>
+
+
+<div class="clue">
+
+<span>🔑</span>
+
+<div>
+
+<strong>Account Information</strong>
+
+<br>
+
+The message is attempting to push you
+toward a login page.
+
+</div>
+
+</div>
+
+
+<div class="clue">
+
+<span>🎭</span>
+
+<div>
+
+<strong>Impersonation</strong>
+
+<br>
+
+The sender is pretending to represent
+a trusted financial organization.
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="threat-meter">
+
+<div class="meter-header">
+
+<span>
+PHISHING RISK
+</span>
+
+<span>
+CRITICAL • 92%
+</span>
+
+</div>
+
+
+<div class="meter-bar">
+
+<div class="meter-fill"></div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     RED FLAGS
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🚨 Phishing Red Flags
+</h2>
+
+<p>
+One warning sign may be accidental. Several together deserve serious attention.
+</p>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="flags">
+
+
+<div class="flag">
+
+<div class="flag-icon">
+⏰
+</div>
+
+<strong>
+Unexpected Urgency
+</strong>
+
+<p>
+"Act now" or "within 10 minutes."
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<div class="flag-icon">
+🔗
+</div>
+
+<strong>
+Suspicious Link
+</strong>
+
+<p>
+The website address looks unusual or unfamiliar.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<div class="flag-icon">
+🎭
+</div>
+
+<strong>
+Fake Identity
+</strong>
+
+<p>
+Someone pretends to represent a trusted organization.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<div class="flag-icon">
+🔑
+</div>
+
+<strong>
+Sensitive Information
+</strong>
+
+<p>
+The message asks for passwords, card details or codes.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<div class="flag-icon">
+💰
+</div>
+
+<strong>
+Payment Request
+</strong>
+
+<p>
+You are unexpectedly asked to transfer money.
+</p>
+
+</div>
+
+
+<div class="flag">
+
+<div class="flag-icon">
+🤫
+</div>
+
+<strong>
+Secret Instructions
+</strong>
+
+<p>
+You're told not to tell anyone or verify the request.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     WHAT TO DO
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+🛡️ Your Anti-Phishing Strategy
+</h2>
+
+<p>
+Don't fight the scammer on their terms.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🛑 STOP
+</h2>
+
+<p>
+
+Don't click the link or reply immediately.
+
+Give yourself a moment to think.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🔍 CHECK
+</h2>
+
+<p>
+
+Look carefully at the sender, website address,
+message wording and request.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+📱 VERIFY
+</h2>
+
+<p>
+
+Open the organization's official app or type
+its website address yourself.
+
+Don't use the contact information
+provided in the suspicious message.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🚫 DON'T SHARE
+</h2>
+
+<p>
+
+Never share passwords, OTPs, PINs or other
+security credentials just because someone
+asks for them.
+
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     INTERACTIVE QUIZ
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="card quiz">
+
+<h2>
+🧠 Phishing Detection Challenge
+</h2>
+
+<p class="quiz-intro">
+
+You have one job:
+<strong>spot the dangerous message.</strong>
+
+</p>
+
+
+<div class="quiz-question">
+
+
+<div class="question-number">
+SCENARIO 1
+</div>
+
+
+<h3>
+Which message is most suspicious?
+</h3>
+
+
+<button
+class="option"
+onclick="answer(this,false)">
+
+📦 Your delivery app:
+"Your package has been delivered.
+Open the app to view details."
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,true)">
+
+🚨 "Your package is stuck!
+Pay ₹25 immediately using this link
+or your parcel will be destroyed."
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,false)">
+
+🏦 Your bank app:
+"Your monthly statement is available."
+
+</button>
+
+
+<div
+class="feedback"
+id="feedback">
+</div>
+
+
+<div
+class="score"
+id="score">
+</div>
+
+
+</div>
+
+
+<button
+class="btn"
+onclick="resetQuiz()">
+
+🔄 Try Again
+
+</button>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     SCENARIO
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="card scenario">
+
+<h2>
+🎯 What Would You Do?
+</h2>
+
+
+<p>
+
+You receive this message:
+
+</p>
+
+
+<div class="scenario-box">
+
+<p>
+
+<strong>
+"Your bank account has been locked.
+Call this number immediately to restore access.
+Do NOT contact the bank directly."
+</strong>
+
+</p>
+
+
+<div class="scenario-options">
+
+
+<button
+class="scenario-btn"
+onclick="scenarioAnswer('safe')">
+
+🛡️ Open my bank's official app
+
+</button>
+
+
+<button
+class="scenario-btn"
+onclick="scenarioAnswer('danger')">
+
+📞 Call the number in the message
+
+</button>
+
+
+<button
+class="scenario-btn"
+onclick="scenarioAnswer('danger')">
+
+🔗 Click the recovery link
+
+</button>
+
+
+<button
+class="scenario-btn"
+onclick="scenarioAnswer('safe')">
+
+🔎 Verify using an official source
+
+</button>
+
+
+</div>
+
+
+<div
+class="scenario-result"
+id="scenarioResult">
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     SAFETY CHECKLIST
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="section-title">
+
+<h2>
+✅ Phishing Safety Checklist
+</h2>
+
+<p>
+Click the items you've learned to recognize.
+</p>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="checklist">
+
+
+<label class="check-item">
+
+<input type="checkbox">
+
+<span>
+I check unexpected links before opening them.
+</span>
+
+</label>
+
+
+<label class="check-item">
+
+<input type="checkbox">
+
+<span>
+I never share my OTP with someone who contacts me.
+</span>
+
+</label>
+
+
+<label class="check-item">
+
+<input type="checkbox">
+
+<span>
+I verify suspicious requests independently.
+</span>
+
+</label>
+
+
+<label class="check-item">
+
+<input type="checkbox">
+
+<span>
+I check the sender's address carefully.
+</span>
+
+</label>
+
+
+<label class="check-item">
+
+<input type="checkbox">
+
+<span>
+I don't allow urgency to make my decisions.
+</span>
+
+</label>
+
+
+<label class="check-item">
+
+<input type="checkbox">
+
+<span>
+I use official apps and websites to verify accounts.
+</span>
+
+</label>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     FINAL
+========================================= -->
+
+<section>
+
+<div class="container">
+
+
+<div class="final-box">
+
+<h2>
+🛡️ Don't Take the Bait
+</h2>
+
+<p>
+
+Phishing works because it looks believable.
+
+Slow down.
+
+Check the source.
+
+Verify independently.
+
+And remember:
+
+<strong>
+a few seconds of caution can prevent a much bigger problem.
+</strong>
+
+</p>
+
+
+<!-- =========================================
+     FINAL NAVIGATION
+========================================= -->
+
+<div class="final-navigation">
+
+
+<a
+href="impersonation.html"
+class="btn previous-btn">
+
+← Previous Scam
+
+</a>
+
+
+<a
+href="home.html"
+class="btn home-btn">
+
+🏠 Home Page
+
+</a>
+
+
+<a
+href="scam.html"
+class="btn scam-btn">
+
+🛡️ Scam Awareness
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+<h3>
+🛡️ SafeShield
+</h3>
+
+<p>
+Stay alert. Protect your information.
+Think before you click.
+</p>
+
+<p style="margin-top:10px;">
+
+© 2026 SafeShield |
+Educational Privacy & Scam Awareness Website
+
+</p>
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* =========================================
+   INSPECT MESSAGE
+========================================= */
+
+function inspectMessage() {
+
+  const clues =
+    document.getElementById("clues");
+
+  const button =
+    document.querySelector(".inspect-btn");
+
+
+  clues.classList.toggle("show");
+
+
+  if(clues.classList.contains("show")) {
+
+    button.innerHTML =
+      "🔒 Hide Phishing Clues";
+
+  }
+
+  else {
+
+    button.innerHTML =
+      "🔎 Inspect This Message";
+
+  }
+
+}
+
+
+/* =========================================
+   QUIZ
+========================================= */
+
+let quizAnswered = false;
+
+
+function answer(button, correct) {
+
+
+  if(quizAnswered)
+    return;
+
+
+  quizAnswered = true;
+
+
+  const options =
+    document.querySelectorAll(".option");
+
+
+  options.forEach(option => {
+
+    option.disabled = true;
+
+  });
+
+
+  const feedback =
+    document.getElementById("feedback");
+
+
+  const score =
+    document.getElementById("score");
+
+
+  if(correct) {
+
+    button.classList.add("correct");
+
+
+    feedback.innerHTML =
+      "🟢 <strong>Correct!</strong><br><br>" +
+
+      "The message creates urgency, " +
+      "asks for immediate payment and " +
+      "uses an unexpected link. " +
+
+      "Those are classic phishing warning signs.";
+
+
+    score.innerHTML =
+      "🏆 Score: 1 / 1 — Excellent! You spotted the bait.";
+
+  }
+
+  else {
+
+    button.classList.add("wrong");
+
+
+    feedback.innerHTML =
+      "🔴 <strong>Not quite.</strong><br><br>" +
+
+      "Look for pressure, unexpected payment " +
+      "requests and suspicious links. " +
+
+      "Those clues point strongly toward phishing.";
+
+
+    score.innerHTML =
+      "📊 Score: 0 / 1 — Try again and look for the pressure tactics.";
+
+  }
+
+
+  feedback.classList.add("show");
+
+  score.style.display =
+    "block";
+
+}
+
+
+function resetQuiz() {
+
+
+  quizAnswered = false;
+
+
+  const options =
+    document.querySelectorAll(".option");
+
+
+  options.forEach(option => {
+
+    option.disabled = false;
+
+    option.classList.remove(
+      "correct",
+      "wrong"
+    );
+
+  });
+
+
+  document.getElementById("feedback")
+    .classList.remove("show");
+
+
+  document.getElementById("score")
+    .style.display = "none";
+
+}
+
+
+/* =========================================
+   SCENARIO
+========================================= */
+
+function scenarioAnswer(type) {
+
+
+  const result =
+    document.getElementById("scenarioResult");
+
+
+  result.style.display =
+    "block";
+
+
+  if(type === "safe") {
+
+    result.innerHTML =
+      "🟢 <strong>Good decision!</strong><br><br>" +
+
+      "Don't trust the contact information " +
+      "inside a suspicious message. " +
+
+      "Open your bank's official app or " +
+      "website yourself and verify the situation.";
+
+    result.style.color =
+      "#22D3A7";
+
+  }
+
+  else {
+
+    result.innerHTML =
+      "🔴 <strong>Dangerous choice!</strong><br><br>" +
+
+      "The scammer controls the number or link " +
+      "they provided. They may use it to pressure " +
+      "you into revealing sensitive information.";
+
+    result.style.color =
+      "#FF6B6B";
+
+  }
+
+}
+
+
+/* =========================================
+   SCROLL REVEAL
+========================================= */
+
+const cards =
+  document.querySelectorAll(".card");
+
+
+const observer =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting) {
+
+          entry.target.style.opacity =
+            "1";
+
+          entry.target.style.transform =
+            "translateY(0)";
+
+        }
+
+      });
+
+    },
+
+    {
+      threshold: 0.12
+    }
+  );
+
+
+cards.forEach(card => {
+
+  card.style.opacity =
+    "0";
+
+  card.style.transform =
+    "translateY(25px)";
+
+  card.style.transition =
+    "opacity 0.7s ease, transform 0.7s ease";
+
+  observer.observe(card);
+
+});
+
+
+</script>
+
+
+<script src="safeshield-fix.js"></script>
+</body>
+
+</html>

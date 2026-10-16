@@ -1,0 +1,3460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield — Backup Important Data</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #070D18;
+    color: #F8FAFC;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+:root {
+    --bg: #070D18;
+    --bg2: #0B1424;
+    --bg3: #0F1B2D;
+
+    --card: rgba(15, 27, 45, 0.78);
+    --card-solid: #101D30;
+
+    --blue: #4F8CFF;
+    --blue-light: #76A7FF;
+
+    --teal: #22D3A7;
+    --teal-light: #5EEAD4;
+
+    --red: #EF4444;
+    --orange: #F59E0B;
+
+    --white: #F8FAFC;
+    --text: #D8E1ED;
+    --muted: #8FA2B8;
+
+    --border: rgba(120, 150, 190, 0.18);
+
+    --shadow:
+        0 25px 80px rgba(0,0,0,0.35);
+}
+
+a {
+    color: inherit;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+::selection {
+    background: rgba(79,140,255,.35);
+    color: white;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(79,140,255,.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(34,211,167,.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(79,140,255,.08),
+            transparent 30%
+        );
+}
+
+.grid-background {
+    position: fixed;
+    inset: 0;
+    z-index: -4;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 60px 60px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 85%
+        );
+
+    opacity: .35;
+}
+
+
+/* =========================================================
+   FLOATING PARTICLES
+========================================================= */
+
+.particle {
+    position: fixed;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: var(--blue);
+
+    box-shadow:
+        0 0 15px var(--blue);
+
+    opacity: .35;
+
+    pointer-events: none;
+
+    z-index: -2;
+
+    animation:
+        particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+
+    from {
+        transform:
+            translateY(110vh)
+            translateX(0);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .35;
+    }
+
+    85% {
+        opacity: .35;
+    }
+
+    to {
+        transform:
+            translateY(-20vh)
+            translateX(100px);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+
+    background:
+        rgba(7,13,24,.78);
+
+    border-bottom:
+        1px solid rgba(120,150,190,.14);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    transition: .3s;
+}
+
+nav.scrolled {
+    background:
+        rgba(7,13,24,.94);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.25);
+}
+
+.nav-container {
+    max-width: 1250px;
+    margin: auto;
+
+    min-height: 74px;
+
+    padding:
+        0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    text-decoration: none;
+
+    font-size: 23px;
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+}
+
+.logo-shield {
+    width: 37px;
+    height: 37px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(79,140,255,.22),
+            rgba(34,211,167,.12)
+        );
+
+    border:
+        1px solid rgba(79,140,255,.35);
+
+    box-shadow:
+        0 0 25px rgba(79,140,255,.15);
+
+    animation:
+        logoPulse 3s infinite;
+}
+
+@keyframes logoPulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 20px rgba(79,140,255,.12);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(79,140,255,.3);
+    }
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 8px 0;
+
+    transition: .3s;
+}
+
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--teal)
+        );
+
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a.active {
+    color: var(--teal-light);
+}
+
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-button {
+    padding:
+        10px 17px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(79,140,255,.10);
+
+    border:
+        1px solid rgba(79,140,255,.3);
+
+    color: var(--blue-light);
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: .3s;
+}
+
+.nav-button:hover {
+    background: var(--blue);
+
+    color: white;
+
+    box-shadow:
+        0 0 25px rgba(79,140,255,.3);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    position: relative;
+
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.hero-container {
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding:
+        95px 25px 85px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.05fr .95fr;
+
+    gap: 55px;
+
+    align-items: center;
+}
+
+.hero-content {
+    animation:
+        heroEnter .9s ease forwards;
+}
+
+@keyframes heroEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+        8px 14px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(34,211,167,.06);
+
+    border:
+        1px solid rgba(34,211,167,.25);
+
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 24px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 12px var(--teal);
+
+    animation:
+        statusBlink 1.6s infinite;
+}
+
+@keyframes statusBlink {
+
+    0%,100% {
+        opacity: 1;
+        transform:
+            scale(1);
+    }
+
+    50% {
+        opacity: .35;
+        transform:
+            scale(.65);
+    }
+}
+
+.hero h1 {
+    max-width: 780px;
+
+    font-size:
+        clamp(45px, 6vw, 78px);
+
+    line-height: .98;
+
+    letter-spacing: -3px;
+
+    margin-bottom: 27px;
+}
+
+.hero h1 .blue {
+    color:
+        var(--blue-light);
+
+    text-shadow:
+        0 0 45px
+        rgba(79,140,255,.18);
+}
+
+.hero h1 .teal {
+    color:
+        var(--teal-light);
+}
+
+.hero-description {
+    max-width: 680px;
+
+    color:
+        var(--text);
+
+    font-size: 18px;
+
+    line-height: 1.8;
+
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    padding:
+        14px 20px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.primary-btn {
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #3678ED
+        );
+
+    color: white;
+
+    border: none;
+
+    box-shadow:
+        0 10px 35px
+        rgba(79,140,255,.2);
+}
+
+.primary-btn:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 16px 45px
+        rgba(79,140,255,.35);
+}
+
+.secondary-btn {
+    background:
+        rgba(255,255,255,.03);
+
+    border:
+        1px solid var(--border);
+
+    color:
+        var(--text);
+}
+
+.secondary-btn:hover {
+    border-color:
+        rgba(34,211,167,.4);
+
+    color:
+        var(--teal-light);
+
+    transform:
+        translateY(-4px);
+}
+
+
+/* =========================================================
+   BACKUP VISUAL
+========================================================= */
+
+.backup-visual {
+    min-height: 450px;
+
+    position: relative;
+
+    display: grid;
+
+    place-items: center;
+
+    animation:
+        visualEnter 1s .2s ease both;
+}
+
+@keyframes visualEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1);
+    }
+}
+
+.backup-orbit {
+    position: absolute;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(79,140,255,.18);
+
+    animation:
+        orbitSpin linear infinite;
+}
+
+.backup-orbit.one {
+    width: 280px;
+    height: 280px;
+
+    animation-duration:
+        14s;
+}
+
+.backup-orbit.two {
+    width: 390px;
+    height: 390px;
+
+    border-color:
+        rgba(34,211,167,.12);
+
+    animation-duration:
+        21s;
+
+    animation-direction:
+        reverse;
+}
+
+.backup-orbit.three {
+    width: 490px;
+    height: 490px;
+
+    border-color:
+        rgba(79,140,255,.07);
+
+    animation-duration:
+        28s;
+}
+
+@keyframes orbitSpin {
+
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+.backup-orbit::before {
+    content: "";
+
+    position: absolute;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--blue);
+
+    box-shadow:
+        0 0 18px var(--blue);
+
+    top: 7px;
+    left: 50%;
+}
+
+.backup-orbit.two::before {
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 18px var(--teal);
+
+    left: auto;
+    right: 10%;
+    top: 50%;
+}
+
+.backup-center {
+    position: relative;
+
+    width: 235px;
+    height: 250px;
+
+    display: grid;
+    place-items: center;
+
+    animation:
+        backupFloat 4s ease-in-out infinite;
+}
+
+@keyframes backupFloat {
+
+    0%,100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-12px);
+    }
+}
+
+.cloud {
+    position: absolute;
+
+    width: 190px;
+    height: 105px;
+
+    bottom: 42px;
+
+    border-radius:
+        55px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #18345A,
+            #0C1A2E
+        );
+
+    border:
+        1px solid
+        rgba(79,140,255,.45);
+
+    box-shadow:
+        0 0 45px
+        rgba(79,140,255,.2),
+        inset 0 0 35px
+        rgba(34,211,167,.04);
+}
+
+.cloud::before {
+    content: "";
+
+    position: absolute;
+
+    width: 72px;
+    height: 72px;
+
+    left: 38px;
+    top: -36px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1B3D68,
+            #0C1A2E
+        );
+
+    border-top:
+        1px solid
+        rgba(79,140,255,.4);
+}
+
+.cloud::after {
+    content: "";
+
+    position: absolute;
+
+    width: 58px;
+    height: 58px;
+
+    right: 35px;
+    top: -28px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1B3D68,
+            #0C1A2E
+        );
+
+    border-top:
+        1px solid
+        rgba(79,140,255,.4);
+}
+
+.backup-arrow {
+    position: absolute;
+
+    width: 72px;
+    height: 95px;
+
+    top: 18px;
+
+    border:
+        7px solid
+        var(--teal-light);
+
+    border-bottom: 0;
+
+    border-radius:
+        45px 45px 0 0;
+
+    filter:
+        drop-shadow(
+            0 0 15px
+            rgba(34,211,167,.35)
+        );
+}
+
+.backup-arrow::before {
+    content: "";
+
+    position: absolute;
+
+    width: 26px;
+    height: 26px;
+
+    border-right:
+        7px solid
+        var(--teal-light);
+
+    border-bottom:
+        7px solid
+        var(--teal-light);
+
+    transform:
+        rotate(45deg);
+
+    bottom: -13px;
+    left: 16px;
+}
+
+.data-lines {
+    position: absolute;
+
+    width: 115px;
+
+    bottom: 66px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 4;
+}
+
+.data-line {
+    height: 5px;
+
+    margin: 7px 0;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--teal)
+        );
+
+    box-shadow:
+        0 0 10px
+        rgba(34,211,167,.25);
+
+    animation:
+        dataPulse 1.8s ease-in-out infinite;
+}
+
+.data-line:nth-child(2) {
+    width: 80%;
+}
+
+.data-line:nth-child(3) {
+    width: 60%;
+}
+
+@keyframes dataPulse {
+
+    0%,100% {
+        opacity: .45;
+        transform: scaleX(.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+.backup-badge {
+    position: absolute;
+
+    padding:
+        11px 14px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(10,20,35,.82);
+
+    border:
+        1px solid
+        var(--border);
+
+    backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.3);
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.backup-badge.top {
+    top: 5%;
+    right: 1%;
+
+    color:
+        var(--teal-light);
+}
+
+.backup-badge.bottom {
+    bottom: 8%;
+    left: 1%;
+
+    color:
+        var(--blue-light);
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+    padding:
+        105px 25px;
+}
+
+.container {
+    max-width: 1250px;
+
+    margin: auto;
+}
+
+.section-heading {
+    text-align: center;
+
+    max-width: 720px;
+
+    margin:
+        0 auto 55px;
+}
+
+.section-tag {
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    text-transform:
+        uppercase;
+
+    margin-bottom: 10px;
+}
+
+.section-heading h2 {
+    font-size:
+        clamp(32px, 4vw, 48px);
+
+    line-height: 1.1;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 14px;
+}
+
+.section-heading p {
+    color:
+        var(--muted);
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   BACKUP AWARENESS SCORE
+========================================================= */
+
+.score-panel {
+    max-width: 900px;
+
+    margin:
+        0 auto 55px;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(17,30,50,.92),
+            rgba(11,20,35,.92)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.2);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.score-panel::before {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    top: -170px;
+    right: -100px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(79,140,255,.1);
+
+    filter:
+        blur(20px);
+}
+
+.score-header {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 18px;
+}
+
+.score-header h3 {
+    font-size: 17px;
+}
+
+.score-value {
+    color:
+        var(--teal-light);
+
+    font-size: 27px;
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 20px
+        rgba(34,211,167,.25);
+}
+
+.progress-track {
+    height: 10px;
+
+    background:
+        #172437;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--teal)
+        );
+
+    box-shadow:
+        0 0 20px
+        rgba(34,211,167,.35);
+
+    transition:
+        width 1s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.score-note {
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 11px;
+}
+
+
+/* =========================================================
+   BACKUP CARDS
+========================================================= */
+
+.backup-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.backup-card {
+    position: relative;
+
+    padding: 30px;
+
+    min-height: 310px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,30,50,.9),
+            rgba(12,22,37,.9)
+        );
+
+    border:
+        1px solid var(--border);
+
+    overflow: hidden;
+
+    transition:
+        .4s
+        cubic-bezier(.2,.8,.2,1);
+
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    cursor: pointer;
+}
+
+.backup-card.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+.backup-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -75px;
+    top: -75px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(79,140,255,.07);
+
+    transition: .4s;
+}
+
+.backup-card::after {
+    content: "";
+
+    position: absolute;
+
+    left: -110%;
+
+    top: 0;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.045),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition: .6s;
+}
+
+.backup-card:hover {
+    transform:
+        translateY(-10px);
+
+    border-color:
+        rgba(79,140,255,.5);
+
+    box-shadow:
+        0 25px 55px
+        rgba(0,0,0,.35),
+        0 0 30px
+        rgba(79,140,255,.08);
+}
+
+.backup-card:hover::before {
+    transform:
+        scale(1.5);
+
+    background:
+        rgba(34,211,167,.08);
+}
+
+.backup-card:hover::after {
+    left: 140%;
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(79,140,255,.09);
+
+    border:
+        1px solid
+        rgba(79,140,255,.22);
+
+    font-size: 29px;
+
+    margin-bottom: 20px;
+
+    transition: .35s;
+}
+
+.backup-card:hover .card-icon {
+    transform:
+        rotate(-6deg)
+        scale(1.1);
+
+    border-color:
+        rgba(34,211,167,.4);
+
+    background:
+        rgba(34,211,167,.08);
+
+    box-shadow:
+        0 0 25px
+        rgba(34,211,167,.12);
+}
+
+.backup-card h3 {
+    font-size: 20px;
+
+    margin-bottom: 10px;
+}
+
+.backup-card p {
+    color:
+        var(--text);
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+.info-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color:
+        var(--blue-light);
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    transition: .3s;
+}
+
+.info-button:hover {
+    color:
+        var(--teal-light);
+
+    transform:
+        translateX(5px);
+}
+
+
+/* =========================================================
+   BACKUP PLAN
+========================================================= */
+
+.plan-section {
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(14,23,40,.55),
+            transparent
+        );
+}
+
+.plan-layout {
+    display: grid;
+
+    grid-template-columns:
+        .85fr 1.15fr;
+
+    gap: 45px;
+
+    align-items: center;
+}
+
+.plan-intro h2 {
+    font-size:
+        clamp(34px,4vw,50px);
+
+    line-height: 1.1;
+
+    margin-bottom: 17px;
+}
+
+.plan-intro p {
+    color:
+        var(--muted);
+
+    margin-bottom: 25px;
+}
+
+.security-level {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        9px 14px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(34,211,167,.07);
+
+    border:
+        1px solid
+        rgba(34,211,167,.2);
+
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.backup-plan-box {
+    padding: 28px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,30,50,.95),
+            rgba(10,20,34,.95)
+        );
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.3);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.backup-plan-box::before {
+    content: "";
+
+    position: absolute;
+
+    width: 230px;
+    height: 230px;
+
+    right: -120px;
+    top: -120px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(34,211,167,.07);
+
+    filter:
+        blur(20px);
+}
+
+.plan-checklist {
+    display: grid;
+
+    gap: 13px;
+
+    position: relative;
+}
+
+.plan-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding:
+        13px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        var(--border);
+
+    transition: .3s;
+}
+
+.plan-item:hover {
+    border-color:
+        rgba(34,211,167,.3);
+
+    transform:
+        translateX(5px);
+}
+
+.plan-check {
+    width: 27px;
+    height: 27px;
+
+    flex: 0 0 27px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(34,211,167,.09);
+
+    border:
+        1px solid
+        rgba(34,211,167,.25);
+
+    color:
+        var(--teal-light);
+
+    font-size: 13px;
+
+    font-weight: 900;
+}
+
+.plan-item strong {
+    display: block;
+
+    font-size: 14px;
+
+    margin-bottom: 2px;
+}
+
+.plan-item span {
+    color:
+        var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   BACKUP PRINCIPLES
+========================================================= */
+
+.principles {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+}
+
+.principle {
+    padding: 26px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(15,27,45,.6);
+
+    border:
+        1px solid var(--border);
+
+    transition: .35s;
+}
+
+.principle:hover {
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(34,211,167,.35);
+}
+
+.principle-number {
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 10px;
+}
+
+.principle h3 {
+    margin-bottom: 8px;
+}
+
+.principle p {
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta {
+    position: relative;
+
+    overflow: hidden;
+
+    margin:
+        0 25px 90px;
+
+    border-radius: 24px;
+
+    border:
+        1px solid
+        rgba(79,140,255,.22);
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(79,140,255,.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(34,211,167,.12),
+            transparent 35%
+        ),
+        #0C1729;
+
+    text-align: center;
+
+    padding:
+        70px 25px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.25);
+}
+
+.cta::before {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border:
+        1px solid
+        rgba(79,140,255,.12);
+
+    border-radius: 50%;
+
+    left: -120px;
+    top: -180px;
+
+    animation:
+        rotateCircle
+        20s linear infinite;
+}
+
+@keyframes rotateCircle {
+
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+.cta h2 {
+    position: relative;
+
+    font-size:
+        clamp(30px,4vw,48px);
+
+    margin-bottom: 12px;
+}
+
+.cta p {
+    position: relative;
+
+    color:
+        var(--muted);
+
+    max-width: 650px;
+
+    margin:
+        0 auto 25px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    border-top:
+        1px solid var(--border);
+
+    background:
+        #050A12;
+
+    padding:
+        45px 25px;
+
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.footer-logo span {
+    color:
+        var(--blue);
+}
+
+footer p {
+    color:
+        #708198;
+
+    font-size: 13px;
+}
+
+.footer-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    color:
+        var(--teal-light);
+
+    font-size: 12px;
+}
+
+.footer-status i {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 10px
+        var(--teal);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(2,6,13,.78);
+
+    backdrop-filter:
+        blur(10px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        .3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.modal-box {
+    width: min(620px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 32px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111E32,
+            #0A1423
+        );
+
+    border:
+        1px solid
+        rgba(79,140,255,.3);
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.5);
+
+    transform:
+        translateY(25px)
+        scale(.96);
+
+    transition:
+        .3s ease;
+
+    position: relative;
+}
+
+.modal.show .modal-box {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:
+        var(--text);
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.modal-close:hover {
+    background:
+        rgba(239,68,68,.12);
+
+    border-color:
+        rgba(239,68,68,.4);
+
+    color:
+        #FCA5A5;
+}
+
+.modal-icon {
+    width: 65px;
+    height: 65px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 17px;
+
+    background:
+        rgba(79,140,255,.1);
+
+    border:
+        1px solid
+        rgba(79,140,255,.25);
+
+    font-size: 31px;
+
+    margin-bottom: 18px;
+}
+
+.modal-box h2 {
+    font-size:
+        clamp(25px,4vw,35px);
+
+    margin-bottom: 12px;
+}
+
+.modal-box p {
+    color:
+        var(--text);
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+.modal-list {
+    display: grid;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.modal-list div {
+    padding:
+        11px 13px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid var(--border);
+
+    color:
+        var(--text);
+
+    font-size: 13px;
+}
+
+.modal-list strong {
+    color:
+        var(--teal-light);
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .hero-container {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .backup-visual {
+        min-height: 420px;
+    }
+
+    .backup-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .principles {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .plan-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-intro {
+        text-align: center;
+    }
+
+    .security-level {
+        margin: auto;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .nav-links,
+    .nav-button {
+        display: none;
+    }
+
+    .nav-container {
+        min-height: 65px;
+    }
+
+    .hero {
+        min-height: auto;
+    }
+
+    .hero-container {
+        padding:
+            75px 18px;
+    }
+
+    .hero h1 {
+        letter-spacing:
+            -2px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .backup-orbit.one {
+        width: 245px;
+        height: 245px;
+    }
+
+    .backup-orbit.two {
+        width: 320px;
+        height: 320px;
+    }
+
+    .backup-orbit.three {
+        width: 390px;
+        height: 390px;
+    }
+
+    .backup-center {
+        transform:
+            scale(.85);
+    }
+
+    .backup-badge {
+        font-size: 10px;
+    }
+
+    section {
+        padding:
+            75px 18px;
+    }
+
+    .backup-grid,
+    .principles {
+        grid-template-columns: 1fr;
+    }
+
+    .score-header {
+        align-items:
+            flex-start;
+    }
+
+    .cta {
+        margin:
+            0 18px 70px;
+    }
+
+    .modal-box {
+        padding: 25px 20px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .hero-actions {
+        flex-direction:
+            column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 100%;
+    }
+
+    .backup-visual {
+        transform:
+            scale(.88);
+    }
+
+    .score-panel,
+    .backup-plan-box {
+        padding: 20px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+}
+
+</style>
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<div class="grid-background"></div>
+
+
+<!-- =======================================================
+     FLOATING PARTICLES
+======================================================= -->
+
+<div class="particle"
+     style="left:8%;animation-duration:14s;">
+</div>
+
+<div class="particle"
+     style="left:18%;animation-duration:19s;animation-delay:3s;">
+</div>
+
+<div class="particle"
+     style="left:34%;animation-duration:16s;animation-delay:7s;">
+</div>
+
+<div class="particle"
+     style="left:52%;animation-duration:21s;animation-delay:2s;">
+</div>
+
+<div class="particle"
+     style="left:67%;animation-duration:17s;animation-delay:5s;">
+</div>
+
+<div class="particle"
+     style="left:81%;animation-duration:23s;animation-delay:8s;">
+</div>
+
+<div class="particle"
+     style="left:94%;animation-duration:18s;animation-delay:4s;">
+</div>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav id="navbar">
+
+    <div class="nav-container">
+
+        <a href="home.html" class="logo">
+
+            <div class="logo-shield">
+                🛡️
+            </div>
+
+            Safe<span>Shield</span>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="home.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="protect.html" class="active">
+                    Protection
+                </a>
+            </li>
+
+            <li>
+                <a href="scam.html">
+                    Scams
+                </a>
+            </li>
+
+            <li>
+                <a href="tool.html">
+                    Tools
+                </a>
+            </li>
+
+            <li>
+                <a href="checklist.html">
+                    Checklist
+                </a>
+            </li>
+
+        </ul>
+
+
+        <a
+            href="checklist.html"
+            class="nav-button"
+        >
+            Security Check →
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<header class="hero">
+
+    <div class="hero-container">
+
+
+        <div class="hero-content">
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                DATA BACKUP SECURITY
+
+            </div>
+
+
+            <h1>
+
+                Keep Your Data
+                <span class="blue">
+                    Safe.
+                </span>
+
+                <br>
+
+                Prepare for the
+                <span class="teal">
+                    Unexpected.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Important photos, documents and personal
+                files can be lost through device failure,
+                theft, accidental deletion or cyberattacks.
+                Regular backups give you another way to
+                recover your important information.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a
+                    href="#backup-tools"
+                    class="primary-btn"
+                >
+                    💾 Explore Backup Security
+                </a>
+
+
+                <a
+                    href="#backup-plan"
+                    class="secondary-btn"
+                >
+                    🛡️ Build a Backup Plan
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- BACKUP SECURITY VISUAL -->
+
+        <div class="backup-visual">
+
+            <div class="backup-orbit one"></div>
+
+            <div class="backup-orbit two"></div>
+
+            <div class="backup-orbit three"></div>
+
+
+            <div class="backup-center">
+
+                <div class="backup-arrow"></div>
+
+                <div class="cloud"></div>
+
+                <div class="data-lines">
+
+                    <div class="data-line"></div>
+
+                    <div class="data-line"></div>
+
+                    <div class="data-line"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="backup-badge top">
+                ✓ Backup Protected
+            </div>
+
+
+            <div class="backup-badge bottom">
+                💾 Recovery Ready
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     BACKUP PROTECTION
+======================================================= -->
+
+<section id="backup-tools">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                DATA BACKUP PROTECTION
+            </div>
+
+            <h2>
+                Protect What You Cannot Replace
+            </h2>
+
+            <p>
+                A reliable backup strategy helps reduce the
+                impact of lost devices, damaged storage,
+                accidental deletion and security incidents.
+            </p>
+
+        </div>
+
+
+        <!-- BACKUP SCORE -->
+
+        <div class="score-panel reveal">
+
+            <div class="score-header">
+
+                <h3>
+                    💾 Backup Security Awareness Score
+                </h3>
+
+                <span
+                    class="score-value"
+                    id="scoreNumber"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="progress-track">
+
+                <div
+                    class="progress-fill"
+                    id="scoreProgress"
+                ></div>
+
+            </div>
+
+
+            <p class="score-note">
+                Explore each backup protection card to
+                improve your understanding of safer data
+                backup habits.
+            </p>
+
+        </div>
+
+
+        <!-- BACKUP CARDS -->
+
+        <div class="backup-grid">
+
+
+            <article class="backup-card reveal">
+
+                <div class="card-icon">
+                    💾
+                </div>
+
+                <h3>
+                    Back Up Important Files
+                </h3>
+
+                <p>
+                    Identify important documents, photos,
+                    school or work files and other information
+                    that would be difficult to replace.
+                </p>
+
+                <button
+                    class="info-button"
+                    type="button"
+                    data-title="Back Up Important Files"
+                    data-icon="💾"
+                    data-info="Start with the information that would cause the biggest problem if it disappeared. Consider documents, photos, project files, financial records and other irreplaceable data."
+                >
+                    Learn More →
+                </button>
+
+            </article>
+
+
+            <article class="backup-card reveal">
+
+                <div class="card-icon">
+                    ☁️
+                </div>
+
+                <h3>
+                    Use Secure Cloud Backup
+                </h3>
+
+                <p>
+                    Cloud storage can provide an additional
+                    copy of your files and make them available
+                    when your main device is unavailable.
+                </p>
+
+                <button
+                    class="info-button"
+                    type="button"
+                    data-title="Use Secure Cloud Backup"
+                    data-icon="☁️"
+                    data-info="A reputable cloud storage or backup service can keep an additional copy away from your physical device. Protect the cloud account with a strong unique password and two-factor authentication."
+                >
+                    Learn More →
+                </button>
+
+            </article>
+
+
+            <article class="backup-card reveal">
+
+                <div class="card-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Protect Backup Accounts
+                </h3>
+
+                <p>
+                    A backup is only useful if unauthorized
+                    people cannot easily access or delete it.
+                    Secure the accounts that hold your backups.
+                </p>
+
+                <button
+                    class="info-button"
+                    type="button"
+                    data-title="Protect Backup Accounts"
+                    data-icon="🔒"
+                    data-info="Use unique credentials for backup accounts, enable two-factor authentication where available, and review account recovery options. Avoid sharing access credentials."
+                >
+                    Learn More →
+                </button>
+
+            </article>
+
+
+            <article class="backup-card reveal">
+
+                <div class="card-icon">
+                    🔄
+                </div>
+
+                <h3>
+                    Back Up Regularly
+                </h3>
+
+                <p>
+                    A backup from months ago may not contain
+                    your newest information. Make backups a
+                    regular part of your digital routine.
+                </p>
+
+                <button
+                    class="info-button"
+                    type="button"
+                    data-title="Back Up Regularly"
+                    data-icon="🔄"
+                    data-info="Choose a backup schedule that matches how often your important files change. Automatic backups can reduce the chance of forgetting to create a new copy."
+                >
+                    Learn More →
+                </button>
+
+            </article>
+
+
+            <article class="backup-card reveal">
+
+                <div class="card-icon">
+                    🧰
+                </div>
+
+                <h3>
+                    Keep More Than One Copy
+                </h3>
+
+                <p>
+                    Relying on a single copy creates a single
+                    point of failure. Consider maintaining
+                    backups in separate locations or systems.
+                </p>
+
+                <button
+                    class="info-button"
+                    type="button"
+                    data-title="Keep More Than One Copy"
+                    data-icon="🧰"
+                    data-info="Consider keeping more than one backup copy and, where practical, storing copies separately. This can help if one storage device is damaged, lost or affected by a security incident."
+                >
+                    Learn More →
+                </button>
+
+            </article>
+
+
+            <article class="backup-card reveal">
+
+                <div class="card-icon">
+                    🧪
+                </div>
+
+                <h3>
+                    Test Your Backups
+                </h3>
+
+                <p>
+                    A backup should not simply exist. Check
+                    that files can actually be recovered when
+                    you need them.
+                </p>
+
+                <button
+                    class="info-button"
+                    type="button"
+                    data-title="Test Your Backups"
+                    data-icon="🧪"
+                    data-info="Periodically restore a small selection of files to confirm that your backup process works. A recovery test can reveal problems before an emergency happens."
+                >
+                    Learn More →
+                </button>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     BACKUP PLAN
+======================================================= -->
+
+<section
+    class="plan-section"
+    id="backup-plan"
+>
+
+    <div class="container">
+
+        <div class="plan-layout">
+
+
+            <div class="plan-intro reveal">
+
+                <div class="section-tag">
+                    SIMPLE BACKUP PLAN
+                </div>
+
+                <h2>
+                    Make Recovery Easier
+                </h2>
+
+                <p>
+                    A good backup routine does not have to be
+                    complicated. Focus on important information,
+                    multiple copies and regular recovery checks.
+                </p>
+
+                <div class="security-level">
+
+                    <span id="planIcon">
+                        🛡️
+                    </span>
+
+                    <span id="planStatus">
+                        Backup plan ready
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="backup-plan-box reveal">
+
+                <div class="plan-checklist">
+
+
+                    <div class="plan-item">
+
+                        <div class="plan-check">
+                            1
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Identify important data
+                            </strong>
+
+                            <span>
+                                Decide which files and information
+                                need reliable protection.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="plan-item">
+
+                        <div class="plan-check">
+                            2
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Create an additional copy
+                            </strong>
+
+                            <span>
+                                Use a suitable backup location or
+                                reputable cloud storage service.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="plan-item">
+
+                        <div class="plan-check">
+                            3
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Automate regular backups
+                            </strong>
+
+                            <span>
+                                Automatic backups can make the
+                                process easier to maintain.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="plan-item">
+
+                        <div class="plan-check">
+                            4
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Secure the backup
+                            </strong>
+
+                            <span>
+                                Protect backup accounts and storage
+                                from unauthorized access.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="plan-item">
+
+                        <div class="plan-check">
+                            5
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Test recovery
+                            </strong>
+
+                            <span>
+                                Confirm that your files can actually
+                                be restored when needed.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SMART BACKUP HABITS
+======================================================= -->
+
+<section>
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                SMART BACKUP HABITS
+            </div>
+
+            <h2>
+                Think Before Your Data Is Lost
+            </h2>
+
+            <p>
+                Good backup security is about preparing before
+                something goes wrong rather than trying to
+                recover everything afterward.
+            </p>
+
+        </div>
+
+
+        <div class="principles">
+
+
+            <div class="principle reveal">
+
+                <div class="principle-number">
+                    01 / IMPORTANT
+                </div>
+
+                <h3>
+                    Protect What Matters Most
+                </h3>
+
+                <p>
+                    Prioritize files that are difficult or
+                    impossible to replace. This gives your
+                    backup routine a clear starting point.
+                </p>
+
+            </div>
+
+
+            <div class="principle reveal">
+
+                <div class="principle-number">
+                    02 / SEPARATE
+                </div>
+
+                <h3>
+                    Avoid One Single Copy
+                </h3>
+
+                <p>
+                    Keeping important information in only one
+                    location means one failure could remove
+                    your only copy.
+                </p>
+
+            </div>
+
+
+            <div class="principle reveal">
+
+                <div class="principle-number">
+                    03 / RECOVER
+                </div>
+
+                <h3>
+                    Test Before You Need It
+                </h3>
+
+                <p>
+                    Regularly checking that your backups can be
+                    restored helps you discover problems before
+                    an emergency occurs.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CTA
+======================================================= -->
+
+<div class="cta reveal">
+
+    <h2>
+        Give Your Data
+        a Second Line of Defense.
+    </h2>
+
+    <p>
+        Backups are one part of a broader security strategy.
+        Continue improving your digital habits with the
+        SafeShield security checklist.
+    </p>
+
+    <a
+        href="checklist.html"
+        class="primary-btn"
+    >
+        🛡️ Open Security Checklist
+    </a>
+
+</div>
+
+
+<!-- =======================================================
+     INFORMATION MODAL
+======================================================= -->
+
+<div
+    class="modal"
+    id="infoModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
+
+        <button
+            class="modal-close"
+            id="modalClose"
+            type="button"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+        <div
+            class="modal-icon"
+            id="modalIcon"
+        >
+            💾
+        </div>
+
+        <h2 id="modalTitle">
+            Backup Information
+        </h2>
+
+        <p id="modalDescription">
+            Backup information.
+        </p>
+
+        <div class="modal-list">
+
+            <div>
+                <strong>Tip:</strong>
+                Keep your backup process regular and easy
+                enough that you can maintain it consistently.
+            </div>
+
+            <div>
+                <strong>Remember:</strong>
+                A backup should be protected and periodically
+                tested so you know it can be recovered.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🛡️ Safe<span>Shield</span>
+    </div>
+
+    <p>
+        Stay aware. Protect your information.
+        Think before you click.
+    </p>
+
+    <div class="footer-status">
+
+        <i></i>
+
+        Data Backup Security Awareness
+
+    </div>
+
+    <p style="margin-top:18px;">
+
+        © 2026 SafeShield · Educational
+        Digital Privacy & Security Website
+
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   NAVBAR SCROLL EFFECT
+========================================================= */
+
+const navbar =
+    document.getElementById("navbar");
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (window.scrollY > 30) {
+
+            navbar.classList.add(
+                "scrolled"
+            );
+
+        } else {
+
+            navbar.classList.remove(
+                "scrolled"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".reveal, .backup-card"
+    );
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+revealElements.forEach(
+    element => {
+
+        revealObserver.observe(
+            element
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BACKUP AWARENESS SCORE
+========================================================= */
+
+let score = 0;
+
+const scoreProgress =
+    document.getElementById(
+        "scoreProgress"
+    );
+
+const scoreNumber =
+    document.getElementById(
+        "scoreNumber"
+    );
+
+const backupCards =
+    document.querySelectorAll(
+        ".backup-card"
+    );
+
+backupCards.forEach(
+    card => {
+
+        card.addEventListener(
+            "mouseenter",
+            () => {
+
+                if (
+                    !card.dataset.visited
+                ) {
+
+                    card.dataset.visited =
+                        "true";
+
+                    score +=
+                        100 /
+                        backupCards.length;
+
+                    if (score > 100) {
+                        score = 100;
+                    }
+
+                    scoreProgress.style.width =
+                        score + "%";
+
+                    scoreNumber.textContent =
+                        Math.round(score) + "%";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   INFORMATION MODAL
+========================================================= */
+
+const infoModal =
+    document.getElementById(
+        "infoModal"
+    );
+
+const modalClose =
+    document.getElementById(
+        "modalClose"
+    );
+
+const modalIcon =
+    document.getElementById(
+        "modalIcon"
+    );
+
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
+
+const modalDescription =
+    document.getElementById(
+        "modalDescription"
+    );
+
+const infoButtons =
+    document.querySelectorAll(
+        ".info-button"
+    );
+
+
+function openModal(button) {
+
+    modalIcon.textContent =
+        button.dataset.icon;
+
+    modalTitle.textContent =
+        button.dataset.title;
+
+    modalDescription.textContent =
+        button.dataset.info;
+
+    infoModal.classList.add(
+        "show"
+    );
+
+    infoModal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeModal() {
+
+    infoModal.classList.remove(
+        "show"
+    );
+
+    infoModal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+infoButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                openModal(button);
+
+            }
+        );
+
+    }
+);
+
+
+modalClose.addEventListener(
+    "click",
+    closeModal
+);
+
+
+infoModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target === infoModal
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            infoModal.classList.contains("show")
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PLAN INTERACTION
+========================================================= */
+
+const planItems =
+    document.querySelectorAll(
+        ".plan-item"
+    );
+
+const planStatus =
+    document.getElementById(
+        "planStatus"
+    );
+
+const planIcon =
+    document.getElementById(
+        "planIcon"
+    );
+
+
+planItems.forEach(
+    item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                planItems.forEach(
+                    other => {
+
+                        other.style.borderColor =
+                            "";
+
+                        other.style.background =
+                            "";
+
+                    }
+                );
+
+                item.style.borderColor =
+                    "rgba(34,211,167,.4)";
+
+                item.style.background =
+                    "rgba(34,211,167,.05)";
+
+                planStatus.textContent =
+                    "Backup step selected";
+
+                planIcon.textContent =
+                    "✓";
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BUTTON PRESS EFFECT
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".primary-btn, .secondary-btn, .info-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    this.animate(
+                        [
+                            {
+                                transform:
+                                    "scale(1)"
+                            },
+
+                            {
+                                transform:
+                                    "scale(.96)"
+                            },
+
+                            {
+                                transform:
+                                    "scale(1)"
+                            }
+                        ],
+                        {
+                            duration: 220
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+<script src="safeshield-fix.js"></script>
+</body>
+</html>

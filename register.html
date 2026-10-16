@@ -1,0 +1,2999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register a Complaint | SafeShield</title>
+
+    <meta
+        name="description"
+        content="Learn how to report cyber scams and financial fraud in India through SafeShield."
+    >
+
+    <style>
+        /* =========================================================
+           ROOT / GLOBAL
+        ========================================================= */
+
+        :root {
+            --bg: #050b14;
+            --bg-soft: #08111e;
+            --card: rgba(11, 25, 43, 0.78);
+            --card-solid: #0b192b;
+
+            --blue: #4da6ff;
+            --blue-bright: #63b3ff;
+            --cyan: #35d6ff;
+            --purple: #8b5cf6;
+
+            --text: #f5f8ff;
+            --muted: #9caec3;
+            --muted-light: #c4d1df;
+
+            --border: rgba(91, 145, 201, 0.18);
+            --border-bright: rgba(77, 166, 255, 0.38);
+
+            --danger: #ff5c5c;
+            --warning: #ffd166;
+            --success: #38e0a1;
+
+            --shadow:
+                0 25px 80px rgba(0, 0, 0, 0.45);
+
+            --glow:
+                0 0 35px rgba(77, 166, 255, 0.14);
+
+            --radius: 22px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(77, 166, 255, 0.10),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(139, 92, 246, 0.09),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(53, 214, 255, 0.06),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 85%
+                );
+
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        #navbar {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 1000;
+
+            padding: 18px 0;
+
+            transition:
+                background 0.35s ease,
+                box-shadow 0.35s ease,
+                padding 0.35s ease;
+        }
+
+        #navbar.scrolled {
+            padding: 12px 0;
+
+            background:
+                rgba(4, 10, 18, 0.86);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid var(--border);
+
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.25);
+        }
+
+        .nav-container {
+            width: min(1200px, calc(100% - 40px));
+
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .nav-links {
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+        }
+
+        .nav-links a {
+            position: relative;
+
+            display: inline-flex;
+            align-items: center;
+
+            padding: 10px 13px;
+
+            color: var(--muted-light);
+
+            font-size: 0.9rem;
+            font-weight: 600;
+
+            border-radius: 10px;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+
+            background:
+                rgba(77, 166, 255, 0.07);
+
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            color: white;
+        }
+
+        .nav-links a.active::after {
+            content: "";
+
+            position: absolute;
+
+            bottom: 4px;
+            left: 50%;
+
+            width: 20px;
+            height: 2px;
+
+            transform: translateX(-50%);
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--blue),
+                    var(--cyan)
+                );
+
+            box-shadow:
+                0 0 10px rgba(77,166,255,0.7);
+        }
+
+        .nav-cta {
+            margin-left: 7px;
+
+            padding: 10px 17px !important;
+
+            color: white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2478d4,
+                    #6550d9
+                ) !important;
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            box-shadow:
+                0 8px 25px rgba(77,166,255,0.18);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px) !important;
+
+            box-shadow:
+                0 12px 30px rgba(77,166,255,0.28);
+        }
+
+        .menu-toggle {
+            display: none;
+
+            width: 43px;
+            height: 43px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            background:
+                rgba(10, 25, 42, 0.8);
+
+            color: white;
+
+            font-size: 1.25rem;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            position: relative;
+
+            min-height: 760px;
+
+            display: flex;
+            align-items: center;
+
+            padding:
+                145px 0
+                90px;
+
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            top: -260px;
+            right: -220px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(77,166,255,0.16),
+                    transparent 68%
+                );
+
+            filter: blur(10px);
+
+            animation:
+                floatingGlow 7s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            bottom: -300px;
+            left: -180px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(139,92,246,0.12),
+                    transparent 68%
+                );
+
+            animation:
+                floatingGlow 9s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatingGlow {
+            0%,100% {
+                transform: translate(0,0) scale(1);
+            }
+
+            50% {
+                transform: translate(-20px,20px) scale(1.08);
+            }
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.15fr)
+                minmax(330px, 0.85fr);
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 13px;
+
+            border:
+                1px solid rgba(77,166,255,0.22);
+
+            border-radius: 999px;
+
+            background:
+                rgba(77,166,255,0.055);
+
+            color: #9dcfff;
+
+            font-size: 0.72rem;
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            box-shadow:
+                0 0 12px rgba(56,224,161,0.8);
+
+            animation:
+                pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%,100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.35);
+                opacity: .65;
+            }
+        }
+
+        .hero h1 {
+            margin-top: 24px;
+
+            max-width: 760px;
+
+            font-size:
+                clamp(3rem, 6vw, 5.6rem);
+
+            line-height: 0.98;
+
+            letter-spacing: -4px;
+        }
+
+        .gradient {
+            display: block;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #ffffff 10%,
+                    #70b8ff 45%,
+                    #a17bff 85%
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 670px;
+
+            margin-top: 28px;
+
+            color: var(--muted);
+
+            font-size: 1.06rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 13px;
+
+            margin-top: 35px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            min-height: 51px;
+
+            padding: 0 20px;
+
+            border-radius: 13px;
+
+            font-size: 0.93rem;
+            font-weight: 750;
+
+            border: 1px solid transparent;
+
+            cursor: pointer;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                border-color .25s ease,
+                background .25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2378d6,
+                    #6752d9
+                );
+
+            box-shadow:
+                0 12px 35px rgba(77,166,255,0.22);
+        }
+
+        .btn-primary:hover {
+            box-shadow:
+                0 18px 45px rgba(77,166,255,0.34);
+        }
+
+        .btn-secondary {
+            color: #d7e6f5;
+
+            border-color:
+                rgba(115,155,194,0.22);
+
+            background:
+                rgba(255,255,255,0.035);
+        }
+
+        .btn-secondary:hover {
+            border-color:
+                rgba(77,166,255,0.4);
+
+            background:
+                rgba(77,166,255,0.06);
+        }
+
+        .btn-danger {
+            background:
+                linear-gradient(
+                    135deg,
+                    #df4747,
+                    #a52f56
+                );
+
+            color: white;
+
+            box-shadow:
+                0 12px 35px rgba(255,92,92,0.18);
+        }
+
+
+        /* =========================================================
+           EMERGENCY CARD
+        ========================================================= */
+
+        .emergency-card {
+            position: relative;
+
+            padding: 30px;
+
+            border-radius: 28px;
+
+            border:
+                1px solid rgba(77,166,255,0.25);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18,39,64,0.92),
+                    rgba(7,18,31,0.84)
+                );
+
+            box-shadow:
+                var(--shadow),
+                var(--glow);
+
+            overflow: hidden;
+
+            animation:
+                cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .emergency-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            top: -120px;
+            right: -100px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(77,166,255,0.17),
+                    transparent 70%
+                );
+        }
+
+        .card-label {
+            color: #87c4ff;
+
+            font-size: 0.73rem;
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .helpline {
+            margin-top: 8px;
+
+            font-size: clamp(4rem, 8vw, 6.5rem);
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            letter-spacing: -5px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #ffffff,
+                    #65b8ff,
+                    #8f72ff
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .helpline-title {
+            margin-top: 5px;
+
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .helpline-text {
+            margin-top: 12px;
+
+            color: var(--muted);
+
+            line-height: 1.65;
+
+            font-size: .9rem;
+        }
+
+        .emergency-actions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .emergency-actions .btn {
+            min-height: 45px;
+            padding: 0 13px;
+            font-size: .82rem;
+        }
+
+        .tiny-note {
+            margin-top: 17px;
+
+            color: #72869c;
+
+            font-size: .74rem;
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        section.content-section {
+            position: relative;
+
+            padding: 105px 0;
+        }
+
+        .section-heading {
+            max-width: 760px;
+
+            margin-bottom: 48px;
+        }
+
+        .section-kicker {
+            color: #6ebaff;
+
+            font-size: .72rem;
+            font-weight: 800;
+
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin-top: 12px;
+
+            font-size:
+                clamp(2.1rem, 4vw, 3.5rem);
+
+            line-height: 1.05;
+
+            letter-spacing: -2px;
+        }
+
+        .section-heading p {
+            margin-top: 16px;
+
+            color: var(--muted);
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================================
+           STEPS
+        ========================================================= */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 17px;
+        }
+
+        .step-card {
+            position: relative;
+
+            padding: 26px;
+
+            min-height: 270px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,31,51,.84),
+                    rgba(7,18,31,.78)
+                );
+
+            overflow: hidden;
+
+            transition:
+                transform .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+
+            border-color:
+                var(--border-bright);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.25),
+                0 0 30px rgba(77,166,255,.08);
+        }
+
+        .step-number {
+            width: 46px;
+            height: 46px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            color: white;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(77,166,255,.25),
+                    rgba(139,92,246,.25)
+                );
+
+            border:
+                1px solid rgba(77,166,255,.25);
+
+            box-shadow:
+                0 0 25px rgba(77,166,255,.08);
+        }
+
+        .step-card h3 {
+            margin-top: 28px;
+
+            font-size: 1.12rem;
+        }
+
+        .step-card p {
+            margin-top: 11px;
+
+            color: var(--muted);
+
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           TIMING / IMPORTANT INFO
+        ========================================================= */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.1fr .9fr;
+
+            gap: 22px;
+        }
+
+        .info-card {
+            padding: 31px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            background:
+                rgba(10,24,41,.72);
+
+            box-shadow:
+                0 15px 50px rgba(0,0,0,.16);
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+        }
+
+        .info-card p {
+            margin-top: 13px;
+
+            color: var(--muted);
+
+            line-height: 1.75;
+        }
+
+        .time-highlight {
+            margin-top: 23px;
+
+            padding: 18px;
+
+            border-left:
+                3px solid var(--blue);
+
+            border-radius: 12px;
+
+            background:
+                rgba(77,166,255,.055);
+        }
+
+        .time-highlight strong {
+            display: block;
+
+            color: white;
+
+            margin-bottom: 5px;
+        }
+
+        .warning-box {
+            border-color:
+                rgba(255,209,102,.18);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(57,43,17,.45),
+                    rgba(17,25,31,.7)
+                );
+        }
+
+        .warning-box .icon {
+            font-size: 2rem;
+        }
+
+
+        /* =========================================================
+           EVIDENCE
+        ========================================================= */
+
+        .evidence-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .evidence-item {
+            display: flex;
+            gap: 14px;
+
+            padding: 19px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            transition:
+                transform .25s ease,
+                background .25s ease;
+        }
+
+        .evidence-item:hover {
+            transform: translateX(5px);
+
+            background:
+                rgba(77,166,255,.05);
+        }
+
+        .evidence-icon {
+            flex:
+                0 0 39px;
+
+            height: 39px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background:
+                rgba(77,166,255,.1);
+
+            border:
+                1px solid rgba(77,166,255,.16);
+        }
+
+        .evidence-item strong {
+            display: block;
+
+            font-size: .91rem;
+        }
+
+        .evidence-item span {
+            display: block;
+
+            margin-top: 5px;
+
+            color: var(--muted);
+
+            font-size: .8rem;
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           INTERACTIVE CHECKER
+        ========================================================= */
+
+        .checker {
+            position: relative;
+
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 35px;
+
+            border:
+                1px solid rgba(77,166,255,.2);
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(13,31,52,.88),
+                    rgba(7,17,29,.82)
+                );
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .checker h3 {
+            font-size: 1.6rem;
+        }
+
+        .checker-subtitle {
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            line-height: 1.6;
+        }
+
+        .question {
+            margin-top: 28px;
+
+            padding-top: 24px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+        .question-title {
+            font-weight: 750;
+
+            line-height: 1.5;
+        }
+
+        .choice-row {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 14px;
+        }
+
+        .choice {
+            position: relative;
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice label {
+            display: inline-flex;
+            align-items: center;
+
+            min-height: 43px;
+
+            padding: 0 16px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            color: var(--muted-light);
+
+            background:
+                rgba(255,255,255,.025);
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                border .2s ease,
+                color .2s ease;
+        }
+
+        .choice input:checked + label {
+            color: white;
+
+            border-color:
+                rgba(77,166,255,.55);
+
+            background:
+                rgba(77,166,255,.11);
+
+            box-shadow:
+                0 0 20px rgba(77,166,255,.07);
+        }
+
+        .checker-result {
+            display: none;
+
+            margin-top: 25px;
+
+            padding: 18px;
+
+            border-radius: 15px;
+
+            line-height: 1.7;
+
+            animation:
+                resultIn .4s ease;
+        }
+
+        @keyframes resultIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .checker-result.show {
+            display: block;
+        }
+
+        .result-urgent {
+            border:
+                1px solid rgba(255,92,92,.25);
+
+            background:
+                rgba(255,92,92,.06);
+
+            color: #ffd1d1;
+        }
+
+        .result-normal {
+            border:
+                1px solid rgba(77,166,255,.22);
+
+            background:
+                rgba(77,166,255,.06);
+
+            color: #cce5ff;
+        }
+
+
+        /* =========================================================
+           OFFICIAL PORTAL CTA
+        ========================================================= */
+
+        .portal-section {
+            padding-bottom: 120px !important;
+        }
+
+        .portal-card {
+            position: relative;
+
+            padding: 55px 50px;
+
+            border-radius: 30px;
+
+            text-align: center;
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(77,166,255,.25);
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(77,166,255,.15),
+                    transparent 50%
+                ),
+                linear-gradient(
+                    145deg,
+                    #0c2038,
+                    #071321
+                );
+
+            box-shadow:
+                0 30px 90px rgba(0,0,0,.3);
+        }
+
+        .portal-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            border-radius: 50%;
+
+            left: -120px;
+            bottom: -160px;
+
+            background:
+                rgba(139,92,246,.1);
+
+            filter: blur(25px);
+        }
+
+        .portal-icon {
+            width: 67px;
+            height: 67px;
+
+            margin: auto;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 20px;
+
+            font-size: 1.9rem;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(77,166,255,.18),
+                    rgba(139,92,246,.18)
+                );
+
+            border:
+                1px solid rgba(77,166,255,.22);
+        }
+
+        .portal-card h2 {
+            margin-top: 22px;
+
+            font-size:
+                clamp(2rem,4vw,3.2rem);
+
+            letter-spacing: -1.5px;
+        }
+
+        .portal-card p {
+            max-width: 650px;
+
+            margin: 14px auto 0;
+
+            color: var(--muted);
+
+            line-height: 1.75;
+        }
+
+        .portal-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 29px;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding:
+                70px 0
+                25px;
+
+            border-top:
+                1px solid var(--border);
+
+            background:
+                rgba(3,9,16,.75);
+        }
+
+        .footer-grid {
+            width: min(1180px, calc(100% - 40px));
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr
+                repeat(3, 1fr);
+
+            gap: 50px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.2rem;
+        }
+
+        .footer-brand h3 span {
+            color: var(--blue);
+        }
+
+        .footer-brand p {
+            max-width: 340px;
+
+            margin-top: 14px;
+
+            color: var(--muted);
+
+            font-size: .84rem;
+            line-height: 1.7;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 5px;
+
+            font-size: .85rem;
+
+            color: white;
+        }
+
+        .footer-column a {
+            width: fit-content;
+
+            color: #8095aa;
+
+            font-size: .8rem;
+
+            transition:
+                color .2s ease,
+                transform .2s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--blue);
+
+            transform: translateX(3px);
+        }
+
+        .footer-bottom {
+            width: min(1180px, calc(100% - 40px));
+
+            margin: 50px auto 0;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid var(--border);
+
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            color: #60758a;
+
+            font-size: .72rem;
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+            position: fixed;
+
+            left: 50%;
+            bottom: 25px;
+
+            z-index: 3000;
+
+            transform:
+                translate(-50%, 130px);
+
+            padding: 13px 18px;
+
+            border:
+                1px solid rgba(77,166,255,.28);
+
+            border-radius: 13px;
+
+            color: white;
+
+            background:
+                rgba(7,19,33,.94);
+
+            backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.35);
+
+            font-size: .83rem;
+
+            transition:
+                transform .35s ease;
+        }
+
+        .toast.show {
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================= */
+
+        .reveal {
+            opacity: 0;
+
+            transform:
+                translateY(28px);
+
+            transition:
+                opacity .75s ease,
+                transform .75s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .nav-links {
+                gap: 1px;
+            }
+
+            .nav-links a {
+                padding:
+                    9px 9px;
+
+                font-size: .82rem;
+            }
+
+            .hero-grid {
+                gap: 45px;
+            }
+
+            .steps {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 850px) {
+
+            #navbar {
+                padding: 13px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+
+                top: calc(100% + 8px);
+                left: 20px;
+                right: 20px;
+
+                padding: 12px;
+
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+
+                gap: 4px;
+
+                opacity: 0;
+                visibility: hidden;
+
+                transform:
+                    translateY(-10px);
+
+                border:
+                    1px solid var(--border);
+
+                border-radius: 18px;
+
+                background:
+                    rgba(5,13,23,.96);
+
+                backdrop-filter: blur(18px);
+
+                box-shadow:
+                    0 25px 60px rgba(0,0,0,.45);
+
+                transition:
+                    opacity .25s ease,
+                    transform .25s ease,
+                    visibility .25s ease;
+            }
+
+            .nav-links.open {
+                opacity: 1;
+                visibility: visible;
+
+                transform:
+                    translateY(0);
+            }
+
+            .nav-links a {
+                width: 100%;
+
+                padding: 13px 14px;
+            }
+
+            .nav-cta {
+                margin-left: 0;
+                margin-top: 4px;
+            }
+
+            .hero {
+                min-height: auto;
+
+                padding-top: 135px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                letter-spacing: -2.5px;
+            }
+
+            .emergency-card {
+                max-width: 620px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container,
+            .nav-container,
+            .footer-grid,
+            .footer-bottom {
+                width:
+                    min(100% - 28px, 1180px);
+            }
+
+            .hero {
+                padding:
+                    120px 0
+                    70px;
+            }
+
+            .hero h1 {
+                font-size:
+                    clamp(2.65rem, 14vw, 4.2rem);
+
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: .93rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+            .emergency-card {
+                padding: 24px;
+            }
+
+            .helpline {
+                font-size: 4.6rem;
+
+                letter-spacing: -3px;
+            }
+
+            section.content-section {
+                padding: 75px 0;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .step-card {
+                min-height: auto;
+            }
+
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checker {
+                padding: 24px 19px;
+            }
+
+            .portal-card {
+                padding:
+                    38px 20px;
+            }
+
+            .portal-buttons {
+                flex-direction: column;
+            }
+
+            .portal-buttons .btn {
+                width: 100%;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav id="navbar">
+
+    <div class="nav-container">
+
+        <a
+            href="home.html"
+            class="logo"
+            aria-label="SafeShield Home">
+            🛡️ Safe<span>Shield</span>
+        </a>
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false">
+            ☰
+        </button>
+
+        <ul
+            class="nav-links"
+            id="navLinks">
+
+            <li>
+                <a href="home.html">
+                    🏠 Home
+                </a>
+            </li>
+
+            <li>
+                <a href="protect.html">
+                    🛡️ Protect
+                </a>
+            </li>
+
+            <li>
+                <a href="scam.html">
+                    🚨 Scams
+                </a>
+            </li>
+
+            <li>
+                <a href="tool.html">
+                    🔧 Tools
+                </a>
+            </li>
+
+            <li>
+                <a href="checklist.html">
+                    📋 Checklist
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="register.html"
+                    class="active">
+                    🖊️ Register Complaint
+                </a>
+            </li>
+<li>
+    <a
+        href="contact.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        📄 Contact 
+    </a>
+</li>
+
+            <li>
+                <a
+                    href="protect.html"
+                    class="nav-cta">
+                    Get Protected
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<main>
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-grid">
+
+            <div class="hero-content reveal">
+
+                <div class="eyebrow">
+                    <span class="status-dot"></span>
+                    REPORT • RESPOND • PROTECT
+                </div>
+
+                <h1>
+                    Don't Wait.
+                    <span class="gradient">
+                        Report It.
+                    </span>
+                </h1>
+
+                <p class="hero-description">
+                    If you have been targeted by a cyber scam or lost
+                    money through an online fraud, reporting quickly can
+                    help authorities and financial institutions respond
+                    sooner. Learn what to do, what information to keep,
+                    and where to report.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="https://www.cybercrime.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary">
+                        🚨 Report Cyber Crime
+                    </a>
+
+                    <a
+                        href="#how"
+                        class="btn btn-secondary">
+                        ↓ How It Works
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMERGENCY CARD -->
+
+            <div class="emergency-card reveal">
+
+                <div class="card-label">
+                    INDIA • CYBER FINANCIAL FRAUD
+                </div>
+
+                <div class="helpline">
+                    1930
+                </div>
+
+                <div class="helpline-title">
+                    Cyber Crime Helpline
+                </div>
+
+                <p class="helpline-text">
+                    For immediate reporting of cyber financial fraud,
+                    call the National Cyber Crime Helpline.
+                </p>
+
+                <div class="emergency-actions">
+
+                    <a
+                        href="tel:1930"
+                        class="btn btn-danger">
+                        📞 Call 1930
+                    </a>
+
+                    <a
+                        href="https://www.cybercrime.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary">
+                        🌐 Portal
+                    </a>
+
+                </div>
+
+                <p class="tiny-note">
+                    The official portal currently identifies 1930 as a
+                    24×7 number for immediate reporting of cyber
+                    financial fraud.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     HOW TO REPORT
+========================================================= -->
+
+<section
+    class="content-section"
+    id="how">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-kicker">
+                THE RESPONSE PLAN
+            </div>
+
+            <h2>
+                What should you do after a cyber scam?
+            </h2>
+
+            <p>
+                Don't panic and don't delete evidence. Follow these
+                steps in order and report the incident as soon as
+                possible.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+            <article class="step-card reveal">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    Stop the damage
+                </h3>
+
+                <p>
+                    Stop communicating with the scammer. Do not send
+                    additional money, OTPs, passwords, card details or
+                    remote-access permissions.
+                </p>
+
+            </article>
+
+
+            <article class="step-card reveal">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Call 1930
+                </h3>
+
+                <p>
+                    If money has been lost through a cyber financial
+                    fraud, report it immediately through the
+                    National Cyber Crime Helpline.
+                </p>
+
+            </article>
+
+
+            <article class="step-card reveal">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    File online
+                </h3>
+
+                <p>
+                    Use the official National Cyber Crime Reporting
+                    Portal to submit the relevant complaint and
+                    provide accurate incident details.
+                </p>
+
+            </article>
+
+
+            <article class="step-card reveal">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>
+                    Save everything
+                </h3>
+
+                <p>
+                    Keep transaction details, screenshots, phone
+                    numbers, URLs, emails, messages and other evidence
+                    connected with the incident.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     HOW FAST?
+========================================================= -->
+
+<section class="content-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-kicker">
+                TIME MATTERS
+            </div>
+
+            <h2>
+                How quickly should you report?
+            </h2>
+
+            <p>
+                The safest rule is simple: <strong>report immediately</strong>.
+                Do not wait until you have collected every piece of
+                evidence before starting the reporting process.
+            </p>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <article class="info-card reveal">
+
+                <h3>
+                    ⚡ Financial fraud
+                </h3>
+
+                <p>
+                    If money has been transferred or debited because
+                    of a cyber scam, act immediately. The official
+                    system is designed for rapid reporting of
+                    financial cyber fraud.
+                </p>
+
+                <div class="time-highlight">
+
+                    <strong>
+                        Immediate action is best
+                    </strong>
+
+                    Call <strong>1930</strong> as soon as possible and
+                    follow the instructions provided during the
+                    reporting process.
+
+                </div>
+
+                <div class="time-highlight">
+
+                    <strong>
+                        If you receive an acknowledgement
+                    </strong>
+
+                    Keep your acknowledgement or reference number
+                    safe. If the reporting process asks you to
+                    complete the online complaint after calling 1930,
+                    do so within the required timeframe shown by the
+                    official system.
+
+                </div>
+
+            </article>
+
+
+            <article class="info-card warning-box reveal">
+
+                <div class="icon">
+                    ⏱️
+                </div>
+
+                <h3 style="margin-top:16px;">
+                    Why waiting can hurt
+                </h3>
+
+                <p>
+                    Digital payments can move quickly between accounts.
+                    Early reporting gives the relevant authorities,
+                    banks and financial intermediaries more opportunity
+                    to act on the transaction.
+                </p>
+
+                <div class="time-highlight">
+
+                    <strong>
+                        Remember
+                    </strong>
+
+                    You do not need to be completely certain about
+                    everything before reporting a suspected fraud.
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     INFORMATION TO COLLECT
+========================================================= -->
+
+<section class="content-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-kicker">
+                KEEP YOUR EVIDENCE
+            </div>
+
+            <h2>
+                What information should you have ready?
+            </h2>
+
+            <p>
+                Accurate information makes your complaint easier to
+                understand. Keep whatever is available — don't delay
+                reporting simply because something is missing.
+            </p>
+
+        </div>
+
+
+        <div class="evidence-grid">
+
+            <div class="evidence-item reveal">
+
+                <div class="evidence-icon">
+                    💳
+                </div>
+
+                <div>
+                    <strong>
+                        Transaction details
+                    </strong>
+
+                    <span>
+                        Transaction ID, date, amount and relevant
+                        payment details.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="evidence-item reveal">
+
+                <div class="evidence-icon">
+                    📱
+                </div>
+
+                <div>
+                    <strong>
+                        Phone numbers
+                    </strong>
+
+                    <span>
+                        Numbers used by the scammer, including
+                        WhatsApp or other messaging accounts.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="evidence-item reveal">
+
+                <div class="evidence-icon">
+                    🔗
+                </div>
+
+                <div>
+                    <strong>
+                        Suspicious links
+                    </strong>
+
+                    <span>
+                        Website URLs, payment links or suspicious
+                        pages involved in the scam.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="evidence-item reveal">
+
+                <div class="evidence-icon">
+                    💬
+                </div>
+
+                <div>
+                    <strong>
+                        Messages & emails
+                    </strong>
+
+                    <span>
+                        Keep screenshots, emails, chat messages and
+                        other communication.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="evidence-item reveal">
+
+                <div class="evidence-icon">
+                    🏦
+                </div>
+
+                <div>
+                    <strong>
+                        Bank / wallet information
+                    </strong>
+
+                    <span>
+                        Relevant bank, wallet, merchant or UPI
+                        information connected to the transaction.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="evidence-item reveal">
+
+                <div class="evidence-icon">
+                    🕒
+                </div>
+
+                <div>
+                    <strong>
+                        Incident timeline
+                    </strong>
+
+                    <span>
+                        Note approximately when the scam started,
+                        when you interacted and when the transaction
+                        occurred.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     INTERACTIVE DECISION TOOL
+========================================================= -->
+
+<section class="content-section">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-kicker">
+                QUICK CHECK
+            </div>
+
+            <h2>
+                What should you do right now?
+            </h2>
+
+            <p>
+                Answer two quick questions to get a simple action
+                recommendation.
+            </p>
+
+        </div>
+
+
+        <div class="checker reveal">
+
+            <h3>
+                Incident Response Checker
+            </h3>
+
+            <p class="checker-subtitle">
+                This is an educational guide, not an official
+                complaint submission.
+            </p>
+
+
+            <div class="question">
+
+                <div class="question-title">
+                    1. Did money leave your bank account, card,
+                    wallet or UPI account?
+                </div>
+
+                <div class="choice-row">
+
+                    <div class="choice">
+                        <input
+                            type="radio"
+                            name="money"
+                            id="moneyYes"
+                            value="yes">
+
+                        <label for="moneyYes">
+                            Yes
+                        </label>
+                    </div>
+
+                    <div class="choice">
+                        <input
+                            type="radio"
+                            name="money"
+                            id="moneyNo"
+                            value="no">
+
+                        <label for="moneyNo">
+                            No
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="question">
+
+                <div class="question-title">
+                    2. Is the incident happening right now or
+                    very recently?
+                </div>
+
+                <div class="choice-row">
+
+                    <div class="choice">
+                        <input
+                            type="radio"
+                            name="recent"
+                            id="recentYes"
+                            value="yes">
+
+                        <label for="recentYes">
+                            Yes
+                        </label>
+                    </div>
+
+                    <div class="choice">
+                        <input
+                            type="radio"
+                            name="recent"
+                            id="recentNo"
+                            value="no">
+
+                        <label for="recentNo">
+                            No
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                id="checkAction"
+                style="margin-top:28px;">
+                🔎 Check My Next Step
+            </button>
+
+
+            <div
+                class="checker-result"
+                id="checkerResult"
+                aria-live="polite">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     OFFICIAL PORTAL
+========================================================= -->
+
+<section class="content-section portal-section">
+
+    <div class="container">
+
+        <div class="portal-card reveal">
+
+            <div class="portal-icon">
+                🛡️
+            </div>
+
+            <h2>
+                Ready to report?
+            </h2>
+
+            <p>
+                Use the official National Cyber Crime Reporting Portal
+                to report a cybercrime. For cyber financial fraud,
+                you can also call 1930 for immediate reporting.
+            </p>
+
+
+            <div class="portal-buttons">
+
+                <a
+                    href="https://www.cybercrime.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary">
+                    🚨 Open Cyber Crime Portal
+                </a>
+
+                <a
+                    href="tel:1930"
+                    class="btn btn-secondary">
+                    📞 Call 1930
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div class="footer-brand">
+
+            <h3>
+                🛡️ Safe<span>Shield</span>
+            </h3>
+
+            <p>
+                A cybersecurity and digital privacy awareness platform
+                helping people recognize scams, protect their information
+                and make safer decisions online.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                SafeShield
+            </h4>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="protect.html">
+                Protect
+            </a>
+
+            <a href="scam.html">
+                Scams
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Security
+            </h4>
+
+            <a href="tool.html">
+                Security Tools
+            </a>
+
+            <a href="checklist.html">
+                Safety Checklist
+            </a>
+
+            <a href="register.html">
+                Register Complaint
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Remember
+            </h4>
+
+            <a href="scam.html">
+                Stop
+            </a>
+
+            <a href="scam.html">
+                Think
+            </a>
+
+            <a href="scam.html">
+                Verify
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 SafeShield
+        </span>
+
+        <span>
+            Educational Cybersecurity & Scam Awareness Website
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite">
+    SafeShield security awareness activated.
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    const navbar =
+        document.getElementById("navbar");
+
+    const menuToggle =
+        document.getElementById("menuToggle");
+
+    const navLinks =
+        document.getElementById("navLinks");
+
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            if (window.scrollY > 25) {
+
+                navbar.classList.add("scrolled");
+
+            } else {
+
+                navbar.classList.remove("scrolled");
+
+            }
+
+        },
+        { passive: true }
+    );
+
+
+    menuToggle.addEventListener(
+        "click",
+        () => {
+
+            const open =
+                navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                open ? "true" : "false"
+            );
+
+            menuToggle.textContent =
+                open ? "✕" : "☰";
+
+        }
+    );
+
+
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    navLinks.classList.remove("open");
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menuToggle.textContent = "☰";
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       SCROLL REVEAL
+    ========================================================= */
+
+    const revealElements =
+        document.querySelectorAll(".reveal");
+
+
+    const revealObserver =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+
+    revealElements.forEach(
+        element => {
+
+            revealObserver.observe(element);
+
+        }
+    );
+
+
+    /* =========================================================
+       INTERACTIVE ACTION CHECKER
+    ========================================================= */
+
+    const checkAction =
+        document.getElementById("checkAction");
+
+    const checkerResult =
+        document.getElementById("checkerResult");
+
+
+    checkAction.addEventListener(
+        "click",
+        () => {
+
+            const money =
+                document.querySelector(
+                    'input[name="money"]:checked'
+                );
+
+            const recent =
+                document.querySelector(
+                    'input[name="recent"]:checked'
+                );
+
+            const hi = window.ssLang === "hi";
+
+            if (!money || !recent) {
+
+                checkerResult.className =
+                    "checker-result show result-normal";
+
+                checkerResult.innerHTML = hi ? `
+                    <strong>
+                        ⚠️ कृपया दोनों सवालों के जवाब दें।
+                    </strong>
+                    <br>
+                    ऊपर एक जवाब चुनें ताकि SafeShield आपके
+                    अगले कदम की सलाह दे सके।
+                    ` : `
+                    <strong>
+                        ⚠️ Please answer both questions.
+                    </strong>
+                    <br>
+                    Choose an answer above so SafeShield can
+                    recommend your next step.
+                    `;
+
+                return;
+
+            }
+
+
+            if (
+                money.value === "yes" &&
+                recent.value === "yes"
+            ) {
+
+                checkerResult.className =
+                    "checker-result show result-urgent";
+
+                checkerResult.innerHTML = hi ? `
+                    <strong>
+                        🚨 तुरंत कार्रवाई करें।
+                    </strong>
+                    <br>
+                    चूँकि यह एक हाल के वित्तीय लेन-देन से जुड़ा है,
+                    जल्द से जल्द साइबर वित्तीय धोखाधड़ी हेल्पलाइन
+                    <strong>1930</strong> पर संपर्क करें और आधिकारिक
+                    साइबर क्राइम रिपोर्टिंग पोर्टल का इस्तेमाल करें।
+                    <br><br>
+
+                    <a
+                        href="tel:1930"
+                        class="btn btn-danger"
+                        style="min-height:42px;">
+                        📞 1930 पर कॉल करें
+                    </a>
+                    ` : `
+                    <strong>
+                        🚨 Act immediately.
+                    </strong>
+                    <br>
+                    Because this involves a recent financial
+                    transaction, contact the cyber financial fraud
+                    helpline at <strong>1930</strong> as soon as
+                    possible and use the official Cyber Crime
+                    Reporting Portal.
+                    <br><br>
+
+                    <a
+                        href="tel:1930"
+                        class="btn btn-danger"
+                        style="min-height:42px;">
+                        📞 Call 1930
+                    </a>
+                    `;
+
+            }
+
+            else if (money.value === "yes") {
+
+                checkerResult.className =
+                    "checker-result show result-urgent";
+
+                checkerResult.innerHTML = hi ? `
+                    <strong>
+                        ⚠️ वित्तीय धोखाधड़ी की शिकायत करें।
+                    </strong>
+                    <br>
+                    भले ही कुछ समय बीत चुका हो, फिर भी आपको घटना
+                    की शिकायत करनी चाहिए। अपने लेन-देन का विवरण
+                    और सहायक सबूत तैयार रखें।
+                    <br><br>
+
+                    <a
+                        href="https://www.cybercrime.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                        style="min-height:42px;">
+                        🌐 ऑनलाइन शिकायत करें
+                    </a>
+                    ` : `
+                    <strong>
+                        ⚠️ Report the financial fraud.
+                    </strong>
+                    <br>
+                    Even if some time has passed, you should still
+                    report the incident. Keep your transaction
+                    details and supporting evidence ready.
+                    <br><br>
+
+                    <a
+                        href="https://www.cybercrime.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                        style="min-height:42px;">
+                        🌐 Report Online
+                    </a>
+                    `;
+
+            }
+
+            else {
+
+                checkerResult.className =
+                    "checker-result show result-normal";
+
+                checkerResult.innerHTML = hi ? `
+                    <strong>
+                        🛡️ सबूत सुरक्षित रखें और शिकायत करें।
+                    </strong>
+                    <br>
+                    स्क्रीनशॉट, यूआरएल, फ़ोन नंबर, ईमेल, मैसेज और
+                    अन्य संबंधित जानकारी सहेजें। घटना की शिकायत
+                    करने के लिए आधिकारिक साइबर क्राइम रिपोर्टिंग
+                    पोर्टल का इस्तेमाल करें।
+                    <br><br>
+
+                    <a
+                        href="https://www.cybercrime.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                        style="min-height:42px;">
+                        🌐 साइबर क्राइम की शिकायत करें
+                    </a>
+                    ` : `
+                    <strong>
+                        🛡️ Preserve evidence and report.
+                    </strong>
+                    <br>
+                    Save screenshots, URLs, phone numbers, emails,
+                    messages and other relevant information. Use
+                    the official Cyber Crime Reporting Portal to
+                    report the incident.
+                    <br><br>
+
+                    <a
+                        href="https://www.cybercrime.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                        style="min-height:42px;">
+                        🌐 Report Cyber Crime
+                    </a>
+                    `;
+
+            }
+
+            checkerResult.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+        }
+    );
+
+
+    /* =========================================================
+       BUTTON FEEDBACK
+    ========================================================= */
+
+    const toast =
+        document.getElementById("toast");
+
+
+    function showToast(message) {
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(
+            () => {
+
+                toast.classList.remove("show");
+
+            },
+            2500
+        );
+
+    }
+
+
+    /* =========================================================
+       EXTERNAL LINK FEEDBACK
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            'a[target="_blank"]'
+        )
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    showToast(
+                        "Opening the official cybercrime portal..."
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       KEYBOARD ACCESSIBILITY
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                navLinks.classList.contains("open")
+            ) {
+
+                navLinks.classList.remove("open");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuToggle.textContent = "☰";
+
+                menuToggle.focus();
+
+            }
+
+        }
+    );
+
+</script>
+
+<script src="safeshield-fix.js"></script>
+</body>
+</html>

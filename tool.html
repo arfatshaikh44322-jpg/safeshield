@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SafeShield interactive cybersecurity tools and scam awareness toolkit.">
+<title>SafeShield - Security Tools</title>
+
+<style>
+:root{
+    --bg:#070d18;
+    --bg2:#0b1424;
+    --bg3:#0f1b2d;
+    --card:rgba(15,27,45,.88);
+    --blue:#4f8cff;
+    --blue-light:#76a7ff;
+    --teal:#22d3a7;
+    --teal-light:#5eead4;
+    --red:#ef4444;
+    --red-light:#ff6675;
+    --yellow:#ffd166;
+    --text:#d8e1ed;
+    --muted:#8fa2b8;
+    --border:rgba(120,150,190,.18);
+    --shadow:0 25px 80px rgba(0,0,0,.35);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    background:var(--bg);
+    color:#f8fafc;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(79,140,255,.12),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(34,211,167,.08),transparent 25%),
+        radial-gradient(circle at 50% 100%,rgba(79,140,255,.08),transparent 30%);
+}
+.grid-background{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    opacity:.35;
+}
+.particle{
+    position:fixed;
+    width:4px;height:4px;border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 15px var(--blue);
+    opacity:.35;
+    pointer-events:none;
+    z-index:-2;
+    animation:particleFloat linear infinite;
+}
+@keyframes particleFloat{
+    from{transform:translateY(110vh) translateX(0);opacity:0}
+    15%,85%{opacity:.35}
+    to{transform:translateY(-20vh) translateX(100px);opacity:0}
+}
+
+a{color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+::selection{background:rgba(79,140,255,.35);color:white}
+
+/* NAVIGATION */
+nav{
+    position:sticky;
+    top:0;
+    z-index:2000;
+    background:rgba(7,13,24,.82);
+    border-bottom:1px solid rgba(120,150,190,.14);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+}
+.nav-container{
+    max-width:1250px;
+    margin:auto;
+    min-height:74px;
+    padding:0 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    text-decoration:none;
+    font-size:23px;
+    font-weight:800;
+}
+.logo-shield{
+    width:37px;height:37px;
+    display:grid;place-items:center;
+    border-radius:11px;
+    background:linear-gradient(135deg,rgba(79,140,255,.22),rgba(34,211,167,.12));
+    border:1px solid rgba(79,140,255,.35);
+    animation:logoPulse 3s infinite;
+}
+@keyframes logoPulse{
+    0%,100%{box-shadow:0 0 20px rgba(79,140,255,.12)}
+    50%{box-shadow:0 0 30px rgba(79,140,255,.3)}
+}
+.logo span{color:var(--blue)}
+.nav-links{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+.nav-links a{
+    position:relative;
+    color:var(--text);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:8px 0;
+    transition:.3s;
+}
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:0;
+    width:0;height:2px;
+    border-radius:5px;
+    background:linear-gradient(90deg,var(--blue),var(--teal));
+    transition:.3s;
+}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-links a:hover,.nav-links a.active{color:white}
+.nav-button{
+    padding:10px 17px;
+    border-radius:10px;
+    background:rgba(79,140,255,.1);
+    border:1px solid rgba(79,140,255,.3);
+    color:var(--blue-light);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:700;
+}
+.menu-btn{
+    display:none;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:white;
+    border-radius:10px;
+    padding:8px 11px;
+}
+.mobile-menu{
+    display:none;
+    max-width:1250px;
+    margin:auto;
+    padding:0 25px 15px;
+}
+.mobile-menu.open{display:grid;gap:8px}
+.mobile-menu a{
+    padding:11px 14px;
+    text-decoration:none;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+}
+
+/* SIGN-IN BUTTON: UPPER LEFT */
+.signin-launcher{
+    position:fixed;
+    top:16px;
+    left:16px;
+    z-index:3000;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid rgba(79,140,255,.35);
+    border-radius:12px;
+    padding:10px 14px;
+    background:rgba(7,13,24,.88);
+    color:white;
+    box-shadow:0 10px 35px rgba(0,0,0,.3);
+    backdrop-filter:blur(15px);
+    transition:.25s;
+}
+.signin-launcher:hover{
+    transform:translateY(-2px);
+    border-color:var(--teal);
+    box-shadow:0 0 25px rgba(34,211,167,.18);
+}
+.signin-launcher .avatar{
+    width:27px;height:27px;
+    border-radius:50%;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--blue),var(--teal));
+    font-size:14px;
+}
+.signin-launcher.signed-in{
+    border-color:rgba(34,211,167,.45);
+}
+.account-menu{
+    position:fixed;
+    top:62px;
+    left:16px;
+    z-index:2999;
+    width:230px;
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:rgba(10,20,35,.96);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(18px);
+    display:none;
+}
+.account-menu.open{display:block;animation:modalIn .2s ease}
+.account-menu-title{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+.account-menu-user{
+    padding:10px;
+    border-radius:10px;
+    background:rgba(255,255,255,.04);
+    margin-bottom:10px;
+    word-break:break-word;
+}
+.logout-btn{
+    width:100%;
+    border:1px solid rgba(239,68,68,.25);
+    color:#ff9aa5;
+    background:rgba(239,68,68,.07);
+    border-radius:9px;
+    padding:9px;
+}
+
+/* AUTH MODAL */
+.auth-overlay{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,7,15,.76);
+    backdrop-filter:blur(9px);
+}
+.auth-overlay.open{display:flex}
+.auth-modal{
+    width:min(440px,100%);
+    position:relative;
+    border:1px solid rgba(79,140,255,.28);
+    border-radius:22px;
+    padding:30px;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(79,140,255,.14),transparent 38%),
+        rgba(10,20,35,.98);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+    animation:modalIn .3s ease;
+}
+@keyframes modalIn{
+    from{opacity:0;transform:translateY(18px) scale(.97)}
+    to{opacity:1;transform:none}
+}
+.auth-close{
+    position:absolute;
+    top:12px;right:12px;
+    width:35px;height:35px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:white;
+}
+.auth-icon{
+    width:60px;height:60px;
+    margin:0 auto 15px;
+    display:grid;place-items:center;
+    border-radius:18px;
+    background:linear-gradient(135deg,rgba(79,140,255,.2),rgba(34,211,167,.15));
+    font-size:28px;
+}
+.auth-modal h2{text-align:center;font-size:28px}
+.auth-modal>p{text-align:center;color:var(--muted);font-size:14px;margin:7px 0 22px}
+.auth-form{display:grid;gap:12px}
+.auth-form label{font-size:12px;color:var(--secondary,var(--text));font-weight:700}
+.auth-form input{
+    width:100%;
+    padding:13px 14px;
+    border-radius:10px;
+    border:1px solid #304968;
+    background:#07111f;
+    color:white;
+    outline:none;
+}
+.auth-form input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(34,211,167,.08)}
+.auth-submit{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--blue),#3678ed);
+    color:white;
+    font-weight:800;
+}
+.auth-divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#647892;
+    font-size:12px;
+    margin:16px 0;
+}
+.auth-divider::before,.auth-divider::after{
+    content:"";
+    height:1px;
+    background:var(--border);
+    flex:1;
+}
+.google-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    border:1px solid #40536d;
+    background:#fff;
+    color:#182334;
+    padding:12px;
+    border-radius:10px;
+    font-weight:800;
+}
+.google-mark{
+    width:20px;height:20px;
+    display:grid;place-items:center;
+    font-weight:900;
+    color:#4285f4;
+}
+.auth-later{
+    width:100%;
+    margin-top:10px;
+    padding:11px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--muted);
+    border-radius:10px;
+}
+.auth-message{
+    min-height:20px;
+    margin-top:10px;
+    font-size:12px;
+    text-align:center;
+}
+.auth-note{
+    margin-top:14px!important;
+    margin-bottom:0!important;
+    font-size:11px!important;
+    color:#647892!important;
+}
+
+/* HERO */
+.hero{
+    position:relative;
+    min-height:600px;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+}
+.hero-container{
+    width:100%;
+    max-width:1250px;
+    margin:auto;
+    padding:100px 25px 80px;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:60px;
+    align-items:center;
+}
+.hero-content{animation:heroEnter .9s ease forwards}
+@keyframes heroEnter{
+    from{opacity:0;transform:translateY(35px)}
+    to{opacity:1;transform:none}
+}
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 14px;
+    border-radius:50px;
+    background:rgba(34,211,167,.06);
+    border:1px solid rgba(34,211,167,.25);
+    color:var(--teal-light);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+    margin-bottom:24px;
+}
+.status-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 12px var(--teal);
+    animation:statusBlink 1.6s infinite;
+}
+@keyframes statusBlink{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.35;transform:scale(.65)}
+}
+.hero h1{
+    font-size:clamp(48px,6vw,82px);
+    line-height:.98;
+    letter-spacing:-3px;
+    margin-bottom:27px;
+}
+.hero h1 span{
+    color:var(--teal-light);
+    text-shadow:0 0 45px rgba(34,211,167,.16);
+}
+.hero-description{
+    max-width:680px;
+    color:var(--text);
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:32px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.primary-btn,.secondary-btn,.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:13px 20px;
+    border-radius:11px;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.3s;
+}
+.primary-btn,.btn-primary{
+    background:linear-gradient(135deg,var(--blue),#3678ed);
+    color:white;
+    border:0;
+    box-shadow:0 10px 35px rgba(79,140,255,.2);
+}
+.primary-btn:hover,.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 45px rgba(79,140,255,.3)}
+.secondary-btn,.btn-secondary{
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    color:var(--text);
+}
+.secondary-btn:hover,.btn-secondary:hover{border-color:rgba(34,211,167,.4);color:var(--teal-light);transform:translateY(-3px)}
+
+.security-visual{
+    min-height:390px;
+    display:grid;
+    place-items:center;
+    position:relative;
+    animation:visualEnter 1s .2s ease both;
+}
+@keyframes visualEnter{
+    from{opacity:0;transform:scale(.9)}
+    to{opacity:1;transform:scale(1)}
+}
+.radar{
+    width:360px;height:360px;
+    border-radius:50%;
+    border:1px solid rgba(79,140,255,.18);
+    position:relative;
+    display:grid;place-items:center;
+    background:
+        radial-gradient(circle,rgba(79,140,255,.08),transparent 58%),
+        repeating-radial-gradient(circle,transparent 0 49px,rgba(79,140,255,.09) 50px 51px);
+    animation:radarPulse 4s ease-in-out infinite;
+}
+.radar::before,.radar::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    border:1px solid rgba(34,211,167,.12);
+}
+.radar::before{inset:45px}
+.radar::after{inset:95px}
+.radar-line{
+    position:absolute;
+    width:48%;
+    height:2px;
+    background:linear-gradient(90deg,transparent,var(--teal),transparent);
+    box-shadow:0 0 18px var(--teal);
+    transform-origin:left center;
+    animation:radarSweep 3.2s linear infinite;
+}
+@keyframes radarSweep{to{transform:rotate(360deg)}}
+@keyframes radarPulse{50%{box-shadow:0 0 50px rgba(79,140,255,.13)}}
+.shield{
+    width:135px;height:155px;
+    display:grid;place-items:center;
+    font-size:60px;
+    background:linear-gradient(145deg,rgba(79,140,255,.24),rgba(34,211,167,.08));
+    clip-path:polygon(50% 0,91% 15%,87% 63%,72% 82%,50% 100%,28% 82%,13% 63%,9% 15%);
+    filter:drop-shadow(0 0 30px rgba(79,140,255,.25));
+    animation:shieldFloat 4s ease-in-out infinite;
+}
+@keyframes shieldFloat{50%{transform:translateY(-12px)}}
+.security-status{
+    position:absolute;
+    right:0;
+    bottom:5%;
+    padding:14px 16px;
+    border-radius:13px;
+    background:rgba(10,20,35,.85);
+    border:1px solid var(--border);
+    backdrop-filter:blur(15px);
+    box-shadow:0 15px 45px rgba(0,0,0,.3);
+}
+.security-status small{display:block;color:var(--muted);font-size:11px}
+.status-value{color:var(--teal-light);font-weight:800;margin:3px 0}
+
+/* STATS */
+.stats{
+    max-width:1250px;
+    margin:auto;
+    padding:0 25px 70px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+.stat{
+    padding:24px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(15,27,45,.58);
+}
+.stat-number{
+    font-size:32px;
+    font-weight:900;
+    color:var(--teal-light);
+}
+.stat-label{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* SECTIONS */
+section{padding:105px 25px}
+.container{max-width:1250px;margin:auto}
+.section-heading{text-align:center;max-width:720px;margin:0 auto 55px}
+.eyebrow{
+    color:var(--teal-light);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
+.section-heading h2{font-size:clamp(32px,4vw,48px);line-height:1.1;margin-bottom:14px}
+.section-heading p{color:var(--muted)}
+
+/* TOOLS */
+.tools-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+}
+.tool{
+    background:linear-gradient(145deg,rgba(15,27,45,.9),rgba(10,20,35,.88));
+    border:1px solid var(--border);
+    padding:30px;
+    border-radius:18px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+.tool::before{
+    content:"";
+    position:absolute;
+    width:160px;height:160px;
+    top:-100px;right:-80px;
+    border-radius:50%;
+    background:rgba(79,140,255,.08);
+    filter:blur(15px);
+}
+.tool:hover{
+    transform:translateY(-5px);
+    border-color:rgba(34,211,167,.35);
+    box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
+.tool>*{position:relative;z-index:1}
+.tool-icon{
+    font-size:30px;
+    margin-bottom:10px;
+    display:inline-block;
+    animation:iconFloat 5s ease-in-out infinite;
+}
+@keyframes iconFloat{50%{transform:translateY(-3px)}}
+.tool h3{font-size:21px;margin-bottom:10px;color:var(--teal-light)}
+.tool-description{color:#9eb0c3;margin-bottom:18px;font-size:14px}
+.tool-description strong{color:var(--yellow)}
+input[type="text"],input[type="password"],input[type="email"]{
+    width:100%;
+    padding:13px 14px;
+    border-radius:10px;
+    border:1px solid #304968;
+    background:#07111f;
+    color:white;
+    outline:none;
+    margin-bottom:12px;
+}
+input:focus{border-color:var(--teal)}
+.result{
+    margin-top:12px;
+    padding:14px;
+    border-radius:9px;
+    background:#07111f;
+    color:#aebed0;
+    min-height:45px;
+}
+.result.show{animation:resultPop .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes resultPop{
+    from{opacity:0;transform:translateY(8px) scale(.98)}
+    to{opacity:1;transform:none}
+}
+.button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.strength-track{
+    height:9px;
+    background:#17263a;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+.strength-bar{
+    width:0;height:100%;
+    border-radius:20px;
+    transition:.35s;
+    background:linear-gradient(90deg,var(--blue),var(--teal));
+}
+.strength-label{
+    display:flex;
+    justify-content:space-between;
+    margin-top:7px;
+    color:var(--muted);
+    font-size:12px;
+}
+.generator-options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    margin:10px 0 14px;
+}
+.generator-option,.check-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:rgba(255,255,255,.025);
+    color:#b9c7da;
+    font-size:13px;
+}
+.generator-option input,.check-item input{
+    width:auto;
+    margin:0;
+    accent-color:var(--teal);
+}
+.generated-password{
+    display:flex;
+    gap:8px;
+}
+.generated-password input{margin-bottom:0}
+.copy-btn{min-width:50px;padding:10px}
+.quiz-progress{
+    height:7px;
+    background:#17263a;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:15px;
+}
+.quiz-progress-bar{
+    width:0;height:100%;
+    background:linear-gradient(90deg,var(--blue),var(--teal));
+    transition:.4s;
+}
+.quiz-question,.scenario{
+    background:#07111f;
+    padding:18px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    margin-bottom:15px;
+}
+.quiz-question strong{color:#fff}
+.warning-box{
+    background:#07111f;
+    border-left:4px solid var(--yellow);
+    padding:18px;
+    border-radius:8px;
+    margin-bottom:18px;
+}
+.warning-box strong{color:var(--yellow)}
+.warning-box p{color:#aebed0;margin-top:8px}
+.message-header{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.message-icon{
+    width:42px;height:42px;
+    border-radius:12px;
+    display:grid;place-items:center;
+    background:rgba(79,140,255,.1);
+    border:1px solid var(--border);
+}
+.check-items{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+.score-panel{
+    margin-top:16px;
+    padding:20px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
+}
+.score-number{
+    font-size:32px;
+    font-weight:900;
+    color:var(--teal-light);
+}
+.random-display{
+    min-height:145px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:25px;
+    border:1px solid rgba(77,166,255,.16);
+    border-radius:15px;
+    background:radial-gradient(circle at center,rgba(77,166,255,.08),rgba(2,10,19,.7));
+    color:#b9c7da;
+    position:relative;
+    overflow:hidden;
+}
+.random-display::before{
+    content:"";
+    position:absolute;
+    width:90px;height:90px;
+    border:1px solid rgba(33,230,179,.12);
+    border-radius:50%;
+    animation:randomPulse 3s ease-in-out infinite;
+}
+@keyframes randomPulse{
+    0%,100%{transform:scale(.8);opacity:.25}
+    50%{transform:scale(1.25);opacity:.7}
+}
+.random-content{position:relative;z-index:2}
+.random-category{
+    display:block;
+    color:var(--teal);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+}
+.random-text{font-size:17px;color:var(--text)}
+
+/* CTA / FOOTER */
+.cta{padding:80px 25px}
+.cta-box{
+    max-width:1100px;
+    margin:auto;
+    padding:55px;
+    text-align:center;
+    border:1px solid rgba(77,166,255,.25);
+    border-radius:25px;
+    background:radial-gradient(circle at center,rgba(77,166,255,.1),rgba(10,27,45,.8));
+    position:relative;
+    overflow:hidden;
+}
+.cta-box h2{font-size:clamp(30px,4vw,45px);margin-bottom:12px}
+.cta-box p{color:var(--muted);max-width:650px;margin:0 auto 25px}
+footer{
+    background:#030810;
+    border-top:1px solid var(--border);
+    padding:55px 25px 30px;
+}
+.footer-grid{
+    max-width:1250px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:35px;
+    padding-bottom:35px;
+}
+.footer-brand p{color:var(--muted);max-width:350px;margin-top:12px;font-size:14px}
+.footer-column h4{margin-bottom:13px}
+.footer-column a{
+    display:block;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14px;
+    margin:8px 0;
+}
+.footer-column a:hover{color:var(--blue);transform:translateX(4px)}
+.footer-bottom{
+    max-width:1250px;
+    margin:auto;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.06);
+    text-align:center;
+    color:#53677d;
+    font-size:13px;
+}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.tool.visible{animation:toolEntrance .75s cubic-bezier(.2,.75,.25,1) both}
+@keyframes toolEntrance{
+    from{opacity:0;transform:translateY(40px) scale(.97)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+.tool:nth-child(1){animation-delay:.03s}.tool:nth-child(2){animation-delay:.08s}
+.tool:nth-child(3){animation-delay:.13s}.tool:nth-child(4){animation-delay:.18s}
+.tool:nth-child(5){animation-delay:.23s}.tool:nth-child(6){animation-delay:.28s}
+.tool:nth-child(7){animation-delay:.33s}.tool:nth-child(8){animation-delay:.38s}
+.tool:nth-child(9){animation-delay:.43s}.tool:nth-child(10){animation-delay:.48s}
+
+@media(max-width:1050px){
+    .hero-container{gap:30px}
+    .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:850px){
+    .nav-links,.nav-button{display:none}
+    .menu-btn{display:block}
+    .hero-container{grid-template-columns:1fr;text-align:center}
+    .hero-description{margin-left:auto;margin-right:auto}
+    .hero-actions{justify-content:center}
+    .tools-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+    .signin-launcher{top:10px;left:10px;padding:8px 11px;font-size:12px}
+    .account-menu{top:55px;left:10px}
+    .nav-container{padding:14px 18px}
+    .logo{font-size:21px}
+    .hero{min-height:auto}
+    .hero-container{padding:90px 18px 60px}
+    .hero h1{font-size:clamp(42px,13vw,60px);letter-spacing:-2px}
+    .hero-description{font-size:16px}
+    .radar{width:280px;height:280px}
+    .shield{width:115px;height:135px;font-size:50px}
+    .security-status{right:-5px;bottom:0;width:180px;padding:12px}
+    section{padding:65px 18px}
+    .stats{padding:0 18px 55px;grid-template-columns:1fr 1fr}
+    .stat-number{font-size:25px}
+    .tool{padding:22px}
+    .check-items{grid-template-columns:1fr}
+    .generator-options{grid-template-columns:1fr 1fr}
+    .cta{padding:55px 18px}
+    .cta-box{padding:40px 20px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand p{margin:12px auto}
+    .auth-modal{padding:25px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+    }
+}
+</style>
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+<body>
+
+<div class="grid-background"></div>
+<div class="particle" style="left:8%;animation-duration:14s"></div>
+<div class="particle" style="left:18%;animation-duration:19s;animation-delay:3s"></div>
+<div class="particle" style="left:34%;animation-duration:16s;animation-delay:7s"></div>
+<div class="particle" style="left:52%;animation-duration:21s;animation-delay:2s"></div>
+<div class="particle" style="left:67%;animation-duration:17s;animation-delay:5s"></div>
+<div class="particle" style="left:81%;animation-duration:23s;animation-delay:8s"></div>
+<div class="particle" style="left:94%;animation-duration:18s;animation-delay:4s"></div>
+
+<!-- SIGN IN: UPPER LEFT -->
+<button class="signin-launcher" id="signinLauncher" type="button" aria-label="Open sign in">
+    <span class="avatar" id="signinAvatar">👤</span>
+    <span id="signinLabel">Sign In</span>
+</button>
+
+<div class="account-menu" id="accountMenu">
+    <div class="account-menu-title">SafeShield Account</div>
+    <div class="account-menu-user" id="accountMenuUser">Not signed in</div>
+    <button class="logout-btn" id="logoutBtn" type="button">🚪 Log Out</button>
+</div>
+
+<!-- SIGN IN MODAL -->
+<div class="auth-overlay" id="authOverlay" aria-modal="true" role="dialog" aria-label="SafeShield sign in">
+    <div class="auth-modal">
+        <button class="auth-close" id="authClose" type="button" aria-label="Close">✕</button>
+
+        <div class="auth-icon">🛡️</div>
+        <h2>Welcome to SafeShield</h2>
+        <p>Sign in to save your SafeShield account information across your pages.</p>
+
+        <form class="auth-form" id="authForm">
+            <div>
+                <label for="authName">Name</label>
+                <input id="authName" type="text" placeholder="Enter your name" autocomplete="name" required>
+            </div>
+
+            <div>
+                <label for="authEmail">Email</label>
+                <input id="authEmail" type="email" placeholder="Enter your email" autocomplete="email" required>
+            </div>
+
+            <div>
+                <label for="authPassword">Password</label>
+                <input id="authPassword" type="password" placeholder="Enter a password" autocomplete="current-password" required>
+            </div>
+
+            <button class="auth-submit" type="submit">🔐 Log In / Sign In</button>
+        </form>
+
+        <div class="auth-divider">OR</div>
+
+        <button class="google-btn" id="googleBtn" type="button">
+            <span class="google-mark">G</span>
+            Continue with Google
+        </button>
+
+        <button class="auth-later" id="authLater" type="button">Later</button>
+
+        <div class="auth-message" id="authMessage"></div>
+
+        <p class="auth-note">
+            This is a front-end educational sign-in. Your password is never stored.
+            Only your name, email and sign-in provider are saved in this browser.
+        </p>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="home.html" class="logo">
+            <div class="logo-shield">🛡️</div>
+            Safe<span>Shield</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="home.html">🏠 Home</a></li>
+            <li><a href="protect.html">🛡️ Protect</a></li>
+            <li><a href="scam.html">🚨 Scams</a></li>
+            <li><a href="tool.html" class="active">🔧 Tools</a></li>
+            <li><a href="checklist.html">📋 Checklist</a></li>            
+	    <li><a href="register.html">🖊️ Register Complaint</a></li>
+<li>
+    <a
+        href="contact.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        📄 Contact 
+    </a>
+</li>
+
+        </ul>
+
+        <a href="checklist.html" class="nav-button">Security Check →</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false">☰</button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="home.html">🏠 Home</a>
+        <a href="protect.html">🛡️ Protect</a>
+        <a href="scam.html">🚨 Scams</a>
+        <a href="tool.html">🧰 Tools</a>
+        <a href="checklist.html">✅ Checklist</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="status">
+                <span class="status-dot"></span>
+                SECURITY TOOLKIT ONLINE
+            </div>
+
+            <h1>
+                Test Your
+                <span>Digital Security.</span>
+            </h1>
+
+            <p class="hero-description">
+                Don't just learn about cybersecurity.
+                Test your security habits, analyze suspicious links,
+                practice identifying scams and discover practical
+                ways to protect your digital life.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#tools" class="primary-btn">🧰 Explore Tools</a>
+                <a href="checklist.html" class="secondary-btn">✅ Security Checklist</a>
+            </div>
+        </div>
+
+        <div class="security-visual">
+            <div class="radar">
+                <div class="radar-line"></div>
+                <div class="shield">🛡️</div>
+            </div>
+
+            <div class="security-status">
+                <small>Security Status</small>
+                <div class="status-value">● Protected</div>
+                <small>SafeShield tools are ready</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+    <div class="stat">
+        <div class="stat-number" data-target="10">0</div>
+        <div class="stat-label">Security Tools</div>
+    </div>
+    <div class="stat">
+        <div class="stat-number" data-target="5">0</div>
+        <div class="stat-label">Security Checks</div>
+    </div>
+    <div class="stat">
+        <div class="stat-number" data-target="100" data-suffix="%">0</div>
+        <div class="stat-label">Educational</div>
+    </div>
+    <div class="stat">
+        <div class="stat-number" data-target="24" data-suffix="/7">0</div>
+        <div class="stat-label">Learn Anytime</div>
+    </div>
+</div>
+
+<!-- TOOLS -->
+<section id="tools">
+<div class="container">
+<div class="section-heading reveal">
+    <div class="eyebrow">Interactive Security Lab</div>
+    <h2>Your Digital Security Toolkit</h2>
+    <p>Experiment, test and strengthen your cybersecurity knowledge with SafeShield's interactive tools.</p>
+</div>
+
+<div class="tools-grid">
+
+<!-- 1 PASSWORD CHECKER -->
+<div class="tool">
+    <div class="tool-icon">🔐</div>
+    <h3>Password Strength Analyzer</h3>
+    <p class="tool-description">
+        Test a sample password and see which security characteristics it contains.
+        <strong>Never enter a real password.</strong>
+    </p>
+    <input type="password" id="password" placeholder="Enter a sample password..." autocomplete="off">
+
+    <div class="strength-track"><div class="strength-bar" id="strengthBar"></div></div>
+    <div class="strength-label">
+        <span id="strengthText">Waiting for input</span>
+        <span id="strengthPercent">0%</span>
+    </div>
+
+    <div class="result" id="passwordResult">Enter a sample password to begin.</div>
+</div>
+
+<!-- 2 GENERATOR -->
+<div class="tool">
+    <div class="tool-icon">🪄</div>
+    <h3>Secure Password Generator</h3>
+    <p class="tool-description">Generate a random password locally in your browser. Nothing is sent anywhere.</p>
+
+    <label for="passwordLength" style="color:var(--text);font-size:13px">
+        Password Length:
+        <strong id="passwordLengthValue" style="color:var(--teal)">16</strong>
+    </label>
+    <input type="range" id="passwordLength" min="8" max="40" value="16">
+
+    <div class="generator-options">
+        <label class="generator-option"><input type="checkbox" id="genUppercase" checked>A-Z</label>
+        <label class="generator-option"><input type="checkbox" id="genLowercase" checked>a-z</label>
+        <label class="generator-option"><input type="checkbox" id="genNumbers" checked>0-9</label>
+        <label class="generator-option"><input type="checkbox" id="genSymbols" checked>Symbols</label>
+    </div>
+
+    <div class="generated-password">
+        <input type="text" id="generatedPassword" readonly value="Click Generate" aria-label="Generated password">
+        <button class="btn btn-secondary copy-btn" id="copyPassword" type="button">📋</button>
+    </div>
+
+    <button class="btn btn-primary" id="generatePassword" type="button">🪄 Generate Password</button>
+    <div class="result" id="generatorResult">Choose your options and generate a password.</div>
+</div>
+
+<!-- 3 URL -->
+<div class="tool">
+    <div class="tool-icon">🔎</div>
+    <h3>Suspicious Link Scanner</h3>
+    <p class="tool-description">
+        Check a URL for basic phishing indicators. This is an educational scanner,
+        not a guarantee that a website is safe.
+    </p>
+    <input type="text" id="urlInput" placeholder="example.com">
+    <button class="btn btn-primary" onclick="checkURL()" type="button">🔍 Analyze Link</button>
+    <div class="result" id="urlResult">Waiting for a website address...</div>
+</div>
+
+<!-- 4 QUIZ -->
+<div class="tool">
+    <div class="tool-icon">🎣</div>
+    <h3>Phishing Detection Quiz</h3>
+    <p class="tool-description">Test whether you can distinguish suspicious messages from safer ones.</p>
+
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="quizProgress"></div></div>
+
+    <div class="quiz-question" id="quizQuestion">
+        <strong>"URGENT: Your bank account will be blocked today! Click this link immediately to verify your account."</strong>
+    </div>
+
+    <div class="button-row">
+        <button class="btn btn-primary" onclick="answerQuiz(true)" type="button">🚨 Suspicious</button>
+        <button class="btn btn-secondary" onclick="answerQuiz(false)" type="button">🟢 Safe</button>
+    </div>
+
+    <div class="result" id="quizResult">Choose an answer.</div>
+    <p id="quizScore" style="color:#7f93aa;margin-top:12px">Score: 0 / 5</p>
+</div>
+
+<!-- 5 SCENARIO -->
+<div class="tool">
+    <div class="tool-icon">🧠</div>
+    <h3>Scam Scenario Simulator</h3>
+    <p class="tool-description">A suspicious message appears on your phone. What would you do?</p>
+
+    <div class="scenario">
+        <div class="message-header">
+            <div class="message-icon">🏦</div>
+            <div><strong>Bank Security</strong><br>Unexpected message</div>
+        </div>
+        <p style="color:#b8c7d9">
+            "Your bank account has been temporarily locked. Click the link below and enter your OTP to restore access."
+        </p>
+    </div>
+
+    <div class="button-row">
+        <button class="btn btn-secondary" onclick="scenarioAnswer(1)" type="button">🔗 Click Link</button>
+        <button class="btn btn-primary" onclick="scenarioAnswer(2)" type="button">🏦 Contact Bank</button>
+        <button class="btn btn-secondary" onclick="scenarioAnswer(3)" type="button">🔢 Send OTP</button>
+    </div>
+
+    <div class="result" id="scenarioResult">Your decision?</div>
+</div>
+
+<!-- 6 BREACH -->
+<div class="tool">
+    <div class="tool-icon">🚨</div>
+    <h3>Breach Response Advisor</h3>
+    <p class="tool-description">Think an account may have been exposed? Learn the safest immediate actions.</p>
+
+    <div class="warning-box">
+        <strong>⚠️ Privacy First</strong>
+        <p>Never enter your actual password into an unfamiliar website to investigate a breach.</p>
+    </div>
+
+    <button class="btn btn-primary" onclick="showBreachAdvice()" type="button">🛡️ Show Response Plan</button>
+    <div class="result" id="breachResult">Your recommended response will appear here.</div>
+</div>
+
+<!-- 7 2FA -->
+<div class="tool">
+    <div class="tool-icon">🔑</div>
+    <h3>Two-Factor Security Checker</h3>
+    <p class="tool-description">Check how many of your important accounts are protected by two-factor authentication.</p>
+
+    <div class="check-items">
+        <label class="check-item"><input type="checkbox" class="security-check">Email</label>
+        <label class="check-item"><input type="checkbox" class="security-check">Banking</label>
+        <label class="check-item"><input type="checkbox" class="security-check">Social Media</label>
+        <label class="check-item"><input type="checkbox" class="security-check">Cloud Storage</label>
+        <label class="check-item"><input type="checkbox" class="security-check">Shopping</label>
+        <label class="check-item"><input type="checkbox" class="security-check">Work / School</label>
+    </div>
+
+    <div class="score-panel">
+        <div class="score-number" id="twoFactorScore">0%</div>
+        <div id="twoFactorText">Start checking your accounts.</div>
+    </div>
+</div>
+
+<!-- 8 PRIVACY -->
+<div class="tool">
+    <div class="tool-icon">👁️</div>
+    <h3>Privacy Exposure Checker</h3>
+    <p class="tool-description">Review common privacy habits and calculate an educational privacy score.</p>
+
+    <div class="check-items">
+        <label class="check-item"><input type="checkbox" class="privacy-check">Private social profiles</label>
+        <label class="check-item"><input type="checkbox" class="privacy-check">App permissions reviewed</label>
+        <label class="check-item"><input type="checkbox" class="privacy-check">Location sharing limited</label>
+        <label class="check-item"><input type="checkbox" class="privacy-check">Browser privacy settings checked</label>
+        <label class="check-item"><input type="checkbox" class="privacy-check">Unused accounts removed</label>
+        <label class="check-item"><input type="checkbox" class="privacy-check">Personal information minimized</label>
+    </div>
+
+    <div class="score-panel">
+        <div class="score-number" id="privacyScore">0%</div>
+        <div id="privacyText">Start your privacy review.</div>
+    </div>
+</div>
+
+<!-- 9 SECURITY SCORE -->
+<div class="tool">
+    <div class="tool-icon">📊</div>
+    <h3>Personal Security Score</h3>
+    <p class="tool-description">Answer a few quick questions to estimate your current cybersecurity readiness.</p>
+
+    <div class="check-items">
+        <label class="check-item"><input type="checkbox" class="score-check">Unique passwords</label>
+        <label class="check-item"><input type="checkbox" class="score-check">2FA enabled</label>
+        <label class="check-item"><input type="checkbox" class="score-check">Software updated</label>
+        <label class="check-item"><input type="checkbox" class="score-check">Backups enabled</label>
+        <label class="check-item"><input type="checkbox" class="score-check">Scam awareness</label>
+        <label class="check-item"><input type="checkbox" class="score-check">Privacy settings reviewed</label>
+    </div>
+
+    <div class="score-panel">
+        <div class="score-number" id="securityScore">0</div>
+        <div id="securityText">Complete the checks above.</div>
+    </div>
+</div>
+
+<!-- 10 RANDOM -->
+<div class="tool">
+    <div class="tool-icon">🎲</div>
+    <h3>Random Security Tool</h3>
+    <p class="tool-description">
+        Get a random cybersecurity tip, challenge or action you can use to improve your digital safety.
+    </p>
+
+    <div class="random-display" id="randomDisplay">
+        <div class="random-content">
+            <span class="random-category">Ready</span>
+            <div class="random-text">Click the button to discover something useful.</div>
+        </div>
+    </div>
+
+    <div class="button-row">
+        <button class="btn btn-primary" onclick="generateRandomSecurity()" type="button">🎲 Randomize</button>
+        <button class="btn btn-secondary" onclick="generateRandomSecurity(true)" type="button">⚡ Challenge Me</button>
+    </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="cta-box reveal">
+        <div class="eyebrow">Keep Going</div>
+        <h2>Ready to Strengthen Your Security?</h2>
+        <p>
+            Use the SafeShield checklist to review your everyday cybersecurity habits
+            and identify areas that deserve more attention.
+        </p>
+        <a href="checklist.html" class="btn btn-primary">🚀 Open Security Checklist</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="home.html" class="logo">
+                <div class="logo-shield">🛡️</div>
+                Safe<span>Shield</span>
+            </a>
+            <p>
+                An educational cybersecurity awareness platform designed to help people
+                recognize digital threats and develop safer online habits.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Explore</h4>
+            <a href="home.html">Home</a>
+            <a href="protect.html">Protect</a>
+            <a href="scam.html">Scams</a>
+        </div>
+
+        <div class="footer-column">
+            <h4>Tools</h4>
+            <a href="tool.html">Security Tools</a>
+            <a href="checklist.html">Security Checklist</a>
+        </div>
+
+        <div class="footer-column">
+            <h4>Safety</h4>
+            <a href="protect.html">Protection Guide</a>
+            <a href="scam.html">Scam Awareness</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 SafeShield | Educational Privacy & Scam Awareness Website
+    </div>
+</footer>
+
+<script>
+/* =========================================================
+   SHARED SIGN-IN / LOCAL STORAGE
+   The same localStorage value can be read by home.html,
+   protect.html, scam.html, checklist.html, etc. when they
+   are opened from the same website/origin.
+========================================================= */
+
+const AUTH_STORAGE_KEY = "safeshieldToolProfile"; /* fixed: was clobbering the site-wide "safeshieldUser" key */
+
+const signinLauncher = document.getElementById("signinLauncher");
+const signinLabel = document.getElementById("signinLabel");
+const signinAvatar = document.getElementById("signinAvatar");
+const authOverlay = document.getElementById("authOverlay");
+const authClose = document.getElementById("authClose");
+const authLater = document.getElementById("authLater");
+const authForm = document.getElementById("authForm");
+const authMessage = document.getElementById("authMessage");
+const googleBtn = document.getElementById("googleBtn");
+const accountMenu = document.getElementById("accountMenu");
+const accountMenuUser = document.getElementById("accountMenuUser");
+const logoutBtn = document.getElementById("logoutBtn");
+
+function getStoredUser(){
+    try{
+        const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+        if(raw) return JSON.parse(raw);
+    }catch{
+        /* ignore malformed profile, fall through to canonical session below */
+    }
+    if(localStorage.getItem("safeshieldSignedIn") === "1"){
+        const canonicalName = localStorage.getItem("safeshieldUser") || "SafeShield User";
+        return { name: canonicalName, email: "", provider: "safeshield" };
+    }
+    return null;
+}
+
+function saveUser(user){
+    /* IMPORTANT: password is intentionally NOT stored. */
+    const safeUser = {
+        name: user.name || "",
+        email: user.email || "",
+        provider: user.provider || "email"
+    };
+
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(safeUser));
+
+    /* keep the site-wide session (home.html, protect.html, etc.) in sync */
+    localStorage.setItem("safeshieldSignedIn", "1");
+    localStorage.setItem("safeshieldUser", safeUser.name || (safeUser.email ? safeUser.email.split("@")[0] : "SafeShield User"));
+
+    updateAccountUI();
+}
+
+function updateAccountUI(){
+    const user = getStoredUser();
+
+    if(user && (user.name || user.email)){
+        signinLauncher.classList.add("signed-in");
+        signinAvatar.textContent = "✓";
+        signinLabel.textContent = user.name || user.email.split("@")[0];
+        accountMenuUser.innerHTML =
+            "<strong>" + escapeHTML(user.name || "SafeShield User") +
+            "</strong><br><small>" + escapeHTML(user.email || "") +
+            "</small><br><small>Signed in with " +
+            escapeHTML(user.provider || "email") + "</small>";
+    }else{
+        signinLauncher.classList.remove("signed-in");
+        signinAvatar.textContent = "👤";
+        signinLabel.textContent = "Sign In";
+        accountMenuUser.textContent = "Not signed in";
+    }
+}
+
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+    }[char]));
+}
+
+function openAuth(){
+    accountMenu.classList.remove("open");
+    authMessage.textContent = "";
+    authMessage.style.color = "var(--muted)";
+    authOverlay.classList.add("open");
+
+    setTimeout(() => {
+        document.getElementById("authName").focus();
+    },100);
+}
+
+function closeAuth(){
+    authOverlay.classList.remove("open");
+}
+
+signinLauncher.addEventListener("click", () => {
+    if(getStoredUser()){
+        accountMenu.classList.toggle("open");
+    }else{
+        openAuth();
+    }
+});
+
+authClose.addEventListener("click", closeAuth);
+authLater.addEventListener("click", closeAuth);
+
+authOverlay.addEventListener("click", event => {
+    if(event.target === authOverlay) closeAuth();
+});
+
+document.addEventListener("keydown", event => {
+    if(event.key === "Escape"){
+        closeAuth();
+        accountMenu.classList.remove("open");
+    }
+});
+
+authForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = document.getElementById("authName").value.trim();
+    const email = document.getElementById("authEmail").value.trim();
+
+    if(!name || !email){
+        authMessage.textContent = "Please enter your name and email.";
+        authMessage.style.color = "var(--yellow)";
+        return;
+    }
+
+    saveUser({
+        name:name,
+        email:email,
+        provider:"email"
+    });
+
+    authMessage.textContent = "✓ Sign-in information saved.";
+    authMessage.style.color = "var(--teal-light)";
+
+    setTimeout(closeAuth, 650);
+});
+
+/*
+   Google button:
+   A real Google OAuth login requires a Google OAuth Client ID
+   and authorized origins/redirect settings. This front-end
+   educational version stores a Google sign-in choice without
+   pretending that Google has authenticated the user.
+*/
+googleBtn.addEventListener("click", () => {
+    const email = prompt("For this educational demo, enter the Google account email you want to use:");
+
+    if(!email) return;
+
+    const cleanEmail = email.trim();
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)){
+        authMessage.textContent = "Please enter a valid email address.";
+        authMessage.style.color = "var(--yellow)";
+        return;
+    }
+
+    saveUser({
+        name: cleanEmail.split("@")[0],
+        email:cleanEmail,
+        provider:"Google"
+    });
+
+    authMessage.textContent = "✓ Google sign-in information saved for this demo.";
+    authMessage.style.color = "var(--teal-light)";
+
+    setTimeout(closeAuth, 700);
+});
+
+logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem("safeshieldSignedIn");
+    localStorage.removeItem("safeshieldUser");
+    accountMenu.classList.remove("open");
+    updateAccountUI();
+});
+
+window.addEventListener("storage", updateAccountUI);
+updateAccountUI();
+
+/* NAVBAR */
+const navbar = document.getElementById("navbar");
+window.addEventListener("scroll", () => {
+    navbar.classList.toggle("scrolled", window.scrollY > 30);
+});
+
+/* MOBILE MENU */
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+    menuBtn.textContent = isOpen ? "✕" : "☰";
+});
+
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+    link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        menuBtn.textContent = "☰";
+        menuBtn.setAttribute("aria-expanded","false");
+    });
+});
+
+/* CLOSE ACCOUNT MENU WHEN CLICKING ELSEWHERE */
+document.addEventListener("click", event => {
+    if(!signinLauncher.contains(event.target) && !accountMenu.contains(event.target)){
+        accountMenu.classList.remove("open");
+    }
+});
+
+/* REVEAL */
+const revealElements = document.querySelectorAll(".reveal,.tool");
+
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+        }
+    });
+},{threshold:.12});
+
+revealElements.forEach(element => revealObserver.observe(element));
+
+/* COUNTERS */
+const counters = document.querySelectorAll(".stat-number");
+let countersStarted = false;
+
+function animateCounters(){
+    if(countersStarted) return;
+    countersStarted = true;
+
+    counters.forEach(counter => {
+        const target = Number(counter.dataset.target);
+        const suffix = counter.dataset.suffix || "";
+        let current = 0;
+        const duration = 1200;
+        const stepTime = Math.max(20,duration / target);
+
+        const timer = setInterval(() => {
+            current++;
+            counter.textContent = current + suffix;
+
+            if(current >= target) clearInterval(timer);
+        },stepTime);
+    });
+}
+
+const statsElement = document.querySelector(".stats");
+new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting) animateCounters();
+},{threshold:.3}).observe(statsElement);
+
+function animateResult(element){
+    element.classList.remove("show");
+    void element.offsetWidth;
+    element.classList.add("show");
+}
+
+/* PASSWORD CHECKER */
+const passwordInput = document.getElementById("password");
+
+passwordInput.addEventListener("input", checkPassword);
+
+function checkPassword(){
+    const password = passwordInput.value;
+    const result = document.getElementById("passwordResult");
+    const bar = document.getElementById("strengthBar");
+    const text = document.getElementById("strengthText");
+    const percent = document.getElementById("strengthPercent");
+
+    if(!password){
+        bar.style.width = "0%";
+        text.textContent = "Waiting for input";
+        text.style.color = "var(--muted)";
+        percent.textContent = "0%";
+        result.innerHTML = "Enter a sample password to begin.";
+        result.style.color = "var(--text)";
+        return;
+    }
+
+    let score = 0;
+
+    if(password.length >= 8) score++;
+    if(password.length >= 12) score++;
+    if(/[A-Z]/.test(password)) score++;
+    if(/[a-z]/.test(password)) score++;
+    if(/[0-9]/.test(password)) score++;
+    if(/[^A-Za-z0-9]/.test(password)) score++;
+
+    const percentage = Math.round((score / 6) * 100);
+
+    bar.style.width = percentage + "%";
+    percent.textContent = percentage + "%";
+    animateResult(result);
+
+    if(score <= 2){
+        bar.style.background = "var(--red)";
+        text.textContent = "Weak";
+        text.style.color = "var(--red-light)";
+        result.innerHTML = "🔴 Weak — use a longer unique passphrase with a mix of characters.";
+        result.style.color = "var(--red-light)";
+    }else if(score <= 4){
+        bar.style.background = "var(--yellow)";
+        text.textContent = "Moderate";
+        text.style.color = "var(--yellow)";
+        result.innerHTML = "🟡 Moderate — increasing length and uniqueness would improve it.";
+        result.style.color = "var(--yellow)";
+    }else{
+        bar.style.background = "linear-gradient(90deg,var(--blue),var(--teal))";
+        text.textContent = "Strong";
+        text.style.color = "var(--teal)";
+        result.innerHTML = "🟢 Strong — good length and character variety. Remember not to reuse passwords.";
+        result.style.color = "var(--teal)";
+    }
+}
+
+/* PASSWORD GENERATOR */
+const passwordLength = document.getElementById("passwordLength");
+const passwordLengthValue = document.getElementById("passwordLengthValue");
+const generatedPassword = document.getElementById("generatedPassword");
+const generatorResult = document.getElementById("generatorResult");
+
+passwordLength.addEventListener("input", () => {
+    passwordLengthValue.textContent = passwordLength.value;
+});
+
+function secureRandomIndex(max){
+    if(window.crypto && crypto.getRandomValues){
+        const array = new Uint32Array(1);
+        crypto.getRandomValues(array);
+        return array[0] % max;
+    }
+    return Math.floor(Math.random() * max);
+}
+
+function generatePassword(){
+    const length = Number(passwordLength.value);
+
+    const sets = [];
+
+    if(document.getElementById("genUppercase").checked)
+        sets.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    if(document.getElementById("genLowercase").checked)
+        sets.push("abcdefghijklmnopqrstuvwxyz");
+
+    if(document.getElementById("genNumbers").checked)
+        sets.push("0123456789");
+
+    if(document.getElementById("genSymbols").checked)
+        sets.push("!@#$%^&*()_+-=[]{}<>?");
+
+    if(sets.length === 0){
+        generatorResult.innerHTML = "⚠️ Select at least one character type.";
+        generatorResult.style.color = "var(--yellow)";
+        animateResult(generatorResult);
+        return;
+    }
+
+    let password = "";
+
+    sets.forEach(set => {
+        password += set[secureRandomIndex(set.length)];
+    });
+
+    const allCharacters = sets.join("");
+
+    while(password.length < length){
+        password += allCharacters[secureRandomIndex(allCharacters.length)];
+    }
+
+    const characters = password.split("");
+
+    for(let i = characters.length - 1;i > 0;i--){
+        const j = secureRandomIndex(i + 1);
+        [characters[i],characters[j]] = [characters[j],characters[i]];
+    }
+
+    generatedPassword.value = characters.join("");
+
+    generatorResult.innerHTML =
+        "🟢 Password generated locally. For important accounts, consider using a trusted password manager.";
+    generatorResult.style.color = "var(--teal)";
+    animateResult(generatorResult);
+}
+
+document.getElementById("generatePassword").addEventListener("click",generatePassword);
+
+document.getElementById("copyPassword").addEventListener("click",async () => {
+    const value = generatedPassword.value;
+
+    if(!value || value === "Click Generate"){
+        generatorResult.innerHTML = "⚠️ Generate a password first.";
+        generatorResult.style.color = "var(--yellow)";
+        animateResult(generatorResult);
+        return;
+    }
+
+    try{
+        await navigator.clipboard.writeText(value);
+        generatorResult.innerHTML = "📋 Password copied to your clipboard.";
+    }catch{
+        generatedPassword.select();
+        document.execCommand("copy");
+        generatorResult.innerHTML = "📋 Password copied.";
+    }
+
+    generatorResult.style.color = "var(--teal)";
+    animateResult(generatorResult);
+});
+
+/* URL CHECKER */
+function checkURL(){
+    const input = document.getElementById("urlInput").value.trim();
+    const result = document.getElementById("urlResult");
+
+    if(!input){
+        result.innerHTML = "⚠️ Please enter a website address.";
+        result.style.color = "var(--yellow)";
+        animateResult(result);
+        return;
+    }
+
+    try{
+        let url = input;
+
+        if(!url.startsWith("http://") && !url.startsWith("https://")){
+            url = "https://" + url;
+        }
+
+        const parsed = new URL(url);
+
+        const suspiciousWords = [
+            "login","verify","secure","account","update",
+            "free","prize","gift","urgent","claim","wallet","password"
+        ];
+
+        const lower = parsed.href.toLowerCase();
+        const warnings = suspiciousWords.filter(word => lower.includes(word));
+
+        if(parsed.protocol !== "https:"){
+            result.innerHTML =
+                "🔴 <strong>Warning:</strong> This address does not use HTTPS. Avoid entering sensitive information.";
+            result.style.color = "var(--red-light)";
+        }else if(warnings.length > 0){
+            result.innerHTML =
+                "🟡 <strong>Be careful:</strong> This address contains terms often seen in phishing messages (" +
+                warnings.join(", ") +
+                "). Independently verify the actual domain: <strong>" +
+                escapeHTML(parsed.hostname) + "</strong>.";
+            result.style.color = "var(--yellow)";
+        }else{
+            result.innerHTML =
+                "🔵 No obvious warning detected. This does <strong>not</strong> prove the website is safe. Verify the domain before entering sensitive information.";
+            result.style.color = "var(--blue-light)";
+        }
+
+        animateResult(result);
+    }catch{
+        result.innerHTML = "🔴 Invalid website address. Check the URL and try again.";
+        result.style.color = "var(--red-light)";
+        animateResult(result);
+    }
+}
+
+/* PHISHING QUIZ */
+const quizQuestions = [
+    {
+        question:'"URGENT: Your bank account will be blocked today! Click this link immediately to verify your account."',
+        suspicious:true,
+        explanation:"Correct! The message creates urgency and directs you to a link involving your bank account."
+    },
+    {
+        question:'"Your monthly bank statement is ready. Open your banking app directly to view it."',
+        suspicious:false,
+        explanation:"Good choice. The safer behavior is to open the official banking application yourself."
+    },
+    {
+        question:'"Congratulations! You won ₹50,000. Pay ₹999 processing fees to claim your prize."',
+        suspicious:true,
+        explanation:"Correct! Unexpected prizes combined with payment requests are major warning signs."
+    },
+    {
+        question:'"Your password manager recommends changing an old password. Open the password manager directly."',
+        suspicious:false,
+        explanation:"Correct. Opening the official application yourself is safer than clicking an unexpected link."
+    },
+    {
+        question:'"You have been selected for a job! Pay ₹2,000 registration fees before your interview."',
+        suspicious:true,
+        explanation:"Correct! Unexpected upfront fees for employment are suspicious."
+    }
+];
+
+let quizIndex = 0;
+let quizScoreValue = 0;
+
+function answerQuiz(answer){
+    const result = document.getElementById("quizResult");
+    const current = quizQuestions[quizIndex];
+
+    if(answer === current.suspicious){
+        quizScoreValue++;
+        result.innerHTML = "🟢 Correct! " + current.explanation;
+        result.style.color = "var(--teal)";
+    }else{
+        result.innerHTML = "🔴 Not quite. " + current.explanation;
+        result.style.color = "var(--red-light)";
+    }
+
+    document.getElementById("quizScore").textContent =
+        "Score: " + quizScoreValue + " / 5";
+
+    animateResult(result);
+
+    quizIndex++;
+
+    document.getElementById("quizProgress").style.width =
+        Math.min(((quizIndex) / 5) * 100,100) + "%";
+
+    if(quizIndex >= quizQuestions.length){
+        setTimeout(() => {
+            result.innerHTML =
+                "🎉 Quiz complete! You scored " +
+                quizScoreValue + " / 5.";
+            result.style.color = "var(--teal)";
+            animateResult(result);
+        },1200);
+
+        setTimeout(() => {
+            quizIndex = 0;
+            quizScoreValue = 0;
+            document.getElementById("quizScore").textContent = "Score: 0 / 5";
+            document.getElementById("quizProgress").style.width = "0%";
+            loadQuizQuestion();
+        },3200);
+
+        return;
+    }
+
+    setTimeout(loadQuizQuestion,1200);
+}
+
+function loadQuizQuestion(){
+    const question = document.getElementById("quizQuestion");
+
+    question.innerHTML =
+        "<strong>" + quizQuestions[quizIndex].question + "</strong>";
+
+    document.getElementById("quizResult").innerHTML = "Choose an answer.";
+    document.getElementById("quizResult").style.color = "var(--text)";
+}
+
+/* BREACH ADVISOR */
+function showBreachAdvice(){
+    const result = document.getElementById("breachResult");
+
+    result.innerHTML = `
+        <strong style="color:var(--teal)">🛡️ Recommended response:</strong>
+        <br><br>
+        1. Change the affected password immediately.
+        <br><br>
+        2. Change the password anywhere else it was reused.
+        <br><br>
+        3. Enable two-factor authentication.
+        <br><br>
+        4. Review recent account activity and logged-in devices.
+        <br><br>
+        5. Watch for suspicious emails or messages.
+        <br><br>
+        <strong style="color:var(--yellow)">⚠️ Never give your actual password to a breach-checking website.</strong>
+    `;
+
+    result.style.color = "var(--text)";
+    animateResult(result);
+}
+
+/* SCAM SCENARIO */
+let scenarioScore = 0;
+
+function scenarioAnswer(answer){
+    const result = document.getElementById("scenarioResult");
+
+    if(answer === 2){
+        scenarioScore++;
+        result.innerHTML =
+            "🟢 Excellent choice! Contact the bank through an official channel instead of using the message link.";
+        result.style.color = "var(--teal)";
+    }else if(answer === 1){
+        result.innerHTML =
+            "🔴 Risky choice. The link could lead to a fake banking website designed to steal information.";
+        result.style.color = "var(--red-light)";
+    }else{
+        result.innerHTML =
+            "🔴 Never share an OTP with someone who contacts you unexpectedly.";
+        result.style.color = "var(--red-light)";
+    }
+
+    animateResult(result);
+}
+
+/* 2FA */
+const twoFactorChecks = document.querySelectorAll(".security-check");
+
+twoFactorChecks.forEach(check => {
+    check.addEventListener("change",updateTwoFactor);
+});
+
+function updateTwoFactor(){
+    const total = twoFactorChecks.length;
+    const checked = document.querySelectorAll(".security-check:checked").length;
+    const percentage = Math.round((checked / total) * 100);
+
+    document.getElementById("twoFactorScore").textContent = percentage + "%";
+
+    const text = document.getElementById("twoFactorText");
+
+    if(percentage === 100){
+        text.textContent = "Excellent — all listed account categories are covered.";
+        text.style.color = "var(--teal)";
+    }else if(percentage >= 60){
+        text.textContent = "Good progress — consider protecting the remaining accounts.";
+        text.style.color = "var(--yellow)";
+    }else{
+        text.textContent = "Start with your email and financial accounts.";
+        text.style.color = "var(--text)";
+    }
+}
+
+/* PRIVACY */
+const privacyChecks = document.querySelectorAll(".privacy-check");
+
+privacyChecks.forEach(check => {
+    check.addEventListener("change",updatePrivacyScore);
+});
+
+function updatePrivacyScore(){
+    const total = privacyChecks.length;
+    const checked = document.querySelectorAll(".privacy-check:checked").length;
+    const percentage = Math.round((checked / total) * 100);
+
+    document.getElementById("privacyScore").textContent = percentage + "%";
+
+    const text = document.getElementById("privacyText");
+
+    if(percentage === 100){
+        text.textContent = "Excellent privacy habits.";
+        text.style.color = "var(--teal)";
+    }else if(percentage >= 60){
+        text.textContent = "Good — review the remaining privacy areas.";
+        text.style.color = "var(--yellow)";
+    }else{
+        text.textContent = "Your privacy review has room for improvement.";
+        text.style.color = "var(--text)";
+    }
+}
+
+/* SECURITY SCORE */
+const securityChecks = document.querySelectorAll(".score-check");
+
+securityChecks.forEach(check => {
+    check.addEventListener("change",updateSecurityScore);
+});
+
+function updateSecurityScore(){
+    const total = securityChecks.length;
+    const checked = document.querySelectorAll(".score-check:checked").length;
+    const score = Math.round((checked / total) * 100);
+
+    document.getElementById("securityScore").textContent = score;
+
+    const text = document.getElementById("securityText");
+
+    if(score === 100){
+        text.textContent = "Excellent cybersecurity readiness.";
+        text.style.color = "var(--teal)";
+    }else if(score >= 70){
+        text.textContent = "Strong foundation — keep improving.";
+        text.style.color = "var(--blue-light)";
+    }else if(score >= 40){
+        text.textContent = "Moderate — there are important areas to strengthen.";
+        text.style.color = "var(--yellow)";
+    }else{
+        text.textContent = "Your security habits need attention.";
+        text.style.color = "var(--red-light)";
+    }
+}
+
+/* RANDOM SECURITY TOOL */
+const randomSecurityItems = [
+    {category:"Password Tip",text:"Use a different password for every important account."},
+    {category:"Privacy Tip",text:"Review which apps can access your location and contacts."},
+    {category:"Phishing Tip",text:"Never trust a message simply because it uses a familiar logo."},
+    {category:"Security Action",text:"Turn on two-factor authentication for your primary email."},
+    {category:"Scam Warning",text:"Unexpected urgency is a common social-engineering warning sign."},
+    {category:"Browser Tip",text:"Before signing in, check the actual website domain."},
+    {category:"Device Security",text:"Install security updates instead of repeatedly postponing them."},
+    {category:"Privacy Challenge",text:"Find one old account you no longer use and consider deleting it."},
+    {category:"Backup Tip",text:"Keep important files backed up in a separate location."},
+    {category:"OTP Safety",text:"Never share an OTP with someone who unexpectedly asks for it."},
+    {category:"Social Media",text:"Avoid publicly sharing information that can be used to answer security questions."},
+    {category:"Email Safety",text:"If an email asks you to act urgently, verify it through an independent channel."},
+    {category:"Security Challenge",text:"Check your most important account and see whether 2FA is enabled."},
+    {category:"Password Tip",text:"Long passphrases are generally easier to remember and harder to guess."},
+    {category:"Scam Awareness",text:"Unexpected prizes that require payment are a major scam warning sign."}
+];
+
+let lastRandomIndex = -1;
+
+function generateRandomSecurity(challengeOnly=false){
+    let available = randomSecurityItems;
+
+    if(challengeOnly){
+        available = randomSecurityItems.filter(item =>
+            item.category.includes("Challenge")
+        );
+    }
+
+    let index;
+
+    do{
+        index = secureRandomIndex(available.length);
+    }while(available.length > 1 && index === lastRandomIndex);
+
+    lastRandomIndex = index;
+
+    const item = available[index];
+    const display = document.getElementById("randomDisplay");
+
+    display.style.animation = "none";
+    void display.offsetWidth;
+    display.style.animation = "resultPop .45s ease";
+
+    display.innerHTML = `
+        <div class="random-content">
+            <span class="random-category">${escapeHTML(item.category)}</span>
+            <div class="random-text">${escapeHTML(item.text)}</div>
+        </div>
+    `;
+}
+
+/* KEYBOARD ACCESSIBILITY */
+document.querySelectorAll(".btn,.primary-btn,.secondary-btn").forEach(button => {
+    button.addEventListener("keydown",event => {
+        if(event.key === "Enter" || event.key === " "){
+            event.preventDefault();
+            button.click();
+        }
+    });
+});
+
+/* INITIALIZE */
+generatePassword();
+document.getElementById("quizProgress").style.width = "20%";
+</script>
+
+<script src="safeshield-fix.js"></script>
+</body>
+</html>

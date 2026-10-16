@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Level up your knowledge with a lesson, a simulation, and a quiz.">
+<title>Play & Learn | SafeShield</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body{
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:#070D18;
+    color:#F8FAFC;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+:root{
+    --blue:#4F8CFF;
+    --teal:#22D3A7;
+    --red:#EF4444;
+    --orange:#F59E0B;
+    --text:#D8E1ED;
+    --muted:#8FA2B8;
+    --border:rgba(120,150,190,.18);
+}
+
+a{ color:inherit; }
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(79,140,255,.12),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(34,211,167,.08),transparent 25%),
+        radial-gradient(circle at 50% 100%,rgba(79,140,255,.08),transparent 30%);
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:2000;
+    background:rgba(7,13,24,.78);
+    border-bottom:1px solid rgba(120,150,190,.14);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    transition:.3s;
+}
+
+nav.scrolled{
+    background:rgba(7,13,24,.94);
+    box-shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+.nav-container{
+    max-width:1250px;
+    margin:auto;
+    min-height:74px;
+    padding:0 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    text-decoration:none;
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:-.5px;
+}
+
+.logo-shield{
+    width:37px;
+    height:37px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    background:linear-gradient(135deg,rgba(79,140,255,.22),rgba(34,211,167,.12));
+    border:1px solid rgba(79,140,255,.35);
+    box-shadow:0 0 25px rgba(79,140,255,.15);
+}
+
+.logo span{ color:var(--blue); }
+
+.nav-links{
+    display:flex;
+    gap:26px;
+    list-style:none;
+}
+
+.nav-links a{
+    color:var(--text);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:8px 0;
+}
+
+.nav-links a:hover{ color:#fff; }
+
+footer{
+    text-align:center;
+    padding:50px 25px 35px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:12.5px;
+}
+
+.footer-logo{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:8px;
+    color:#fff;
+}
+
+.footer-logo span{ color:var(--teal); }
+</style>
+
+<link rel="stylesheet" href="game.css">
+</head>
+
+<body>
+
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="home.html" class="logo">
+            <div class="logo-shield">🛡️</div>
+            Safe<span>Shield</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="home.html">🏠 Home</a></li>
+            <li><a href="protect.html">🛡️ Protect</a></li>
+            <li><a href="scam.html">🚨 Scams</a></li>
+            <li><a href="play.html">🎮 Play & Learn</a></li>
+            <li><a href="tool.html">🔧 Tools</a></li>
+            <li><a href="checklist.html">📋 Checklist</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+
+<div id="notFoundView" style="display:none;">
+    <div class="pl-soon-card">
+        <div class="pl-topic-icon" style="margin:0 auto 16px;">❓</div>
+        <h2>Topic not found</h2>
+        <p>We couldn't find that learning path.</p>
+        <a href="play.html" class="pl-sim-btn" style="text-decoration:none;display:inline-block;">← Back to Play & Learn</a>
+    </div>
+</div>
+
+<div id="soonView" style="display:none;">
+    <div class="pl-soon-card">
+        <div class="pl-topic-icon" id="soonIcon" style="margin:0 auto 16px;"></div>
+        <h2 id="soonTitle"></h2>
+        <p>This learning path is still being built — check back soon!</p>
+        <a href="play.html" class="pl-sim-btn" style="text-decoration:none;display:inline-block;">← Back to Play & Learn</a>
+    </div>
+</div>
+
+<div id="gameView" style="display:none;">
+
+    <div class="pl-topic-header">
+        <a href="play.html" class="pl-back-link">← Back to Play & Learn</a>
+        <div class="pl-topic-header-icon" id="topicIcon"></div>
+        <h1 id="topicTitle"></h1>
+        <div class="pl-topic-progress-label" id="topicProgressLabel"></div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="pl-roadmap-view" id="roadmapView">
+        <div class="pl-roadmap">
+            <div class="pl-roadmap-line"></div>
+            <div id="roadmapNodes"></div>
+        </div>
+    </div>
+
+    <!-- LESSON / SIMULATION / QUIZ -->
+    <div class="pl-lesson-view" id="lessonView">
+
+        <button class="pl-lesson-back" id="backToRoadmapBtn">← Back to Roadmap</button>
+
+        <div class="pl-review-banner" id="reviewBanner">
+            📌 Quick refresher before you try the next level again — let's make sure this one's solid first.
+        </div>
+
+        <div class="pl-lesson-card">
+            <div class="pl-lesson-eyebrow" id="lessonEyebrow"></div>
+            <h2 id="lessonTitle"></h2>
+            <ul class="pl-lesson-points" id="lessonPoints"></ul>
+        </div>
+
+        <div class="pl-sim-card">
+            <div class="pl-sim-eyebrow">🧪 Try It Yourself</div>
+            <div id="simBody"></div>
+        </div>
+
+        <button class="pl-sim-btn" id="readyBtn" style="width:100%;padding:14px;font-size:14px;">I'm Ready — Take the Quiz →</button>
+
+        <div class="pl-quiz-card" id="quizCard"></div>
+
+        <div class="pl-result-card" id="resultCard"></div>
+
+    </div>
+
+</div>
+
+</main>
+
+<footer>
+    <div class="footer-logo">🛡️ Safe<span>Shield</span></div>
+    <p>Learn to protect yourself — one level at a time.</p>
+</footer>
+
+<!-- Badge celebration modal -->
+<div class="pl-badge-modal-overlay" id="badgeModalOverlay">
+    <div class="pl-badge-modal">
+        <div class="pl-badge-modal-icon" id="badgeModalIcon"></div>
+        <h3 id="badgeModalTitle"></h3>
+        <p id="badgeModalDesc"></p>
+        <button id="badgeModalBtn">Nice! →</button>
+    </div>
+</div>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+<script src="game-data.js"></script>
+<script src="game-engine.js"></script>
+<script src="safeshield-fix.js"></script>
+<script>
+
+var BADGE_META = {
+    started: { icon:"🥉", label:"Started" },
+    halfway: { icon:"🥈", label:"Halfway" },
+    master:  { icon:"🥇", label:"Mastered" }
+};
+
+var params = new URLSearchParams(location.search);
+var topicKey = params.get("topic");
+var topic = topicKey ? GAME_TOPICS[topicKey] : null;
+
+var currentLevelIndex = null;
+var quizAnswers = [];
+var badgeQueue = [];
+
+if(!topic){
+
+    document.getElementById("notFoundView").style.display = "block";
+
+}else if(topic.levels.length === 0){
+
+    document.getElementById("soonIcon").textContent = topic.icon;
+    document.getElementById("soonTitle").textContent = topic.title;
+    document.getElementById("soonView").style.display = "block";
+
+}else{
+
+    document.getElementById("gameView").style.display = "block";
+    initTopic();
+}
+
+
+function initTopic(){
+
+    document.getElementById("topicIcon").textContent = topic.icon;
+    document.getElementById("topicTitle").textContent = topic.title;
+
+    document.getElementById("backToRoadmapBtn").addEventListener("click", backToRoadmap);
+
+    renderHeaderProgress();
+    renderRoadmap();
+}
+
+function renderHeaderProgress(){
+
+    var progress = SSGame.getTopicProgress(topicKey);
+    document.getElementById("topicProgressLabel").textContent =
+        progress.passedLevels.length + " / " + topic.levels.length + " levels complete";
+}
+
+
+/* =========================================================
+   ROADMAP
+========================================================= */
+
+function renderRoadmap(){
+
+    var container = document.getElementById("roadmapNodes");
+    var aligns = ["left","center","right"];
+    var html = "";
+
+    topic.levels.forEach(function(level, i){
+
+        var unlocked = SSGame.isLevelUnlocked(topicKey, i);
+        var passed = SSGame.isLevelPassed(topicKey, i);
+        var state = passed ? "completed" : (unlocked ? "current" : "locked");
+        var align = aligns[i % aligns.length];
+        var icon = passed ? "✓" : (unlocked ? "▶" : "🔒");
+
+        html += '<div class="pl-node-row align-' + align + '">' +
+                    '<button type="button" class="pl-node ' + state + '" data-idx="' + i + '">' +
+                        '<div class="pl-node-circle">' + icon + '</div>' +
+                        '<div class="pl-node-label">' + level.title + '</div>' +
+                    '</button>' +
+                '</div>';
+    });
+
+    container.innerHTML = html;
+
+    container.querySelectorAll(".pl-node").forEach(function(node){
+
+        node.addEventListener("click", function(){
+
+            if(node.classList.contains("locked")) return;
+
+            openLevel(Number(node.dataset.idx));
+        });
+    });
+}
+
+function backToRoadmap(){
+
+    document.getElementById("lessonView").classList.remove("active");
+    document.getElementById("roadmapView").classList.remove("hidden");
+
+    renderHeaderProgress();
+    renderRoadmap();
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+
+/* =========================================================
+   LESSON VIEW
+========================================================= */
+
+function openLevel(i){
+
+    currentLevelIndex = i;
+
+    var level = topic.levels[i];
+    var progress = SSGame.getTopicProgress(topicKey);
+
+    document.getElementById("roadmapView").classList.add("hidden");
+    document.getElementById("lessonView").classList.add("active");
+
+    document.getElementById("reviewBanner").classList.toggle("show", progress.reviewFor === i);
+
+    document.getElementById("lessonEyebrow").textContent = "Level " + (i + 1) + " of " + topic.levels.length;
+    document.getElementById("lessonTitle").textContent = level.title;
+
+    var pointsHtml = "";
+    level.lesson.forEach(function(point){ pointsHtml += "<li>" + point + "</li>"; });
+    document.getElementById("lessonPoints").innerHTML = pointsHtml;
+
+    renderSimulation(document.getElementById("simBody"), level.simulation);
+
+    var quizCard = document.getElementById("quizCard");
+    quizCard.classList.remove("show");
+    quizCard.innerHTML = "";
+
+    var resultCard = document.getElementById("resultCard");
+    resultCard.classList.remove("show","pass","fail");
+    resultCard.innerHTML = "";
+
+    var readyBtn = document.getElementById("readyBtn");
+    readyBtn.style.display = "inline-block";
+    readyBtn.onclick = function(){
+        readyBtn.style.display = "none";
+        renderQuiz(level);
+        quizCard.scrollIntoView({ behavior:"smooth", block:"start" });
+    };
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+
+/* =========================================================
+   SIMULATIONS
+========================================================= */
+
+function renderSimulation(container, sim){
+
+    container.innerHTML = '<div class="pl-sim-prompt">' + sim.prompt + '</div><div id="simInner"></div>';
+
+    var body = container.querySelector("#simInner");
+
+    if(sim.type === "password-strength") renderPasswordSim(body);
+    else if(sim.type === "spot-flags") renderSpotFlags(body, sim);
+    else if(sim.type === "decision-scenario") renderDecisionScenario(body, sim);
+    else if(sim.type === "rapid-fire") renderRapidFire(body, sim);
+    else if(sim.type === "checklist-select") renderChecklistSelect(body, sim);
+}
+
+function renderPasswordSim(body){
+
+    body.innerHTML =
+        '<input type="text" class="pl-sim-input" id="simPwInput" placeholder="Type a password to test..." autocomplete="off">' +
+        '<div class="pl-meter-track"><div class="pl-meter-fill" id="simMeterFill"></div></div>' +
+        '<div class="pl-meter-verdict" id="simMeterVerdict">Start typing…</div>';
+
+    var input = body.querySelector("#simPwInput");
+    var fill = body.querySelector("#simMeterFill");
+    var verdict = body.querySelector("#simMeterVerdict");
+
+    input.addEventListener("input", function(){
+
+        var v = input.value;
+        var hasLength = v.length >= 12;
+        var hasCase = /[a-z]/.test(v) && /[A-Z]/.test(v);
+        var hasNumber = /[0-9]/.test(v);
+        var hasSymbol = /[^A-Za-z0-9]/.test(v);
+
+        if(v.length === 0){
+            fill.style.width = "0%";
+            verdict.textContent = "Start typing…";
+            return;
+        }
+
+        var score = [hasLength,hasCase,hasNumber,hasSymbol].filter(Boolean).length;
+        if(v.length < 6) score = Math.min(score,1);
+
+        fill.style.width = ((score/4)*100) + "%";
+
+        var text = "Weak", gradient = "linear-gradient(90deg,#ef4444,#ff6b6b)";
+
+        if(score >= 4){ text = "Excellent"; gradient = "linear-gradient(90deg,#22d3a7,#69f0ca)"; }
+        else if(score === 3){ text = "Strong"; gradient = "linear-gradient(90deg,#4f8cff,#22d3a7)"; }
+        else if(score === 2){ text = "Fair"; gradient = "linear-gradient(90deg,#f59e0b,#4f8cff)"; }
+
+        fill.style.background = gradient;
+        verdict.textContent = text;
+    });
+}
+
+function renderSpotFlags(body, sim){
+
+    var html = '<div class="pl-flag-text">';
+
+    sim.chunks.forEach(function(chunk, idx){
+        html += '<span class="pl-flag-chunk" data-idx="' + idx + '">' + chunk.text + '</span>';
+    });
+
+    html += '</div><button class="pl-sim-btn" id="checkFlagsBtn" style="margin-top:14px;">Check My Answer</button>' +
+            '<div class="pl-sim-result" id="flagResult"></div>';
+
+    body.innerHTML = html;
+
+    var selected = {};
+
+    body.querySelectorAll(".pl-flag-chunk").forEach(function(span){
+
+        span.addEventListener("click", function(){
+
+            var idx = span.dataset.idx;
+
+            if(selected[idx]){
+                delete selected[idx];
+                span.classList.remove("selected");
+            }else{
+                selected[idx] = true;
+                span.classList.add("selected");
+            }
+        });
+    });
+
+    body.querySelector("#checkFlagsBtn").addEventListener("click", function(){
+
+        var correctCount = 0;
+        var totalFlags = 0;
+
+        sim.chunks.forEach(function(chunk, idx){
+
+            var span = body.querySelector('.pl-flag-chunk[data-idx="' + idx + '"]');
+            var wasSelected = !!selected[idx];
+
+            if(chunk.flag) totalFlags++;
+
+            if(chunk.flag && wasSelected){ span.classList.add("correct"); correctCount++; }
+            else if(chunk.flag && !wasSelected){ span.classList.add("incorrect"); }
+            else if(!chunk.flag && wasSelected){ span.classList.add("incorrect"); }
+        });
+
+        body.querySelector("#flagResult").textContent =
+            "You correctly spotted " + correctCount + " of " + totalFlags + " suspicious parts.";
+    });
+}
+
+function renderDecisionScenario(body, sim){
+
+    var idx = 0;
+
+    function renderScenario(){
+
+        var scenario = sim.scenarios[idx];
+        var html = '<div class="pl-scenario-prompt">' + scenario.prompt + '</div>';
+
+        scenario.choices.forEach(function(choice, cIdx){
+            html += '<button type="button" class="pl-scenario-choice" data-idx="' + cIdx + '">' + choice.text + '</button>';
+        });
+
+        html += '<div id="scenarioFeedback"></div>';
+
+        body.innerHTML = html;
+
+        body.querySelectorAll(".pl-scenario-choice").forEach(function(btn){
+
+            btn.addEventListener("click", function(){
+
+                body.querySelectorAll(".pl-scenario-choice").forEach(function(b){ b.disabled = true; });
+
+                var choice = scenario.choices[Number(btn.dataset.idx)];
+                btn.classList.add(choice.correct ? "correct" : "incorrect");
+
+                var feedbackHost = body.querySelector("#scenarioFeedback");
+
+                var fb = document.createElement("div");
+                fb.className = "pl-scenario-feedback";
+                fb.textContent = choice.feedback;
+                feedbackHost.appendChild(fb);
+
+                if(idx < sim.scenarios.length - 1){
+
+                    var nextBtn = document.createElement("button");
+                    nextBtn.className = "pl-sim-btn";
+                    nextBtn.style.marginTop = "14px";
+                    nextBtn.textContent = "Next Scenario →";
+                    nextBtn.addEventListener("click", function(){ idx++; renderScenario(); });
+                    feedbackHost.appendChild(nextBtn);
+                }
+            });
+        });
+    }
+
+    renderScenario();
+}
+
+function renderRapidFire(body, sim){
+
+    var idx = 0;
+
+    function renderCard(){
+
+        if(idx >= sim.cards.length){
+            body.innerHTML = '<div class="pl-rapid-card"><div class="pl-rapid-text">Nice work — practice complete! 🎉</div></div>';
+            return;
+        }
+
+        var card = sim.cards[idx];
+
+        body.innerHTML =
+            '<div class="pl-rapid-progress">Card ' + (idx+1) + ' of ' + sim.cards.length + '</div>' +
+            '<div class="pl-rapid-card">' +
+                '<div class="pl-rapid-text">' + card.text + '</div>' +
+                '<div class="pl-rapid-buttons">' +
+                    '<button type="button" class="pl-rapid-btn legit" data-answer="legit">✅ Legit</button>' +
+                    '<button type="button" class="pl-rapid-btn suspicious" data-answer="suspicious">🚩 Suspicious</button>' +
+                '</div>' +
+                '<div class="pl-rapid-feedback" id="rapidFeedback"></div>' +
+            '</div>';
+
+        body.querySelectorAll(".pl-rapid-btn").forEach(function(btn){
+
+            btn.addEventListener("click", function(){
+
+                body.querySelectorAll(".pl-rapid-btn").forEach(function(b){ b.disabled = true; });
+
+                var correct = btn.dataset.answer === card.answer;
+                var fb = body.querySelector("#rapidFeedback");
+
+                fb.textContent = correct ? "✅ Correct!" : ("❌ Actually " + card.answer + ".");
+                fb.className = "pl-rapid-feedback " + (correct ? "correct" : "incorrect");
+
+                setTimeout(function(){ idx++; renderCard(); }, 1100);
+            });
+        });
+    }
+
+    renderCard();
+}
+
+function renderChecklistSelect(body, sim){
+
+    var html = "";
+
+    sim.options.forEach(function(opt, idx){
+        html += '<label class="pl-check-option" data-idx="' + idx + '"><input type="checkbox"> ' + opt.text + '</label>';
+    });
+
+    html += '<button class="pl-sim-btn" id="checkSelectBtn" style="margin-top:10px;">Check My Answers</button>' +
+            '<div class="pl-sim-result" id="selectResult"></div>';
+
+    body.innerHTML = html;
+
+    body.querySelector("#checkSelectBtn").addEventListener("click", function(){
+
+        var correctCount = 0;
+        var totalCorrect = 0;
+
+        sim.options.forEach(function(opt, idx){
+
+            var label = body.querySelector('.pl-check-option[data-idx="' + idx + '"]');
+            var checked = label.querySelector("input").checked;
+
+            if(opt.correct) totalCorrect++;
+
+            if(opt.correct && checked){ label.classList.add("correct"); correctCount++; }
+            else if(!opt.correct && checked){ label.classList.add("incorrect"); }
+            else if(opt.correct && !checked){ label.classList.add("missed"); }
+        });
+
+        body.querySelector("#selectResult").textContent =
+            "You correctly identified " + correctCount + " of " + totalCorrect + " right actions.";
+    });
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+function renderQuiz(level){
+
+    var quizCard = document.getElementById("quizCard");
+
+    var html = '<h2>Quick Check</h2><div class="pl-quiz-sub">Answer every question, then submit. You need 70% or better to move on.</div>';
+
+    level.quiz.forEach(function(q, qIdx){
+
+        html += '<div class="pl-quiz-q"><div class="pl-quiz-q-text">' + (qIdx+1) + '. ' + q.q + '</div>';
+
+        q.options.forEach(function(opt, oIdx){
+            html += '<button type="button" class="pl-quiz-option" data-q="' + qIdx + '" data-o="' + oIdx + '">' + opt + '</button>';
+        });
+
+        html += '</div>';
+    });
+
+    html += '<button class="pl-quiz-submit" id="quizSubmitBtn" disabled>Submit Quiz</button>';
+
+    quizCard.innerHTML = html;
+    quizCard.classList.add("show");
+
+    quizAnswers = new Array(level.quiz.length).fill(null);
+
+    quizCard.querySelectorAll(".pl-quiz-option").forEach(function(btn){
+
+        btn.addEventListener("click", function(){
+
+            var qIdx = Number(btn.dataset.q);
+
+            quizCard.querySelectorAll('.pl-quiz-option[data-q="' + qIdx + '"]').forEach(function(b){
+                b.classList.remove("selected");
+            });
+
+            btn.classList.add("selected");
+            quizAnswers[qIdx] = Number(btn.dataset.o);
+
+            document.getElementById("quizSubmitBtn").disabled = quizAnswers.indexOf(null) !== -1;
+        });
+    });
+
+    document.getElementById("quizSubmitBtn").addEventListener("click", function(){
+        submitQuiz(level);
+    });
+}
+
+function submitQuiz(level){
+
+    var correct = 0;
+
+    level.quiz.forEach(function(q, idx){
+        if(quizAnswers[idx] === q.correct) correct++;
+    });
+
+    var percent = Math.round((correct / level.quiz.length) * 100);
+
+    document.getElementById("quizCard").classList.remove("show");
+    showResult(percent);
+}
+
+
+/* =========================================================
+   RESULT + PROGRESSION
+========================================================= */
+
+function showResult(percent){
+
+    var resultCard = document.getElementById("resultCard");
+    var pass = percent >= 70;
+
+    resultCard.className = "pl-result-card show " + (pass ? "pass" : "fail");
+
+    if(pass){
+
+        var outcome = SSGame.passLevel(topicKey, currentLevelIndex, percent);
+        var isLast = outcome.isLastLevel;
+
+        resultCard.innerHTML =
+            '<div class="pl-result-icon">' + (isLast ? "🎉" : "✅") + '</div>' +
+            '<h2>' + (isLast ? "Topic Complete!" : "Level Passed!") + '</h2>' +
+            '<div class="pl-result-score">Score: ' + percent + '%</div>' +
+            '<p>' + (isLast ? ("You've finished every level in " + topic.title + ".") : "Nice work — the next level is unlocked.") + '</p>' +
+            '<button class="pl-sim-btn" id="resultContinueBtn">' + (isLast ? "Back to Roadmap" : "Continue →") + '</button>';
+
+        document.getElementById("resultContinueBtn").addEventListener("click", function(){
+
+            queueBadges(outcome.newBadges, outcome.newChampion);
+
+            showNextBadgeOrContinue(function(){
+
+                var nextIndex = outcome.resumeIndex != null ? outcome.resumeIndex : (isLast ? null : currentLevelIndex + 1);
+
+                if(nextIndex != null && topic.levels[nextIndex]) openLevel(nextIndex);
+                else backToRoadmap();
+            });
+        });
+
+    }else{
+
+        var outcome2 = SSGame.failLevel(topicKey, currentLevelIndex, percent);
+
+        resultCard.innerHTML =
+            '<div class="pl-result-icon">🔁</div>' +
+            '<h2>Not Quite Yet</h2>' +
+            '<div class="pl-result-score">Score: ' + percent + '%</div>' +
+            '<p>' + (outcome2.isReview ? "Let's revisit the previous lesson before trying this one again." : "Let's go through this lesson again.") + '</p>' +
+            '<button class="pl-sim-btn" id="resultContinueBtn">' + (outcome2.isReview ? "Review Previous Level" : "Try Again") + '</button>';
+
+        document.getElementById("resultContinueBtn").addEventListener("click", function(){
+            openLevel(outcome2.targetIndex);
+        });
+    }
+
+    resultCard.scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+
+/* =========================================================
+   BADGE CELEBRATION
+========================================================= */
+
+function queueBadges(newBadges, newChampion){
+
+    newBadges.forEach(function(tier){
+
+        var meta = BADGE_META[tier];
+
+        badgeQueue.push({
+            icon: meta.icon,
+            title: meta.label + " Badge!",
+            desc: "You earned the " + meta.label + " badge for " + topic.title + "."
+        });
+    });
+
+    if(newChampion){
+        badgeQueue.push({
+            icon: "🏆",
+            title: "SafeShield Champion!",
+            desc: "You completed every available learning path. Incredible work."
+        });
+    }
+}
+
+function showNextBadgeOrContinue(continueFn){
+
+    if(badgeQueue.length === 0){
+        continueFn();
+        return;
+    }
+
+    var badge = badgeQueue.shift();
+    var overlay = document.getElementById("badgeModalOverlay");
+
+    document.getElementById("badgeModalIcon").textContent = badge.icon;
+    document.getElementById("badgeModalTitle").textContent = badge.title;
+    document.getElementById("badgeModalDesc").textContent = badge.desc;
+
+    overlay.classList.add("show");
+
+    document.getElementById("badgeModalBtn").onclick = function(){
+        overlay.classList.remove("show");
+        showNextBadgeOrContinue(continueFn);
+    };
+}
+
+</script>
+</body>
+</html>

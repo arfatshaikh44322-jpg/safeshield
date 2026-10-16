@@ -1,0 +1,3357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - Impersonation Scam</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    background: #0B1220;
+    color: #F8FAFC;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+:root {
+    --bg: #0B1220;
+    --bg-secondary: #0E1728;
+    --card: #111C2E;
+
+    --blue: #4F8CFF;
+    --teal: #22D3A7;
+
+    --text: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --muted: #94A3B8;
+
+    --border: #26364D;
+
+    --red: #EF4444;
+    --red-light: #FF6B6B;
+
+    --orange: #F59E0B;
+
+    --footer: #080E19;
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND
+========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(79,140,255,0.06),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 90% 70%,
+            rgba(34,211,167,0.05),
+            transparent 25%
+        );
+
+    pointer-events: none;
+    z-index: -2;
+}
+
+
+/* =========================================================
+   FLOATING PARTICLES
+========================================================= */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    background: var(--blue);
+
+    border-radius: 50%;
+
+    opacity: 0.35;
+
+    animation: floatParticle linear infinite;
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-duration: 15s;
+}
+
+.particle:nth-child(2) {
+    left: 25%;
+    animation-duration: 21s;
+}
+
+.particle:nth-child(3) {
+    left: 40%;
+    animation-duration: 17s;
+}
+
+.particle:nth-child(4) {
+    left: 55%;
+    animation-duration: 25s;
+}
+
+.particle:nth-child(5) {
+    left: 70%;
+    animation-duration: 19s;
+}
+
+.particle:nth-child(6) {
+    left: 85%;
+    animation-duration: 23s;
+}
+
+.particle:nth-child(7) {
+    left: 95%;
+    animation-duration: 18s;
+}
+
+@keyframes floatParticle {
+
+    0% {
+        transform: translateY(110vh) scale(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.4;
+    }
+
+    80% {
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   FIXED NAVIGATION
+========================================================= */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    z-index: 10000;
+
+    background: rgba(11,18,32,0.96);
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 5px 30px rgba(0,0,0,0.25);
+}
+
+.nav-container {
+    max-width: 1200px;
+    height: 72px;
+
+    margin: auto;
+
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+/* LOGO */
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+
+    color: var(--blue);
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    flex-shrink: 0;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+
+    text-shadow:
+        0 0 20px rgba(79,140,255,0.8);
+}
+
+.logo span {
+    color: white;
+}
+
+
+/* NAV LINKS */
+
+.nav-links {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 25px;
+
+    list-style: none;
+
+    margin-left: auto;
+}
+
+.nav-links a {
+    position: relative;
+
+    color: var(--text-secondary);
+
+    text-decoration: none;
+
+    transition: 0.3s;
+
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: var(--teal);
+}
+
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -6px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--teal);
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+
+/* REMOVE OLD THREE-LINE BUTTON COMPLETELY */
+
+.menu-button,
+.mobile-menu {
+    display: none !important;
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   SPACE FOR FIXED NAVIGATION
+========================================================= */
+
+body {
+    padding-top: 72px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    position: relative;
+
+    min-height: 720px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 110px 25px;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(239,68,68,0.15),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 50% 60%,
+            rgba(79,140,255,0.10),
+            transparent 55%
+        );
+}
+
+
+/* =========================================================
+   RADAR
+========================================================= */
+
+.radar {
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%,-50%);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.18);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    animation:
+        radarPulse 4s ease-in-out infinite;
+}
+
+.radar::before,
+.radar::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%,-50%);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(239,68,68,0.10);
+}
+
+.radar::before {
+    width: 310px;
+    height: 310px;
+}
+
+.radar::after {
+    width: 160px;
+    height: 160px;
+}
+
+@keyframes radarPulse {
+
+    0%,
+    100% {
+        opacity: 0.25;
+
+        transform:
+            translate(-50%,-50%)
+            scale(0.85);
+    }
+
+    50% {
+        opacity: 0.8;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.05);
+    }
+}
+
+
+/* =========================================================
+   RADAR SCAN
+========================================================= */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 230px;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(239,68,68,0.7),
+            transparent
+        );
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin: left center;
+
+    animation:
+        scan 4s linear infinite;
+
+    opacity: 0.5;
+}
+
+@keyframes scan {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.alert-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 17px;
+
+    margin-bottom: 22px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(239,68,68,0.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.5);
+
+    color:
+        var(--red-light);
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    animation:
+        alertGlow 2s infinite,
+        badgeEnter 0.8s ease;
+}
+
+.alert-dot {
+    width: 8px;
+    height: 8px;
+
+    background: var(--red);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 12px var(--red);
+
+    animation:
+        alertBlink 1s infinite;
+}
+
+@keyframes alertGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 10px
+            rgba(239,68,68,0.08);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px
+            rgba(239,68,68,0.35);
+    }
+}
+
+@keyframes alertBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
+}
+
+@keyframes badgeEnter {
+
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.hero h1 {
+    font-size:
+        clamp(42px,6vw,68px);
+
+    line-height: 1.1;
+
+    margin-bottom: 20px;
+
+    animation:
+        heroEnter 0.8s ease both;
+}
+
+.hero h1 span {
+    display: block;
+
+    color:
+        var(--red-light);
+
+    text-shadow:
+        0 0 25px
+        rgba(239,68,68,0.35);
+
+    animation:
+        redGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes redGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 15px
+            rgba(239,68,68,0.2);
+    }
+
+    50% {
+        text-shadow:
+            0 0 35px
+            rgba(239,68,68,0.65);
+    }
+}
+
+.hero p {
+    max-width: 760px;
+
+    margin: auto;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 18px;
+
+    animation:
+        heroEnter 0.8s ease 0.15s both;
+}
+
+@keyframes heroEnter {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.hero-button {
+    display: inline-block;
+
+    margin-top: 30px;
+
+    padding: 14px 27px;
+
+    border-radius: 8px;
+
+    background:
+        var(--blue);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 8px 25px
+        rgba(79,140,255,0.18);
+
+    animation:
+        heroEnter 0.8s ease 0.3s both;
+}
+
+.hero-button:hover {
+    transform:
+        translateY(-5px)
+        scale(1.03);
+
+    background:
+        #6A9CFF;
+
+    box-shadow:
+        0 12px 40px
+        rgba(79,140,255,0.45);
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+    padding: 90px 25px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+
+    margin-bottom: 10px;
+
+    position: relative;
+}
+
+.section-title h2::after {
+    content: "";
+
+    display: block;
+
+    width: 55px;
+    height: 3px;
+
+    margin:
+        12px auto 0;
+
+    background:
+        var(--teal);
+
+    box-shadow:
+        0 0 15px
+        rgba(34,211,167,0.5);
+
+    border-radius: 10px;
+}
+
+.section-title p {
+    color:
+        var(--muted);
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal-on-scroll {
+    opacity: 0;
+
+    transform:
+        translateY(35px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.reveal-on-scroll.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   EXAMPLE
+========================================================= */
+
+.example {
+    max-width: 900px;
+
+    margin: auto;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 35px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.2);
+
+    transition: 0.4s;
+}
+
+.example:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(239,68,68,0.45);
+
+    box-shadow:
+        0 20px 55px
+        rgba(239,68,68,0.08);
+}
+
+.example::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 20px
+        rgba(239,68,68,0.6);
+
+    animation:
+        dangerLine 2s ease-in-out infinite;
+}
+
+@keyframes dangerLine {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+
+        box-shadow:
+            0 0 35px
+            rgba(239,68,68,0.9);
+    }
+}
+
+
+/* =========================================================
+   FAKE CHAT
+========================================================= */
+
+.fake-chat {
+    background:
+        #091321;
+
+    border:
+        1px solid #334155;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    margin-top: 25px;
+
+    transition: 0.3s;
+}
+
+.fake-chat:hover {
+    border-color:
+        rgba(79,140,255,0.5);
+
+    box-shadow:
+        0 0 30px
+        rgba(79,140,255,0.06);
+}
+
+.chat-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.profile {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F8CFF,
+            #22D3A7
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+
+    animation:
+        profilePulse 2.5s infinite;
+}
+
+@keyframes profilePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 rgba(79,140,255,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 20px rgba(79,140,255,0.35);
+    }
+}
+
+.chat-name {
+    font-weight: bold;
+}
+
+.verified {
+    color:
+        var(--blue);
+
+    font-size: 12px;
+}
+
+.chat-message {
+    margin-top: 20px;
+
+    background:
+        #172235;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    color:
+        var(--text-secondary);
+
+    animation:
+        messageAppear 0.7s ease;
+}
+
+@keyframes messageAppear {
+
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.danger {
+    color:
+        var(--red-light);
+
+    font-weight: bold;
+}
+
+.fake-link {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 9px 14px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(239,68,68,0.10);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.4);
+
+    color:
+        var(--red-light);
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.fake-link:hover {
+    background:
+        rgba(239,68,68,0.18);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 0 20px
+        rgba(239,68,68,0.2);
+}
+
+.reveal {
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(239,68,68,0.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,0.3);
+
+    color:
+        var(--red-light);
+}
+
+.reveal.show {
+    display: block;
+
+    animation:
+        revealIn 0.4s ease;
+}
+
+@keyframes revealIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   SCAM CARDS
+========================================================= */
+
+.scam-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 22px;
+}
+
+.scam-card {
+    position: relative;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    transition:
+        transform 0.35s,
+        border-color 0.35s,
+        box-shadow 0.35s;
+
+    cursor: pointer;
+
+    overflow: hidden;
+}
+
+.scam-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -100%;
+    left: -50%;
+
+    width: 200%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.04),
+            transparent
+        );
+
+    transform: rotate(20deg);
+
+    transition: 0.7s;
+}
+
+.scam-card:hover::before {
+    top: 100%;
+}
+
+.scam-card:hover {
+    transform:
+        translateY(-10px)
+        scale(1.01);
+
+    border-color:
+        rgba(239,68,68,0.6);
+
+    box-shadow:
+        0 18px 45px
+        rgba(239,68,68,0.12);
+}
+
+.scam-icon {
+    font-size: 45px;
+
+    margin-bottom: 12px;
+
+    transition:
+        0.3s;
+}
+
+.scam-card:hover .scam-icon {
+    transform:
+        scale(1.18)
+        rotate(-6deg);
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(79,140,255,0.4)
+        );
+}
+
+.scam-card h3 {
+    margin-bottom: 10px;
+}
+
+.scam-card p {
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+.card-details {
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition:
+        max-height 0.4s ease;
+
+    color:
+        var(--text-secondary);
+
+    margin-top: 0;
+}
+
+.scam-card.active .card-details {
+    max-height: 180px;
+
+    margin-top: 15px;
+}
+
+.learn {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    color:
+        var(--teal);
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   WARNING FLAGS
+========================================================= */
+
+.flags {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 18px;
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.flag {
+    display: flex;
+
+    gap: 18px;
+
+    align-items: center;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    padding: 22px;
+
+    border-radius: 12px;
+
+    transition:
+        0.3s;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.flag::before {
+    content: "";
+
+    position: absolute;
+
+    left: -100%;
+
+    bottom: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        var(--red);
+
+    transition: 0.4s;
+}
+
+.flag:hover::before {
+    left: 0;
+}
+
+.flag:hover {
+    border-color:
+        var(--red);
+
+    transform:
+        translateX(7px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(239,68,68,0.10);
+}
+
+.flag-icon {
+    font-size: 32px;
+
+    min-width: 45px;
+
+    text-align: center;
+
+    transition: 0.3s;
+}
+
+.flag:hover .flag-icon {
+    transform:
+        scale(1.2)
+        rotate(5deg);
+}
+
+.flag h3 {
+    margin-bottom: 5px;
+}
+
+.flag p {
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   CHALLENGE
+========================================================= */
+
+.challenge {
+    max-width: 850px;
+
+    margin: auto;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.15);
+}
+
+.challenge h2 {
+    margin-bottom: 10px;
+}
+
+.challenge > p {
+    color:
+        var(--muted);
+
+    margin-bottom: 25px;
+}
+
+.choices {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 12px;
+}
+
+.choice {
+    padding: 16px;
+
+    background:
+        #091321;
+
+    color:
+        var(--text-secondary);
+
+    border:
+        1px solid #334155;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    transition:
+        0.3s;
+
+    font-size: 14px;
+}
+
+.choice:hover {
+    border-color:
+        var(--blue);
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(79,140,255,0.12);
+}
+
+.choice.correct {
+    border-color:
+        var(--teal);
+
+    background:
+        rgba(34,211,167,0.10);
+
+    color:
+        var(--teal);
+
+    animation:
+        correctPulse 1s;
+}
+
+.choice.wrong {
+    border-color:
+        var(--red);
+
+    background:
+        rgba(239,68,68,0.10);
+
+    color:
+        var(--red-light);
+
+    animation:
+        shake 0.4s;
+}
+
+@keyframes correctPulse {
+
+    50% {
+        box-shadow:
+            0 0 30px
+            rgba(34,211,167,0.4);
+    }
+}
+
+@keyframes shake {
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    50% {
+        transform: translateX(6px);
+    }
+
+    75% {
+        transform: translateX(-4px);
+    }
+}
+
+#challengeResult {
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border-radius: 9px;
+
+    display: none;
+}
+
+#challengeResult.show {
+    display: block;
+
+    animation:
+        revealIn 0.4s ease;
+}
+
+
+/* =========================================================
+   SAFETY
+========================================================= */
+
+.safety {
+    max-width: 900px;
+
+    margin: auto;
+
+    text-align: center;
+
+    padding: 40px;
+
+    border:
+        1px solid
+        rgba(34,211,167,0.25);
+
+    background:
+        rgba(34,211,167,0.04);
+
+    border-radius: 16px;
+
+    transition: 0.4s;
+}
+
+.safety:hover {
+    box-shadow:
+        0 0 40px
+        rgba(34,211,167,0.08);
+}
+
+.safety h2 {
+    color:
+        var(--teal);
+
+    margin-bottom: 12px;
+}
+
+.safety p {
+    color:
+        var(--text-secondary);
+
+    margin-bottom: 25px;
+}
+
+.safety-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 12px;
+}
+
+.safety-item {
+    padding: 18px 10px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    transition:
+        0.3s;
+}
+
+.safety-item:hover {
+    transform:
+        translateY(-7px);
+
+    border-color:
+        var(--teal);
+
+    box-shadow:
+        0 10px 25px
+        rgba(34,211,167,0.08);
+}
+
+.safety-number {
+    width: 35px;
+    height: 35px;
+
+    margin:
+        0 auto 10px;
+
+    border-radius: 50%;
+
+    background:
+        var(--teal);
+
+    color:
+        #06150F;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.safety-item:hover .safety-number {
+    transform:
+        rotate(360deg)
+        scale(1.1);
+}
+
+.safety-item p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color:
+        var(--muted);
+}
+
+
+/* =========================================================
+   STEPS
+========================================================= */
+
+.steps {
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.step {
+    display: flex;
+
+    gap: 20px;
+
+    align-items: flex-start;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+
+    border-radius: 12px;
+
+    transition:
+        0.3s;
+
+    position: relative;
+}
+
+.step::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    height: 2px;
+    width: 0;
+
+    background:
+        var(--blue);
+
+    transition: 0.4s;
+}
+
+.step:hover::after {
+    width: 100%;
+}
+
+.step:hover {
+    transform:
+        translateX(8px);
+
+    border-color:
+        var(--blue);
+
+    box-shadow:
+        0 10px 30px
+        rgba(79,140,255,0.10);
+}
+
+.step-number {
+    min-width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background:
+        var(--blue);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    box-shadow:
+        0 0 15px
+        rgba(79,140,255,0.2);
+}
+
+.step h3 {
+    margin-bottom: 5px;
+}
+
+.step p {
+    color:
+        var(--muted);
+}
+
+
+/* =========================================================
+   FINAL MESSAGE
+========================================================= */
+
+.final-message {
+    position: relative;
+
+    overflow: hidden;
+}
+
+.final-message strong {
+    animation:
+        finalGlow 2s infinite;
+}
+
+@keyframes finalGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 5px
+            rgba(34,211,167,0.1);
+    }
+
+    50% {
+        text-shadow:
+            0 0 20px
+            rgba(34,211,167,0.6);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+========================================================= */
+
+.bottom-navigation {
+    background:
+        var(--bg-secondary);
+
+    border-top:
+        1px solid var(--border);
+
+    padding:
+        35px 25px;
+
+    position: relative;
+}
+
+.bottom-navigation-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+.bottom-nav-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+
+    padding: 14px 18px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    color: var(--text);
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    transition:
+        0.3s;
+
+    text-align: center;
+}
+
+.bottom-nav-button:hover {
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--blue);
+
+    background:
+        #17243A;
+
+    box-shadow:
+        0 10px 30px
+        rgba(79,140,255,0.15);
+}
+
+
+/* HOME BUTTON */
+
+.bottom-nav-button.home:hover {
+    border-color:
+        var(--teal);
+
+    box-shadow:
+        0 10px 30px
+        rgba(34,211,167,0.15);
+}
+
+
+/* PREVIOUS */
+
+.bottom-nav-button.previous:hover {
+    border-color:
+        var(--orange);
+
+    box-shadow:
+        0 10px 30px
+        rgba(245,158,11,0.15);
+}
+
+
+/* CURRENT SCAM */
+
+.bottom-nav-button.current {
+    border-color:
+        rgba(239,68,68,0.5);
+
+    background:
+        rgba(239,68,68,0.08);
+
+    color:
+        var(--red-light);
+}
+
+.bottom-nav-button.current:hover {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0 10px 30px
+        rgba(239,68,68,0.18);
+}
+
+
+/* NEXT */
+
+.bottom-nav-button.next:hover {
+    border-color:
+        var(--teal);
+
+    box-shadow:
+        0 10px 30px
+        rgba(34,211,167,0.15);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background:
+        var(--footer);
+
+    border-top:
+        1px solid var(--border);
+
+    padding:
+        40px 25px;
+
+    text-align: center;
+}
+
+footer h3 {
+    color:
+        var(--teal);
+
+    margin-bottom: 10px;
+
+    transition: 0.3s;
+}
+
+footer h3:hover {
+    text-shadow:
+        0 0 15px
+        rgba(34,211,167,0.6);
+}
+
+footer p {
+    color:
+        #71859A;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .scam-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .safety-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 13px;
+    }
+
+    .bottom-navigation-inner {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .nav-container {
+        height: 65px;
+
+        padding:
+            0 15px;
+    }
+
+    body {
+        padding-top: 65px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    section {
+        padding:
+            65px 18px;
+    }
+
+    .hero {
+        min-height: 650px;
+
+        padding:
+            80px 18px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .flags {
+        grid-template-columns: 1fr;
+    }
+
+    .choices {
+        grid-template-columns: 1fr;
+    }
+
+    .safety-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        flex-direction: column;
+    }
+
+    .radar {
+        width: 320px;
+        height: 320px;
+    }
+
+    .bottom-navigation {
+        padding:
+            25px 15px;
+    }
+
+    .bottom-navigation-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-nav-button {
+        min-height: 50px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
+
+</style>
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     FLOATING PARTICLES
+========================================================= -->
+
+<div class="particles">
+
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+</div>
+
+
+<!-- =========================================================
+     FIXED TOP NAVIGATION
+========================================================= -->
+
+<nav>
+
+    <div class="nav-container">
+
+        <div class="logo">
+            🛡️ Safe<span>Shield</span>
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="home.html">
+                    🏠 Home
+                </a>
+            </li>
+
+            <li>
+                <a href="protect.html">
+                    🛡️ Protect
+                </a>
+            </li>
+
+            <li>
+                <a href="scam.html">
+                    🚨 Scams
+                </a>
+            </li>
+
+            <li>
+                <a href="tool.html">
+                    🧰 Tools
+                </a>
+            </li>
+
+            <li>
+                <a href="checklist.html">
+                    ✅ Checklist
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="radar"></div>
+
+    <div class="hero-content">
+
+        <div class="alert-badge">
+
+            <span class="alert-dot"></span>
+
+            IMPERSONATION SCAM • STAY ALERT
+
+        </div>
+
+
+        <h1>
+
+            Is That Really
+
+            <span>Who They Say They Are?</span>
+
+        </h1>
+
+
+        <p>
+
+            An impersonation scam happens when someone
+            pretends to be a person, company or organization
+            you trust in order to trick you into sharing
+            information, sending money or taking an action.
+
+            <br><br>
+
+            The identity may look real. The request is what
+            you need to question.
+
+        </p>
+
+
+        <a
+            href="#example"
+            class="hero-button"
+        >
+
+            🔍 Investigate the Scam
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXAMPLE
+========================================================= -->
+
+<section id="example">
+
+    <div class="container">
+
+        <div class="section-title reveal-on-scroll">
+
+            <h2>
+                📱 Can You Spot the Fake?
+            </h2>
+
+            <p>
+                Look carefully at this example before
+                revealing the warning signs.
+            </p>
+
+        </div>
+
+
+        <div class="example reveal-on-scroll">
+
+            <h3>
+                Someone claims to be your friend.
+            </h3>
+
+            <p style="color:var(--muted);margin-top:8px;">
+
+                You receive a message from an account
+                using your friend's name and profile picture.
+
+            </p>
+
+
+            <div class="fake-chat">
+
+                <div class="chat-header">
+
+                    <div class="profile">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <div class="chat-name">
+                            Rahul
+                        </div>
+
+                        <div class="verified">
+                            ✓ Friend • Online
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat-message">
+
+                    <strong>
+                        Rahul:
+                    </strong>
+
+                    <br><br>
+
+                    "Hey! I'm in a bit of trouble right now.
+                    I lost my phone and I'm using this account.
+
+                    <br><br>
+
+                    Can you send me ₹5,000 urgently?
+                    I'll return it tonight."
+
+                    <br><br>
+
+                    <span class="danger">
+
+                        Please don't call my old number.
+                        I can't answer it.
+
+                    </span>
+
+                    <br><br>
+
+                    <div
+                        class="fake-link"
+                        onclick="revealScam()"
+                    >
+
+                        🔎 Inspect Message
+
+                    </div>
+
+
+                    <div
+                        class="reveal"
+                        id="reveal"
+                    >
+
+                        🚨 <strong>Warning signs detected!</strong>
+
+                        <br><br>
+
+                        The person creates urgency, gives an
+                        unusual reason for avoiding verification,
+                        and requests money.
+
+                        <br><br>
+
+                        A real friend can be verified through
+                        another trusted communication method.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TYPES OF IMPERSONATION
+========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title reveal-on-scroll">
+
+            <h2>
+                🎭 Who Can Scammers Pretend To Be?
+            </h2>
+
+            <p>
+                Click each card to reveal how the scam works.
+            </p>
+
+        </div>
+
+
+        <div class="scam-grid">
+
+
+            <div class="scam-card reveal-on-scroll"
+                 onclick="toggleCard(this)">
+
+                <div class="scam-icon">
+                    👨‍👩‍👧
+                </div>
+
+                <h3>
+                    Family or Friend
+                </h3>
+
+                <p>
+                    Someone pretends to be someone you know.
+                </p>
+
+                <div class="card-details">
+
+                    They may claim their phone is lost,
+                    they're travelling, or they're facing
+                    an emergency.
+
+                    <br><br>
+
+                    <strong>Protection:</strong>
+
+                    Call the person using a number you
+                    already know.
+
+                </div>
+
+                <span class="learn">
+                    Click to learn more ↓
+                </span>
+
+            </div>
+
+
+            <div class="scam-card reveal-on-scroll"
+                 onclick="toggleCard(this)">
+
+                <div class="scam-icon">
+                    🏦
+                </div>
+
+                <h3>
+                    Bank Employee
+                </h3>
+
+                <p>
+                    A scammer pretends to represent your bank.
+                </p>
+
+                <div class="card-details">
+
+                    They may claim there is suspicious
+                    activity on your account and ask for
+                    personal information or security codes.
+
+                    <br><br>
+
+                    <strong>Protection:</strong>
+
+                    Contact your bank using its official
+                    app or verified contact details.
+
+                </div>
+
+                <span class="learn">
+                    Click to learn more ↓
+                </span>
+
+            </div>
+
+
+            <div class="scam-card reveal-on-scroll"
+                 onclick="toggleCard(this)">
+
+                <div class="scam-icon">
+                    👮
+                </div>
+
+                <h3>
+                    Police or Government Official
+                </h3>
+
+                <p>
+                    Someone claims to be an authority figure.
+                </p>
+
+                <div class="card-details">
+
+                    They may threaten you with arrest,
+                    penalties or legal action unless you
+                    immediately pay or provide information.
+
+                    <br><br>
+
+                    <strong>Protection:</strong>
+
+                    Don't panic. Independently verify
+                    the claim through official channels.
+
+                </div>
+
+                <span class="learn">
+                    Click to learn more ↓
+                </span>
+
+            </div>
+
+
+            <div class="scam-card reveal-on-scroll"
+                 onclick="toggleCard(this)">
+
+                <div class="scam-icon">
+                    💼
+                </div>
+
+                <h3>
+                    Boss or Manager
+                </h3>
+
+                <p>
+                    A scammer pretends to be someone from work.
+                </p>
+
+                <div class="card-details">
+
+                    They may ask you to urgently purchase
+                    gift cards, transfer money or share
+                    confidential information.
+
+                    <br><br>
+
+                    <strong>Protection:</strong>
+
+                    Confirm unusual requests directly
+                    with your manager.
+
+                </div>
+
+                <span class="learn">
+                    Click to learn more ↓
+                </span>
+
+            </div>
+
+
+            <div class="scam-card reveal-on-scroll"
+                 onclick="toggleCard(this)">
+
+                <div class="scam-icon">
+                    📦
+                </div>
+
+                <h3>
+                    Delivery Company
+                </h3>
+
+                <p>
+                    A scammer pretends to be a courier service.
+                </p>
+
+                <div class="card-details">
+
+                    They may claim your package has a problem
+                    and ask you to click a link or provide
+                    personal or payment information.
+
+                    <br><br>
+
+                    <strong>Protection:</strong>
+
+                    Check your delivery through the official
+                    company's website or application.
+
+                </div>
+
+                <span class="learn">
+                    Click to learn more ↓
+                </span>
+
+            </div>
+
+
+            <div class="scam-card reveal-on-scroll"
+                 onclick="toggleCard(this)">
+
+                <div class="scam-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Company Representative
+                </h3>
+
+                <p>
+                    A scammer pretends to represent a business.
+                </p>
+
+                <div class="card-details">
+
+                    They may offer refunds, prizes, support
+                    or special deals to convince you to
+                    provide information.
+
+                    <br><br>
+
+                    <strong>Protection:</strong>
+
+                    Visit the company's official website
+                    yourself instead of using their link.
+
+                </div>
+
+                <span class="learn">
+                    Click to learn more ↓
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WARNING SIGNS
+========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title reveal-on-scroll">
+
+            <h2>
+                🚨 Warning Signs
+            </h2>
+
+            <p>
+                Scammers often use the same psychological tricks.
+            </p>
+
+        </div>
+
+
+        <div class="flags">
+
+
+            <div class="flag reveal-on-scroll">
+
+                <div class="flag-icon">
+                    ⏰
+                </div>
+
+                <div>
+
+                    <h3>
+                        Extreme Urgency
+                    </h3>
+
+                    <p>
+                        "You must do this right now."
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flag reveal-on-scroll">
+
+                <div class="flag-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <h3>
+                        Avoiding Verification
+                    </h3>
+
+                    <p>
+                        They give excuses for why you
+                        cannot contact the real person.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flag reveal-on-scroll">
+
+                <div class="flag-icon">
+                    💰
+                </div>
+
+                <div>
+
+                    <h3>
+                        Money Request
+                    </h3>
+
+                    <p>
+                        They suddenly ask for a transfer
+                        or payment.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flag reveal-on-scroll">
+
+                <div class="flag-icon">
+                    🔐
+                </div>
+
+                <div>
+
+                    <h3>
+                        Sensitive Information
+                    </h3>
+
+                    <p>
+                        They ask for passwords, OTPs or
+                        financial information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flag reveal-on-scroll">
+
+                <div class="flag-icon">
+                    🤫
+                </div>
+
+                <div>
+
+                    <h3>
+                        Keep It Secret
+                    </h3>
+
+                    <p>
+                        They tell you not to contact anyone
+                        else about the request.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flag reveal-on-scroll">
+
+                <div class="flag-icon">
+                    🔗
+                </div>
+
+                <div>
+
+                    <h3>
+                        Suspicious Link
+                    </h3>
+
+                    <p>
+                        They want you to use a link they
+                        provided instead of an official source.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CHALLENGE
+========================================================= -->
+
+<section style="background:var(--bg-secondary);">
+
+    <div class="container">
+
+        <div class="challenge reveal-on-scroll">
+
+            <h2>
+                🧠 What Would You Do?
+            </h2>
+
+            <p>
+
+                Someone claiming to be your friend sends
+                you an urgent request for ₹10,000.
+
+                <br>
+
+                They say their phone was stolen and
+                they cannot receive calls.
+
+            </p>
+
+
+            <div class="choices">
+
+                <button
+                    class="choice"
+                    onclick="chooseAnswer(this,false)"
+                >
+
+                    💸 Send the money immediately
+
+                </button>
+
+
+                <button
+                    class="choice"
+                    onclick="chooseAnswer(this,true)"
+                >
+
+                    📞 Verify their identity using
+                    another trusted method
+
+                </button>
+
+
+                <button
+                    class="choice"
+                    onclick="chooseAnswer(this,false)"
+                >
+
+                    🔐 Ask them for their OTP
+
+                </button>
+
+
+                <button
+                    class="choice"
+                    onclick="chooseAnswer(this,false)"
+                >
+
+                    🔗 Click any link they send
+
+                </button>
+
+            </div>
+
+
+            <div id="challengeResult"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SAFETY RULE
+========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="safety reveal-on-scroll">
+
+            <h2>
+                🛡️ The Verify Before You Trust Rule
+            </h2>
+
+            <p>
+
+                Never trust an unexpected request simply
+                because the person appears familiar.
+
+            </p>
+
+
+            <div class="safety-grid">
+
+
+                <div class="safety-item">
+
+                    <div class="safety-number">
+                        1
+                    </div>
+
+                    <h3>
+                        STOP
+                    </h3>
+
+                    <p>
+                        Don't react immediately.
+                    </p>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-number">
+                        2
+                    </div>
+
+                    <h3>
+                        CHECK
+                    </h3>
+
+                    <p>
+                        Look for unusual behavior.
+                    </p>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-number">
+                        3
+                    </div>
+
+                    <h3>
+                        VERIFY
+                    </h3>
+
+                    <p>
+                        Contact them independently.
+                    </p>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-number">
+                        4
+                    </div>
+
+                    <h3>
+                        ACT
+                    </h3>
+
+                    <p>
+                        Only continue when you're sure.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ALREADY RESPONDED
+========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title reveal-on-scroll">
+
+            <h2>
+                😨 What If You Already Responded?
+            </h2>
+
+            <p>
+                Don't panic. Take these steps.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step reveal-on-scroll">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <div>
+
+                    <h3>
+                        Stop Contact
+                    </h3>
+
+                    <p>
+                        Stop replying to the suspicious account
+                        or caller.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step reveal-on-scroll">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <div>
+
+                    <h3>
+                        Verify the Real Person
+                    </h3>
+
+                    <p>
+                        Contact the person or organization
+                        through a trusted method you already know.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step reveal-on-scroll">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <div>
+
+                    <h3>
+                        Secure Your Accounts
+                    </h3>
+
+                    <p>
+                        If you shared credentials or sensitive
+                        information, change affected passwords
+                        and review account security.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step reveal-on-scroll">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <div>
+
+                    <h3>
+                        Contact Your Bank If Necessary
+                    </h3>
+
+                    <p>
+                        If money or financial information was
+                        involved, contact your financial institution
+                        through an official channel as soon as possible.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step reveal-on-scroll">
+
+                <div class="step-number">
+                    5
+                </div>
+
+                <div>
+
+                    <h3>
+                        Report the Account
+                    </h3>
+
+                    <p>
+                        Report suspicious profiles, messages or
+                        activity to the relevant platform or
+                        organization.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL MESSAGE
+========================================================= -->
+
+<section
+    class="final-message"
+    style="background:var(--bg-secondary);"
+>
+
+    <div class="container">
+
+        <div class="section-title reveal-on-scroll">
+
+            <h2>
+                🔐 Familiar Doesn't Always Mean Safe
+            </h2>
+
+            <p>
+
+                A profile picture can be copied.
+
+                <br>
+
+                A name can be copied.
+
+                <br>
+
+                A company logo can be copied.
+
+                <br><br>
+
+                <strong style="color:var(--teal);">
+
+                    Always verify the person behind the request.
+
+                </strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BOTTOM PAGE NAVIGATION
+========================================================= -->
+
+<section class="bottom-navigation">
+
+    <div class="bottom-navigation-inner">
+
+
+        <!-- HOME -->
+
+        <a
+            href="home.html"
+            class="bottom-nav-button home"
+        >
+
+            🏠 Home
+
+        </a>
+
+
+        <!-- PREVIOUS SCAM -->
+
+        <a
+            href="upi.html"
+            class="bottom-nav-button previous"
+        >
+
+            ← UPI Scam
+
+        </a>
+
+
+        <!-- CURRENT SCAM -->
+
+        <a
+            href="scam.html"
+            class="bottom-nav-button current"
+        >
+
+            🚨 Scam page
+
+        </a>
+
+
+        <!-- NEXT SCAM -->
+
+        <a
+            href="phishing.html"
+            class="bottom-nav-button next"
+        >
+
+            Phishing Scam →
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <h3>
+        🛡️ SafeShield
+    </h3>
+
+    <p>
+        Stay alert. Protect your information.
+        Think before you click.
+    </p>
+
+    <p style="margin-top:10px;">
+
+        © 2026 SafeShield |
+        Educational Privacy & Scam Awareness Website
+
+    </p>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+/* =========================================================
+   REVEAL SCAM MESSAGE
+========================================================= */
+
+function revealScam() {
+
+    const reveal =
+        document.getElementById("reveal");
+
+    reveal.classList.toggle("show");
+
+}
+
+
+/* =========================================================
+   SCAM CARDS
+========================================================= */
+
+function toggleCard(card) {
+
+    card.classList.toggle("active");
+
+}
+
+
+/* =========================================================
+   CHALLENGE
+========================================================= */
+
+function chooseAnswer(button, correct) {
+
+    const buttons =
+        document.querySelectorAll(".choice");
+
+    buttons.forEach(btn => {
+
+        btn.disabled = true;
+
+    });
+
+
+    const result =
+        document.getElementById("challengeResult");
+
+
+    if (correct) {
+
+        button.classList.add("correct");
+
+        result.innerHTML =
+            "🟢 <strong>Correct!</strong><br><br>" +
+            "The safest response is to verify the " +
+            "person independently before sending money " +
+            "or sharing information.";
+
+        result.style.background =
+            "rgba(34,211,167,0.10)";
+
+        result.style.border =
+            "1px solid rgba(34,211,167,0.35)";
+
+        result.style.color =
+            "#22D3A7";
+
+    }
+
+    else {
+
+        button.classList.add("wrong");
+
+        result.innerHTML =
+            "🔴 <strong>Be careful!</strong><br><br>" +
+            "The correct response is to independently " +
+            "verify the person's identity before taking action.";
+
+        result.style.background =
+            "rgba(239,68,68,0.10)";
+
+        result.style.border =
+            "1px solid rgba(239,68,68,0.35)";
+
+        result.style.color =
+            "#FF6B6B";
+
+
+        buttons.forEach(btn => {
+
+            if (
+                btn.innerText.includes(
+                    "Verify their identity"
+                )
+            ) {
+
+                btn.classList.add("correct");
+
+            }
+
+        });
+
+    }
+
+
+    result.classList.add("show");
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".reveal-on-scroll"
+    );
+
+
+const observer =
+    new IntersectionObserver(
+
+        (entries) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold: 0.15
+        }
+
+    );
+
+
+revealElements.forEach(element => {
+
+    observer.observe(element);
+
+});
+
+
+/* =========================================================
+   STAGGER CARD ANIMATION
+========================================================= */
+
+const cards =
+    document.querySelectorAll(".scam-card");
+
+cards.forEach((card, index) => {
+
+    card.style.transitionDelay =
+        `${index * 0.05}s`;
+
+});
+
+
+/* =========================================================
+   MOUSE GLOW EFFECT
+========================================================= */
+
+document
+.querySelectorAll(".scam-card, .example, .challenge")
+.forEach(card => {
+
+    card.addEventListener(
+        "mousemove",
+        function(e) {
+
+            const rect =
+                this.getBoundingClientRect();
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+            this.style.background =
+                `radial-gradient(
+                    circle at ${x}px ${y}px,
+                    rgba(79,140,255,0.08),
+                    var(--card) 45%
+                )`;
+
+        }
+    );
+
+
+    card.addEventListener(
+        "mouseleave",
+        function() {
+
+            this.style.background =
+                "var(--card)";
+
+        }
+    );
+
+});
+
+
+</script>
+
+
+<script src="safeshield-fix.js"></script>
+</body>
+</html>

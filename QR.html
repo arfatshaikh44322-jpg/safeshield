@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SafeShield - UPI & QR Code Scam</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0B1220;
+    color:#F8FAFC;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root{
+
+    --bg:#0B1220;
+
+    --card:#111C2E;
+
+    --blue:#4F8CFF;
+
+    --blue-light:#6A9CFF;
+
+    --teal:#22D3A7;
+
+    --text:#F8FAFC;
+
+    --secondary:#CBD5E1;
+
+    --muted:#94A3B8;
+
+    --border:#26364D;
+
+    --red:#EF4444;
+
+    --redlight:#FF6B6B;
+
+    --footer:#080E19;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    background:rgba(11,18,32,.88);
+
+    border-bottom:1px solid var(--border);
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:0 5px 25px rgba(0,0,0,.15);
+}
+
+.nav-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:16px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:var(--blue);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.logo:hover{
+
+    transform:scale(1.05);
+
+    text-shadow:0 0 15px rgba(79,140,255,.6);
+}
+
+.logo span{
+    color:white;
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:25px;
+
+    list-style:none;
+}
+
+.nav-links a{
+
+    color:var(--secondary);
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    position:relative;
+}
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:0;
+
+    height:2px;
+
+    left:0;
+
+    bottom:-6px;
+
+    background:var(--teal);
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+
+    color:var(--teal);
+}
+
+.nav-links a:hover::after{
+
+    width:100%;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    position:relative;
+
+    padding:120px 25px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    background:
+
+    radial-gradient(
+        circle at 50% 30%,
+        rgba(79,140,255,.18),
+        transparent 35%
+    ),
+
+    radial-gradient(
+        circle at 50% 80%,
+        rgba(239,68,68,.10),
+        transparent 45%
+    );
+}
+
+
+/* Animated background circles */
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+
+    height:300px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(79,140,255,.15);
+
+    top:30px;
+
+    left:10%;
+
+    animation:pulseCircle 5s infinite;
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:200px;
+
+    height:200px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(34,211,167,.12);
+
+    bottom:20px;
+
+    right:12%;
+
+    animation:pulseCircle 4s infinite reverse;
+}
+
+@keyframes pulseCircle{
+
+    0%{
+
+        transform:scale(.8);
+
+        opacity:.2;
+    }
+
+    50%{
+
+        transform:scale(1.2);
+
+        opacity:.7;
+    }
+
+    100%{
+
+        transform:scale(.8);
+
+        opacity:.2;
+    }
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    animation:heroAppear 1s ease;
+}
+
+@keyframes heroAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+}
+
+.icon{
+
+    font-size:80px;
+
+    margin-bottom:20px;
+
+    animation:
+
+        float 3s ease-in-out infinite,
+
+        iconGlow 2s infinite alternate;
+}
+
+@keyframes float{
+
+    0%,100%{
+
+        transform:translateY(0);
+    }
+
+    50%{
+
+        transform:translateY(-14px);
+    }
+}
+
+@keyframes iconGlow{
+
+    from{
+
+        filter:drop-shadow(0 0 5px rgba(79,140,255,.2));
+    }
+
+    to{
+
+        filter:drop-shadow(0 0 25px rgba(79,140,255,.8));
+    }
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:8px 17px;
+
+    border-radius:30px;
+
+    background:rgba(239,68,68,.1);
+
+    border:1px solid rgba(239,68,68,.5);
+
+    color:var(--redlight);
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+    animation:badgePulse 2s infinite;
+}
+
+@keyframes badgePulse{
+
+    0%,100%{
+
+        box-shadow:0 0 0 rgba(239,68,68,0);
+    }
+
+    50%{
+
+        box-shadow:0 0 20px rgba(239,68,68,.25);
+    }
+}
+
+.hero h1{
+
+    font-size:clamp(42px,6vw,68px);
+
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+
+    color:var(--blue);
+
+    text-shadow:0 0 20px rgba(79,140,255,.25);
+}
+
+.hero p{
+
+    max-width:780px;
+
+    margin:auto;
+
+    color:var(--secondary);
+
+    font-size:18px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+
+    padding:80px 25px;
+}
+
+.container{
+
+    max-width:1000px;
+
+    margin:auto;
+}
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(35px);
+
+    transition:
+
+        opacity .7s ease,
+
+        transform .7s ease;
+}
+
+.reveal.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:35px;
+
+    margin-bottom:25px;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+
+    height:100px;
+
+    border-radius:50%;
+
+    background:rgba(79,140,255,.05);
+
+    top:-50px;
+
+    right:-50px;
+
+    transition:.5s;
+}
+
+.card:hover::before{
+
+    transform:scale(3);
+}
+
+.card:hover{
+
+    transform:translateY(-7px);
+
+    box-shadow:
+
+        0 20px 50px rgba(79,140,255,.12);
+
+    border-color:rgba(79,140,255,.6);
+}
+
+.card h2{
+
+    color:var(--blue);
+
+    margin-bottom:15px;
+
+    position:relative;
+}
+
+.card h3{
+
+    margin-bottom:10px;
+
+    color:var(--teal);
+}
+
+.card p{
+
+    color:var(--secondary);
+}
+
+
+/* =========================
+   FAKE UPI
+========================= */
+
+.fake-upi{
+
+    max-width:420px;
+
+    margin:30px auto;
+
+    background:#091321;
+
+    border:1px solid #334155;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    position:relative;
+}
+
+.fake-upi:hover{
+
+    transform:scale(1.02);
+
+    box-shadow:0 0 30px rgba(79,140,255,.12);
+}
+
+
+/* QR */
+
+.qr{
+
+    width:150px;
+
+    height:150px;
+
+    margin:20px auto;
+
+    background:
+
+    repeating-linear-gradient(
+        45deg,
+        #fff 0px,
+        #fff 5px,
+        #111 5px,
+        #111 10px
+    );
+
+    border:10px solid white;
+
+    animation:qrGlow 2s infinite alternate;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.qr:hover{
+
+    transform:scale(1.08) rotate(2deg);
+}
+
+@keyframes qrGlow{
+
+    from{
+
+        box-shadow:
+            0 0 5px rgba(79,140,255,.2);
+    }
+
+    to{
+
+        box-shadow:
+            0 0 35px rgba(79,140,255,.7);
+    }
+}
+
+.qr-message{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    background:rgba(239,68,68,.1);
+
+    border:1px solid rgba(239,68,68,.4);
+
+    color:var(--redlight);
+
+    animation:pop .4s ease;
+}
+
+.qr-message.show{
+
+    display:block;
+}
+
+@keyframes pop{
+
+    from{
+
+        transform:scale(.8);
+
+        opacity:0;
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+    }
+}
+
+
+/* =========================
+   WARNING
+========================= */
+
+.warning{
+
+    background:rgba(239,68,68,.07);
+
+    border:1px solid rgba(239,68,68,.45);
+
+    border-left:5px solid var(--red);
+
+    animation:warningPulse 3s infinite;
+}
+
+@keyframes warningPulse{
+
+    0%,100%{
+
+        box-shadow:0 0 0 rgba(239,68,68,0);
+    }
+
+    50%{
+
+        box-shadow:0 0 25px rgba(239,68,68,.08);
+    }
+}
+
+.warning h2{
+
+    color:var(--redlight);
+}
+
+
+/* =========================
+   WARNING SIGNS
+========================= */
+
+.warning-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.warning-item{
+
+    padding:20px;
+
+    background:#0E1728;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    position:relative;
+}
+
+.warning-item:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--red);
+}
+
+.warning-item.active{
+
+    border-color:var(--teal);
+
+    background:rgba(34,211,167,.08);
+
+    box-shadow:
+        0 0 20px rgba(34,211,167,.08);
+}
+
+.warning-detail{
+
+    display:none;
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+.warning-item.active .warning-detail{
+
+    display:block;
+
+    animation:slideDown .3s ease;
+}
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-5px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================
+   RISK METER
+========================= */
+
+.risk-box{
+
+    margin-top:30px;
+
+    padding:25px;
+
+    background:#091321;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    text-align:center;
+}
+
+.risk-bar{
+
+    width:100%;
+
+    height:15px;
+
+    background:#1E293B;
+
+    border-radius:20px;
+
+    margin:20px 0;
+
+    overflow:hidden;
+}
+
+.risk-fill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:var(--red);
+
+    transition:1s ease;
+}
+
+.risk-text{
+
+    color:var(--redlight);
+
+    font-weight:bold;
+}
+
+
+/* =========================
+   SAFE CHECKLIST
+========================= */
+
+.safe-list{
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.safe-item{
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#0E1728;
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.safe-item:hover{
+
+    border-color:var(--teal);
+
+    transform:translateX(5px);
+}
+
+.safe-item.checked{
+
+    background:rgba(34,211,167,.08);
+
+    border-color:var(--teal);
+
+    color:var(--teal);
+}
+
+.safe-item.checked span{
+
+    text-decoration:line-through;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-top:25px;
+}
+
+.btn{
+
+    padding:14px 23px;
+
+    border-radius:9px;
+
+    border:none;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    display:inline-block;
+}
+
+.primary{
+
+    background:var(--blue);
+
+    color:white;
+}
+
+.primary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 10px 30px rgba(79,140,255,.35);
+}
+
+.secondary{
+
+    background:transparent;
+
+    border:1px solid var(--border);
+
+    color:white;
+}
+
+.secondary:hover{
+
+    border-color:var(--teal);
+
+    color:var(--teal);
+
+    transform:translateY(-4px);
+}
+
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz{
+
+    text-align:center;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        rgba(79,140,255,.08),
+        rgba(34,211,167,.04)
+    );
+}
+
+.question{
+
+    font-size:21px;
+
+    margin-bottom:25px;
+
+    color:var(--secondary);
+}
+
+.option{
+
+    display:block;
+
+    width:100%;
+
+    padding:16px;
+
+    margin:10px 0;
+
+    border:1px solid var(--border);
+
+    background:#0B1220;
+
+    color:white;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    text-align:left;
+
+    transition:.3s;
+}
+
+.option:hover{
+
+    border-color:var(--blue);
+
+    transform:translateX(7px);
+
+    background:#101B2D;
+}
+
+.option:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.8;
+}
+
+.correct{
+
+    background:rgba(34,211,167,.12)!important;
+
+    border-color:var(--teal)!important;
+
+    color:var(--teal)!important;
+
+    animation:correctPulse .6s ease;
+}
+
+.wrong{
+
+    background:rgba(239,68,68,.12)!important;
+
+    border-color:var(--red)!important;
+
+    color:var(--redlight)!important;
+
+    animation:shake .4s ease;
+}
+
+@keyframes correctPulse{
+
+    50%{
+
+        transform:scale(1.03);
+    }
+}
+
+@keyframes shake{
+
+    25%{
+
+        transform:translateX(-8px);
+    }
+
+    50%{
+
+        transform:translateX(8px);
+    }
+
+    75%{
+
+        transform:translateX(-5px);
+    }
+}
+
+#quizResult{
+
+    margin-top:20px;
+
+    font-weight:bold;
+
+    display:none;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#091321;
+
+    animation:pop .4s ease;
+}
+
+
+/* =========================
+   NEXT SCAM AREA
+========================= */
+
+.next-area{
+
+    text-align:center;
+
+    margin-top:35px;
+
+    padding:35px;
+
+    border-radius:16px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(79,140,255,.10),
+            transparent 60%
+        );
+
+    border:1px solid var(--border);
+}
+
+.next-area h2{
+
+    color:var(--teal);
+
+    margin-bottom:10px;
+}
+
+.next-area p{
+
+    color:var(--muted);
+
+    margin-bottom:20px;
+}
+
+
+/* =========================
+   BACK TO TOP
+========================= */
+
+#topBtn{
+
+    position:fixed;
+
+    bottom:25px;
+
+    right:25px;
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:var(--blue);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+    display:none;
+
+    z-index:999;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.3);
+
+    transition:.3s;
+}
+
+#topBtn:hover{
+
+    transform:translateY(-5px);
+
+    background:var(--blue-light);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    background:var(--footer);
+
+    border-top:1px solid var(--border);
+
+    padding:40px 25px;
+
+    text-align:center;
+}
+
+footer h3{
+
+    color:var(--teal);
+
+    margin-bottom:10px;
+}
+
+footer p{
+
+    color:#71859A;
+
+    font-size:14px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .nav-links{
+
+        display:none;
+    }
+
+    section{
+
+        padding:60px 18px;
+    }
+
+    .card{
+
+        padding:25px;
+    }
+
+    .warning-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+
+        padding:90px 20px;
+    }
+
+    .buttons{
+
+        flex-direction:column;
+    }
+
+    .btn{
+
+        text-align:center;
+
+        width:100%;
+    }
+}
+
+</style>
+
+<link rel="stylesheet" href="safeshield-fix.css">
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav>
+
+<div class="nav-container">
+
+<div class="logo">
+
+🛡️ Safe<span>Shield</span>
+
+</div>
+
+<ul class="nav-links">
+
+<li>
+<a href="home.html">Home</a>
+</li>
+
+<li>
+<a href="protect.html">Protect</a>
+</li>
+
+<li>
+<a href="scam.html">Scams</a>
+</li>
+
+<li>
+<a href="tool.html">Tools</a>
+</li>
+
+<li>
+<a href="checklist.html">Checklist</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="icon">
+📱
+</div>
+
+<div class="badge">
+⚠️ DIGITAL PAYMENT SCAM
+</div>
+
+<h1>
+
+The <span>UPI & QR Code</span> Scam
+
+</h1>
+
+<p>
+
+A QR code may look harmless, but scammers can use
+fake refunds, payment requests and social engineering
+to trick you into authorizing a payment.
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<div class="card reveal">
+
+<h2>
+🎭 How Does the Scam Work?
+</h2>
+
+<p>
+
+A scammer may contact you pretending to be a buyer,
+customer-service representative, friend, delivery agent
+or someone offering a refund.
+
+</p>
+
+<br>
+
+<p>
+
+They may send a QR code or a payment request and tell
+you that you need to scan it or enter your UPI PIN
+to receive money.
+
+</p>
+
+<br>
+
+<p class="danger">
+
+⚠️ Your UPI PIN is used to authorize payments.
+Treat any unexpected request to enter it as a major
+warning sign.
+
+</p>
+
+</div>
+
+
+
+<!-- =========================
+     QR SIMULATOR
+========================= -->
+
+<div class="card reveal">
+
+<h2>
+📲 Interactive QR Scam Simulator
+</h2>
+
+<p>
+
+This is a simulated example. Click the QR code to
+see what a scammer might try to convince you to do.
+
+</p>
+
+<div class="fake-upi">
+
+<h3>
+💰 "Refund Ready"
+</h3>
+
+<p>
+
+Your refund of ₹5,000 is waiting.
+
+</p>
+
+<div
+class="qr"
+onclick="showQRWarning()"
+title="Click the QR code"
+></div>
+
+<p class="danger">
+
+Scan to receive your refund
+
+</p>
+
+<div
+id="qrMessage"
+class="qr-message"
+>
+
+🚨 STOP! A QR code can be used to request
+a payment. Never enter your UPI PIN just
+because someone says you are receiving money.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     WARNING SIGNS
+========================= -->
+
+<div class="card warning reveal">
+
+<h2>
+🚨 Tap the Warning Signs
+</h2>
+
+<p>
+
+Click each warning sign to learn why it matters.
+
+</p>
+
+<div class="warning-grid">
+
+
+<div
+class="warning-item"
+onclick="toggleWarning(this)"
+>
+
+<strong>
+🔴 Unexpected QR Code
+</strong>
+
+<div class="warning-detail">
+
+You weren't expecting a payment request
+but someone suddenly sends you a QR code.
+
+</div>
+
+</div>
+
+
+<div
+class="warning-item"
+onclick="toggleWarning(this)"
+>
+
+<strong>
+💰 "Pay to Receive"
+</strong>
+
+<div class="warning-detail">
+
+Someone claims you must make a payment
+to receive money or a refund.
+
+</div>
+
+</div>
+
+
+<div
+class="warning-item"
+onclick="toggleWarning(this)"
+>
+
+<strong>
+🔐 UPI PIN Request
+</strong>
+
+<div class="warning-detail">
+
+Your UPI PIN authorizes transactions.
+Never reveal it to another person.
+
+</div>
+
+</div>
+
+
+<div
+class="warning-item"
+onclick="toggleWarning(this)"
+>
+
+<strong>
+⏰ Artificial Urgency
+</strong>
+
+<div class="warning-detail">
+
+"Do it now!" or "The offer expires in 5 minutes"
+is designed to stop you from thinking.
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     RISK METER
+========================= -->
+
+<div class="card reveal">
+
+<h2>
+📊 Scam Risk Meter
+</h2>
+
+<p>
+
+How risky does this situation sound?
+
+</p>
+
+<div class="risk-box">
+
+<p>
+
+Someone you don't know sends you a QR code
+and says you must enter your UPI PIN to
+receive ₹10,000.
+
+</p>
+
+<div class="risk-bar">
+
+<div
+class="risk-fill"
+id="riskFill"
+></div>
+
+</div>
+
+<div class="risk-text">
+
+<span id="riskText">
+Click the button to analyze
+</span>
+
+</div>
+
+<button
+class="btn primary"
+onclick="analyzeRisk()"
+>
+
+🔍 Analyze Risk
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     PROTECTION
+========================= -->
+
+<div class="card reveal">
+
+<h2>
+🛡️ Your SafeShield Checklist
+</h2>
+
+<p>
+Click each step after you've understood it.
+</p>
+
+<div class="safe-list">
+
+<div
+class="safe-item"
+onclick="checkItem(this)"
+>
+
+<span>
+☐ I will never share my UPI PIN.
+</span>
+
+</div>
+
+<div
+class="safe-item"
+onclick="checkItem(this)"
+>
+
+<span>
+☐ I will verify unexpected payment requests.
+</span>
+
+</div>
+
+<div
+class="safe-item"
+onclick="checkItem(this)"
+>
+
+<span>
+☐ I won't scan random QR codes.
+</span>
+
+</div>
+
+<div
+class="safe-item"
+onclick="checkItem(this)"
+>
+
+<span>
+☐ I will stop when someone creates urgency.
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     QUIZ
+========================= -->
+
+<div class="card quiz reveal">
+
+<h2>
+🧠 Quick Scam Test
+</h2>
+
+<br>
+
+<div class="question">
+
+Someone says:
+
+<br><br>
+
+<strong>
+
+"Scan this QR code and enter your UPI PIN
+to receive ₹2,000."
+
+</strong>
+
+<br><br>
+
+What should you do?
+
+</div>
+
+
+<button
+class="option"
+onclick="answer(this,false)"
+>
+
+A. Scan it immediately
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,true)"
+>
+
+B. Stop and verify the request
+
+</button>
+
+
+<button
+class="option"
+onclick="answer(this,false)"
+>
+
+C. Give them your OTP too
+
+</button>
+
+
+<div id="quizResult"></div>
+
+
+<button
+id="retryBtn"
+class="btn secondary"
+style="display:none;margin-top:15px;"
+onclick="resetQuiz()"
+>
+
+🔄 Try Again
+
+</button>
+
+</div>
+
+
+
+<!-- =========================
+     NEXT SCAM
+========================= -->
+
+<div class="next-area reveal">
+
+<h2>
+🎯 Ready for the Next Scam?
+</h2>
+
+<p>
+
+You've learned how QR and UPI scams can trick
+people into authorizing payments.
+
+</p>
+
+<div class="buttons">
+
+
+<a
+href="media.html"
+class="btn secondary"
+>
+
+← Media Scam
+
+</a>
+
+<a
+href="home.html"
+class="btn secondary"
+>
+
+🏠 Home
+
+</a>
+
+<a
+href="scam.html"
+class="btn secondary"
+>
+
+ Scam Awareness
+
+</a>
+
+<a
+href="upi.html"
+class="btn primary"
+>
+
+UPI Scam →
+
+</a>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     BACK TO TOP
+========================= -->
+
+<button
+id="topBtn"
+onclick="scrollToTop()"
+>
+
+↑
+
+</button>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<h3>
+🛡️ SafeShield
+</h3>
+
+<p>
+
+Stay alert. Protect your information.
+Think before you click.
+
+</p>
+
+<p style="margin-top:10px;">
+
+© 2026 SafeShield |
+Educational Privacy & Scam Awareness Website
+
+</p>
+
+</footer>
+
+
+
+<script>
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const revealElements =
+document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+
+    revealElements.forEach(element=>{
+
+        const windowHeight =
+        window.innerHeight;
+
+        const elementTop =
+        element.getBoundingClientRect().top;
+
+        if(elementTop < windowHeight - 80){
+
+            element.classList.add("show");
+
+        }
+
+    });
+
+}
+
+window.addEventListener(
+    "scroll",
+    revealOnScroll
+);
+
+revealOnScroll();
+
+
+
+/* =========================
+   QR WARNING
+========================= */
+
+function showQRWarning(){
+
+    const message =
+    document.getElementById("qrMessage");
+
+    message.classList.toggle("show");
+
+}
+
+
+
+/* =========================
+   WARNING SIGNS
+========================= */
+
+function toggleWarning(element){
+
+    element.classList.toggle("active");
+
+}
+
+
+
+/* =========================
+   RISK METER
+========================= */
+
+function analyzeRisk(){
+
+    const fill =
+    document.getElementById("riskFill");
+
+    const text =
+    document.getElementById("riskText");
+
+    fill.style.width="95%";
+
+    text.innerHTML=
+    "🚨 VERY HIGH RISK — Stop and verify before paying.";
+
+}
+
+
+
+/* =========================
+   SAFE CHECKLIST
+========================= */
+
+function checkItem(element){
+
+    element.classList.toggle("checked");
+
+    const text =
+    element.querySelector("span");
+
+    if(element.classList.contains("checked")){
+
+        text.innerHTML =
+        "☑ " +
+        text.innerHTML.substring(2);
+
+    }else{
+
+        text.innerHTML =
+        "☐ " +
+        text.innerHTML.substring(2);
+
+    }
+
+}
+
+
+
+/* =========================
+   QUIZ
+========================= */
+
+function answer(button,correct){
+
+    const options =
+    document.querySelectorAll(".option");
+
+    options.forEach(option=>{
+
+        option.disabled=true;
+
+    });
+
+
+    const result =
+    document.getElementById("quizResult");
+
+    const retry =
+    document.getElementById("retryBtn");
+
+
+    if(correct){
+
+        button.classList.add("correct");
+
+        result.innerHTML =
+        "✅ Excellent! Your UPI PIN authorizes a transaction. Stop and independently verify unexpected payment requests.";
+
+        result.style.color =
+        "#22D3A7";
+
+        createConfetti();
+
+    }else{
+
+        button.classList.add("wrong");
+
+        result.innerHTML =
+        "❌ Not quite. Never blindly scan a QR code or enter your UPI PIN because someone asks you to.";
+
+        result.style.color =
+        "#FF6B6B";
+
+    }
+
+    result.style.display="block";
+
+    retry.style.display="inline-block";
+
+}
+
+
+
+/* =========================
+   RESET QUIZ
+========================= */
+
+function resetQuiz(){
+
+    const options =
+    document.querySelectorAll(".option");
+
+    options.forEach(option=>{
+
+        option.disabled=false;
+
+        option.classList.remove(
+            "correct",
+            "wrong"
+        );
+
+    });
+
+    document.getElementById(
+        "quizResult"
+    ).style.display="none";
+
+    document.getElementById(
+        "retryBtn"
+    ).style.display="none";
+
+}
+
+
+
+/* =========================
+   CONFETTI
+========================= */
+
+function createConfetti(){
+
+    for(let i=0;i<25;i++){
+
+        const confetti =
+        document.createElement("div");
+
+        confetti.innerHTML="✦";
+
+        confetti.style.position="fixed";
+
+        confetti.style.left=
+        Math.random()*100+"vw";
+
+        confetti.style.top="-20px";
+
+        confetti.style.fontSize=
+        (Math.random()*15+10)+"px";
+
+        confetti.style.color=
+        i%2===0
+        ? "#22D3A7"
+        : "#4F8CFF";
+
+        confetti.style.zIndex="9999";
+
+        document.body.appendChild(confetti);
+
+
+        const duration =
+        Math.random()*2000+1500;
+
+
+        confetti.animate(
+
+            [
+
+                {
+                    transform:"translateY(0) rotate(0deg)",
+                    opacity:1
+                },
+
+                {
+                    transform:
+                    `translateY(110vh) rotate(720deg)`,
+                    opacity:0
+                }
+
+            ],
+
+            {
+
+                duration:duration,
+
+                easing:"ease-out"
+
+            }
+
+        );
+
+
+        setTimeout(()=>{
+
+            confetti.remove();
+
+        },duration);
+
+    }
+
+}
+
+
+
+/* =========================
+   BACK TO TOP
+========================= */
+
+const topBtn =
+document.getElementById("topBtn");
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        if(window.scrollY > 500){
+
+            topBtn.style.display="block";
+
+        }else{
+
+            topBtn.style.display="none";
+
+        }
+
+    }
+);
+
+
+function scrollToTop(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+</script>
+
+
+<script src="safeshield-fix.js"></script>
+</body>
+
+</html>
